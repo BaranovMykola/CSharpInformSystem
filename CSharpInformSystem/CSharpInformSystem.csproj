@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="IFileManager.cs" />
     <Compile Include="IShape.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ShapeProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shape\AbstractShape.cs" />
     <Compile Include="Shape\Circle.cs" />
@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\PosSelect.xml" />
+    <Content Include="Data\RawData.xml" />
     <Content Include="Data\SquareSort.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

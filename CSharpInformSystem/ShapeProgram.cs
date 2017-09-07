@@ -9,7 +9,7 @@ using CSharpInformSystem.Shape;
 
 namespace CSharpInformSystem
 {
-    class Program
+    class ShapeProgram
     {
         static readonly Random rnd = new Random();
 
@@ -42,16 +42,17 @@ namespace CSharpInformSystem
         static void Main(string[] args)
         {
             var sfm = new ShapeFileManager();
-            var shapes = GenerateShapes(100);
-            List<AbstractShape> sortedShapes = shapes.OrderBy(s => s.ComputeSquare()).ToList();
-
-            var posSelect =
-                from item in shapes
-                where item.Pin.X < 0 && item.Pin.Y < 0
-                select item;
 
             try
             {
+                var shapes  = sfm.LoadList<AbstractShape>("../../Data/RawData.xml");
+                
+                List<AbstractShape> sortedShapes = shapes.OrderBy(s => s.ComputeSquare()).ToList();
+
+                var posSelect =
+                    from item in shapes
+                    where item.Pin.X < 0 && item.Pin.Y < 0
+                    select item;
                 sfm.SaveList(sortedShapes, "../../Data/SquareSort.xml");
                 sfm.SaveList(posSelect.ToList(), "../../Data/PosSelect.xml");
             }

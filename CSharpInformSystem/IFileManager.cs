@@ -6,5 +6,6 @@ namespace CSharpInformSystem
     interface IFileManager
     {
         void SaveList<T>(List<T> figures, string fileName);
+        List<T> LoadList<T>(string fileName);
     }
 }

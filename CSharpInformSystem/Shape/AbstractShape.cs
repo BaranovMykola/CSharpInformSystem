@@ -26,9 +26,5 @@ namespace CSharpInformSystem.Shape
 
         public abstract float ComputeSquare();
         public abstract float ComputePerimetr();
-        //public void SaveList(List<AbstractShape> figures, string fileName)
-        //{
-    
-        //}
     }
 }
