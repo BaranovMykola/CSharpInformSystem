@@ -1,52 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 using CSharpInformSystem.Shape;
 
 namespace CSharpInformSystem
 {
-    class ShapeProgram
+    /// <summary>
+    /// Main Class
+    /// </summary>
+    public class ShapeProgram
     {
-        static readonly Random rnd = new Random();
+        private static readonly Random Rnd = new Random();
 
-        static AbstractShape GenerateSingleShape(Type figure)
+        private static AbstractShape GenerateSingleShape(Type figure)
         {
             AbstractShape randomFigure = null;
-            if (figure == typeof (Circle))
+            if (figure == typeof(Circle))
             {
-                randomFigure = new Circle(rnd.Next(1, 10), new Point(rnd.Next(-10, 10), rnd.Next(-10, 10)));
+                randomFigure = new Circle(Rnd.Next(1, 10), new Point(Rnd.Next(-10, 10), Rnd.Next(-10, 10)));
             }
-            else if (figure == typeof (Square))
+            else if (figure == typeof(Square))
             {
-                randomFigure = new Square(rnd.Next(1, 10), new Point(rnd.Next(-10, 10), rnd.Next(-10, 10)));
+                randomFigure = new Square(Rnd.Next(1, 10), new Point(Rnd.Next(-10, 10), Rnd.Next(-10, 10)));
             }
+
             return randomFigure;
         }
 
-        static List<AbstractShape> GenerateShapes(int count)
+        private static List<AbstractShape> GenerateShapes(int count)
         {
             List<AbstractShape> shapes = new List<AbstractShape>();
-            Type[] figuresTypes = {typeof (Circle), typeof (Square)};
+            Type[] figuresTypes = { typeof(Circle), typeof(Square) };
 
             for (int i = 0; i < count; i++)
             {
-                shapes.Insert(0,GenerateSingleShape(figuresTypes[rnd.Next(0,2)]));
+                shapes.Insert(0, GenerateSingleShape(figuresTypes[Rnd.Next(0, 2)]));
             }
+
             return shapes;
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var sfm = new ShapeFileManager();
 
             try
             {
-                var shapes  = sfm.LoadList<AbstractShape>("../../Data/RawData.xml");
-                
+                var shapes = sfm.LoadList<AbstractShape>("../../Data/RawData.xml");
+
                 List<AbstractShape> sortedShapes = shapes.OrderBy(s => s.ComputeSquare()).ToList();
 
                 var posSelect =
@@ -61,6 +62,7 @@ namespace CSharpInformSystem
                 Console.WriteLine("Error while writting");
                 Console.WriteLine(e.Message);
             }
+
             Console.ReadKey();
         }
     }

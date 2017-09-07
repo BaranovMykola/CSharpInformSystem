@@ -6,20 +6,30 @@ using System.Threading.Tasks;
 
 namespace CSharpInformSystem.Shape
 {
+    /// <summary>
+    /// Circle entities
+    /// </summary>
     [Serializable]
     public class Circle : AbstractShape
     {
-        public float R { get; set; }
-
+        /// <summary>
+        /// Default circle
+        /// </summary>
         public Circle()
         {
-            
         }
 
-        public Circle(float r, Point center): base(center)
+        /// <summary>
+        /// Creates circle with user params
+        /// </summary>
+        /// <param name="r">Radius</param>
+        /// <param name="center">Center of circle</param>
+        public Circle(float r, Point center) : base(center)
         {
             R = r;
         }
+
+        public float R { get; set; }
 
         public override string ToString() => $"Circle:\tR [{R}]\tCenter [{Pin}]";
 

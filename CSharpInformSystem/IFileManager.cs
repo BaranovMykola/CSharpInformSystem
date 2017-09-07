@@ -3,9 +3,10 @@ using CSharpInformSystem.Shape;
 
 namespace CSharpInformSystem
 {
-    interface IFileManager
+    public interface IFileManager
     {
         void SaveList<T>(List<T> figures, string fileName);
+
         List<T> LoadList<T>(string fileName);
     }
 }

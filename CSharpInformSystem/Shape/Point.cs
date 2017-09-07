@@ -5,14 +5,20 @@ namespace CSharpInformSystem.Shape
     [Serializable]
     public struct Point
     {
-        public float X { get; set; }
-        public float Y { get; set; }
-
+        /// <summary>
+        /// Contructs point with users defined coordinates
+        /// </summary>
+        /// <param name="x">X cooridnate</param>
+        /// <param name="y">Y coordinate</param>
         public Point(float x, float y)
         {
             X = x;
             Y = y;
         }
+
+        public float X { get; set; }
+
+        public float Y { get; set; }
 
         public override string ToString() => $"[{X},{Y}]";
     }

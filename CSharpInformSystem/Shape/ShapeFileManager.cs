@@ -6,11 +6,14 @@ using System.Xml.Serialization;
 
 namespace CSharpInformSystem.Shape
 {
-    class ShapeFileManager : IFileManager
+    /// <summary>
+    /// Class provides interface for loading\saving list of entities
+    /// </summary>
+    public class ShapeFileManager : IFileManager
     {
         public void SaveList<T>(List<T> figures, string fileName)
         {
-            File.WriteAllText(fileName, String.Empty);
+            File.WriteAllText(fileName, string.Empty);
             using (var str = File.Open(fileName, FileMode.Open, FileAccess.Write))
             {
                 XmlSerializer xml = new XmlSerializer(typeof(List<AbstractShape>));
@@ -26,6 +29,7 @@ namespace CSharpInformSystem.Shape
                 XmlSerializer xml = new XmlSerializer(typeof(List<AbstractShape>));
                 shapes = xml.Deserialize(str) as List<T>;
             }
+
             return shapes;
         }
     }
