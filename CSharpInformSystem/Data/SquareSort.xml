@@ -1,0 +1,703 @@
+<?xml version="1.0"?>
+<ArrayOfAbstractShape xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>0</X>
+      <Y>7</Y>
+    </Pin>
+    <Side>1</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>1</X>
+      <Y>-2</Y>
+    </Pin>
+    <Side>1</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>4</X>
+      <Y>-9</Y>
+    </Pin>
+    <Side>1</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-4</X>
+      <Y>2</Y>
+    </Pin>
+    <Side>1</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-7</X>
+      <Y>0</Y>
+    </Pin>
+    <R>1</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-8</X>
+      <Y>-3</Y>
+    </Pin>
+    <R>1</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>5</X>
+      <Y>-4</Y>
+    </Pin>
+    <R>1</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-10</X>
+      <Y>2</Y>
+    </Pin>
+    <R>1</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-3</X>
+      <Y>5</Y>
+    </Pin>
+    <R>1</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-2</X>
+      <Y>1</Y>
+    </Pin>
+    <R>1</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>5</X>
+      <Y>-2</Y>
+    </Pin>
+    <Side>2</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-9</X>
+      <Y>-3</Y>
+    </Pin>
+    <Side>2</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-5</X>
+      <Y>5</Y>
+    </Pin>
+    <Side>2</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>1</X>
+      <Y>-7</Y>
+    </Pin>
+    <Side>2</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>6</X>
+      <Y>-1</Y>
+    </Pin>
+    <Side>2</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>5</X>
+      <Y>-2</Y>
+    </Pin>
+    <Side>2</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-5</X>
+      <Y>-3</Y>
+    </Pin>
+    <Side>2</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-3</X>
+      <Y>-5</Y>
+    </Pin>
+    <Side>3</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>5</X>
+      <Y>4</Y>
+    </Pin>
+    <Side>3</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>8</X>
+      <Y>5</Y>
+    </Pin>
+    <Side>3</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-8</X>
+      <Y>6</Y>
+    </Pin>
+    <Side>3</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-5</X>
+      <Y>-7</Y>
+    </Pin>
+    <Side>3</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-8</X>
+      <Y>0</Y>
+    </Pin>
+    <Side>3</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>6</X>
+      <Y>-4</Y>
+    </Pin>
+    <Side>3</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-8</X>
+      <Y>7</Y>
+    </Pin>
+    <Side>3</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-3</X>
+      <Y>-8</Y>
+    </Pin>
+    <R>2</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>8</X>
+      <Y>-3</Y>
+    </Pin>
+    <R>2</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>2</X>
+      <Y>2</Y>
+    </Pin>
+    <R>2</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>7</X>
+      <Y>1</Y>
+    </Pin>
+    <R>2</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-10</X>
+      <Y>-10</Y>
+    </Pin>
+    <R>2</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-4</X>
+      <Y>-3</Y>
+    </Pin>
+    <R>2</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-8</X>
+      <Y>-5</Y>
+    </Pin>
+    <R>2</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-2</X>
+      <Y>-3</Y>
+    </Pin>
+    <R>2</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>2</X>
+      <Y>9</Y>
+    </Pin>
+    <Side>4</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-4</X>
+      <Y>9</Y>
+    </Pin>
+    <Side>4</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>1</X>
+      <Y>8</Y>
+    </Pin>
+    <Side>4</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-7</X>
+      <Y>8</Y>
+    </Pin>
+    <Side>4</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>5</X>
+      <Y>-7</Y>
+    </Pin>
+    <Side>4</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-4</X>
+      <Y>-8</Y>
+    </Pin>
+    <Side>4</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>2</X>
+      <Y>5</Y>
+    </Pin>
+    <Side>4</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-10</X>
+      <Y>9</Y>
+    </Pin>
+    <Side>5</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-3</X>
+      <Y>4</Y>
+    </Pin>
+    <Side>5</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>4</X>
+      <Y>-8</Y>
+    </Pin>
+    <Side>5</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>5</X>
+      <Y>-10</Y>
+    </Pin>
+    <Side>5</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>5</X>
+      <Y>8</Y>
+    </Pin>
+    <Side>5</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-8</X>
+      <Y>6</Y>
+    </Pin>
+    <R>3</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-1</X>
+      <Y>3</Y>
+    </Pin>
+    <R>3</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-1</X>
+      <Y>-6</Y>
+    </Pin>
+    <R>3</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>3</X>
+      <Y>7</Y>
+    </Pin>
+    <Side>6</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-5</X>
+      <Y>-7</Y>
+    </Pin>
+    <Side>6</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>8</X>
+      <Y>7</Y>
+    </Pin>
+    <Side>6</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-4</X>
+      <Y>9</Y>
+    </Pin>
+    <Side>7</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>2</X>
+      <Y>7</Y>
+    </Pin>
+    <Side>7</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>9</X>
+      <Y>1</Y>
+    </Pin>
+    <Side>7</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-3</X>
+      <Y>2</Y>
+    </Pin>
+    <Side>7</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-1</X>
+      <Y>2</Y>
+    </Pin>
+    <Side>7</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-2</X>
+      <Y>-3</Y>
+    </Pin>
+    <Side>7</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-2</X>
+      <Y>9</Y>
+    </Pin>
+    <Side>7</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>6</X>
+      <Y>-10</Y>
+    </Pin>
+    <R>4</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-3</X>
+      <Y>-7</Y>
+    </Pin>
+    <R>4</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>3</X>
+      <Y>9</Y>
+    </Pin>
+    <R>4</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-7</X>
+      <Y>9</Y>
+    </Pin>
+    <R>4</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-4</X>
+      <Y>-7</Y>
+    </Pin>
+    <Side>8</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-8</X>
+      <Y>-3</Y>
+    </Pin>
+    <Side>8</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-2</X>
+      <Y>-10</Y>
+    </Pin>
+    <Side>8</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-10</X>
+      <Y>-7</Y>
+    </Pin>
+    <R>5</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-10</X>
+      <Y>8</Y>
+    </Pin>
+    <R>5</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>5</X>
+      <Y>0</Y>
+    </Pin>
+    <R>5</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-8</X>
+      <Y>-8</Y>
+    </Pin>
+    <R>5</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>6</X>
+      <Y>0</Y>
+    </Pin>
+    <R>5</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-7</X>
+      <Y>4</Y>
+    </Pin>
+    <R>5</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-4</X>
+      <Y>2</Y>
+    </Pin>
+    <R>5</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>0</X>
+      <Y>-10</Y>
+    </Pin>
+    <Side>9</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>6</X>
+      <Y>9</Y>
+    </Pin>
+    <Side>9</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-10</X>
+      <Y>-6</Y>
+    </Pin>
+    <Side>9</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>6</X>
+      <Y>7</Y>
+    </Pin>
+    <Side>9</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>2</X>
+      <Y>-4</Y>
+    </Pin>
+    <Side>9</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Square">
+    <Pin>
+      <X>-5</X>
+      <Y>0</Y>
+    </Pin>
+    <Side>9</Side>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>7</X>
+      <Y>-1</Y>
+    </Pin>
+    <R>6</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-9</X>
+      <Y>6</Y>
+    </Pin>
+    <R>6</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-8</X>
+      <Y>4</Y>
+    </Pin>
+    <R>6</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-8</X>
+      <Y>5</Y>
+    </Pin>
+    <R>7</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>2</X>
+      <Y>-2</Y>
+    </Pin>
+    <R>7</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-8</X>
+      <Y>-1</Y>
+    </Pin>
+    <R>7</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>8</X>
+      <Y>6</Y>
+    </Pin>
+    <R>7</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>1</X>
+      <Y>0</Y>
+    </Pin>
+    <R>7</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-4</X>
+      <Y>7</Y>
+    </Pin>
+    <R>7</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-9</X>
+      <Y>-2</Y>
+    </Pin>
+    <R>7</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-9</X>
+      <Y>3</Y>
+    </Pin>
+    <R>8</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>5</X>
+      <Y>-4</Y>
+    </Pin>
+    <R>8</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>6</X>
+      <Y>-9</Y>
+    </Pin>
+    <R>8</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-5</X>
+      <Y>-8</Y>
+    </Pin>
+    <R>8</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-8</X>
+      <Y>0</Y>
+    </Pin>
+    <R>8</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>1</X>
+      <Y>7</Y>
+    </Pin>
+    <R>9</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>0</X>
+      <Y>0</Y>
+    </Pin>
+    <R>9</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>0</X>
+      <Y>-10</Y>
+    </Pin>
+    <R>9</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-9</X>
+      <Y>0</Y>
+    </Pin>
+    <R>9</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>0</X>
+      <Y>-1</Y>
+    </Pin>
+    <R>9</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>2</X>
+      <Y>-4</Y>
+    </Pin>
+    <R>9</R>
+  </AbstractShape>
+  <AbstractShape xsi:type="Circle">
+    <Pin>
+      <X>-3</X>
+      <Y>0</Y>
+    </Pin>
+    <R>9</R>
+  </AbstractShape>
+</ArrayOfAbstractShape>
