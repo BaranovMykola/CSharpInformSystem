@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CSharpInformSystem
+﻿namespace CSharpInformSystem.Shape
 {
     public interface IShape
     {
