@@ -46,17 +46,21 @@ namespace CSharpInformSystem
 
             try
             {
+                Console.WriteLine("Shape loading...");
                 var shapes = sfm.LoadList<AbstractShape>("../../Data/RawData.xml");
                 //sfm.SaveList(GenerateShapes(100), "../../Data/RawData.xml");
 
+                Console.WriteLine("Shape sorting...");
                 List<AbstractShape> sortedShapes = shapes.OrderBy(s => s.ComputeSquare()).ToList();
-
+                Console.WriteLine("Shape selecting...");
                 var posSelect =
                     from item in shapes
                     where item.Pin.X < 0 && item.Pin.Y < 0
                     select item;
+                Console.WriteLine("Saving shapes to xml files...");
                 sfm.SaveList(sortedShapes, "../../Data/SquareSort.xml");
                 sfm.SaveList(posSelect.ToList(), "../../Data/PosSelect.xml");
+                Console.WriteLine("Done.");
             }
             catch (Exception e)
             {
