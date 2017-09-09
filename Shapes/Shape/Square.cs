@@ -21,17 +21,35 @@ namespace CSharpInformSystem.Shape
         /// </summary>
         /// <param name="side">Side lenth</param>
         /// <param name="leftUpPoint">Left up corner point</param>
-        public Square(float side, Point leftUpPoint) : base(leftUpPoint)
+        public Square(Point leftUpPoint, Point rightDownPoint) : base(leftUpPoint)
         {
-            Side = side;
+            RightDownPoint = rightDownPoint;
+            if (!(Pin.X <= RightDownPoint.X && Pin.Y >= RightDownPoint.Y))
+            {
+                Point swap = Pin;
+                Pin = RightDownPoint;
+                RightDownPoint = swap;
+
+            }
         }
 
-        public float Side { get; set; }
+        //public float Side { get; set; }
 
-        public override string ToString() => $"Square:\tLeft up point [{Pin}] Side Lenght [{Side}]";
+        public Point RightDownPoint { get; set; }
 
-        public override float ComputeSquare() => (float)Math.Pow(Side, 2);
+        public override string ToString() => $"Square:\tLeft up point [{Pin}] Right down point[{RightDownPoint}]";
 
-        public override float ComputePerimetr() => Side * 4;
+        public override float ComputeSquare()
+        {
+            Point normPoint = Pin - RightDownPoint;
+            float square = Math.Abs(normPoint.X*normPoint.Y);
+            return square;
+        }
+
+        public override float ComputePerimetr()
+        {
+            Point normPoint = Pin - RightDownPoint;
+            return normPoint.X*2 + normPoint.Y*2;
+        }
     }
 }

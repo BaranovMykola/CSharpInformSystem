@@ -21,7 +21,7 @@ namespace CSharpInformSystem
             }
             else if (figure == typeof(Square))
             {
-                randomFigure = new Square(Rnd.Next(1, 10), new Point(Rnd.Next(-10, 10), Rnd.Next(-10, 10)));
+                randomFigure = new Square(new Point(Rnd.Next(-10, 10), Rnd.Next(-10, 10)), new Point(Rnd.Next(-10, 10), Rnd.Next(-10, 10)));
             }
 
             return randomFigure;
@@ -47,6 +47,7 @@ namespace CSharpInformSystem
             try
             {
                 var shapes = sfm.LoadList<AbstractShape>("../../Data/RawData.xml");
+                //sfm.SaveList(GenerateShapes(100), "../../Data/RawData.xml");
 
                 List<AbstractShape> sortedShapes = shapes.OrderBy(s => s.ComputeSquare()).ToList();
 
