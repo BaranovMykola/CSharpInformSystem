@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using CSharpInformSystem.Shape;
 
-namespace CSharpInformSystem
+namespace CSharpInformSystem.Shape
 {
     public interface IFileManager
     {

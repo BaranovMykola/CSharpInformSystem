@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IFileManager.cs" />
+    <Compile Include="Shape\IFileManager.cs" />
     <Compile Include="Shape\IShape.cs" />
     <Compile Include="ShapeProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
