@@ -60,7 +60,7 @@ namespace CSharpInformSystem.Shape
         public override float ComputePerimeter()
         {
             Point normPoint = Pin - RightDownPoint;
-            return (normPoint.X * 2) + (normPoint.Y * 2);
+            return Math.Abs(normPoint.X * 2 + normPoint.Y * 2);
         }
     }
 }

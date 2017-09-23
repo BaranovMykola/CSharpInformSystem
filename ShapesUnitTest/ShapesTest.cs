@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ShapesUnitTest
 {
     [TestClass]
-    public class UnitTest1
+    public class ShapesTest
     {
         [TestMethod]
         public void TestCircleSquare()
@@ -19,7 +19,7 @@ namespace ShapesUnitTest
         public void TestCirclePerimetr()
         {
             var i = new Circle(1, new Point(0, 0));
-            Assert.AreEqual(i.ComputePerimetr(), 2* (float)Math.PI);
+            Assert.AreEqual(i.ComputePerimeter(), 2* (float)Math.PI);
         }
 
         [TestMethod]
@@ -32,12 +32,12 @@ namespace ShapesUnitTest
         }
 
         [TestMethod]
-        public void TestSquarePerimetr()
+        public void TestSquarePerimeter()
         {
             var i = new Square(new Point(1, 1), new Point(0, 0));
             var j = new Square(new Point(0, 0), new Point(1, 1));
-            Assert.AreEqual(i.ComputePerimetr(), j.ComputePerimetr());
-            Assert.AreEqual(i.ComputePerimetr(), 4);
+            Assert.AreEqual(i.ComputePerimeter(), j.ComputePerimeter());
+            Assert.AreEqual(i.ComputePerimeter(), 4);
         }
 
         [TestMethod]
