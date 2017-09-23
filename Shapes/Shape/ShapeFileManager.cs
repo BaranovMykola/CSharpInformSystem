@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -11,6 +9,12 @@ namespace CSharpInformSystem.Shape
     /// </summary>
     public class ShapeFileManager : IFileManager
     {
+        /// <summary>
+        /// Implementation of IFileManager method, saves shapes to file
+        /// </summary>
+        /// <typeparam name="T">Template parameter</typeparam>
+        /// <param name="figures">List of template elements</param>
+        /// <param name="fileName">File, where figures will be saved</param>
         public void SaveList<T>(List<T> figures, string fileName)
         {
             File.WriteAllText(fileName, string.Empty);
@@ -21,6 +25,12 @@ namespace CSharpInformSystem.Shape
             }
         }
 
+        /// <summary>
+        /// Implementation of IFileManager method, reads shapes from file
+        /// </summary>
+        /// <typeparam name="T">Template parameter</typeparam>
+        /// <param name="fileName">File, from where figures will be read</param>
+        /// <returns>List of T elements, read from file</returns>
         public List<T> LoadList<T>(string fileName)
         {
             List<T> shapes;

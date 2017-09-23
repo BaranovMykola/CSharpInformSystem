@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpInformSystem.Shape
 {
@@ -13,28 +9,43 @@ namespace CSharpInformSystem.Shape
     public class Circle : AbstractShape
     {
         /// <summary>
-        /// Default circle
+        /// Initializes a new instance of the Circle class
         /// </summary>
         public Circle()
         {
         }
 
         /// <summary>
-        /// Creates circle with user params
+        /// Initializes a new instance of the Circle class
         /// </summary>
-        /// <param name="r">Radius</param>
+        /// <param name="r">Radius of circle</param>
         /// <param name="center">Center of circle</param>
         public Circle(float r, Point center) : base(center)
         {
             R = r;
         }
 
+        /// <summary>
+        /// Radius of square
+        /// </summary>
         public float R { get; set; }
 
+        /// <summary>
+        /// Converts current element to string
+        /// </summary>
+        /// <returns>Circle written in string</returns>
         public override string ToString() => $"Circle:\tR [{R}]\tCenter [{Pin}]";
 
+        /// <summary>
+        /// Implementation of IShape method
+        /// </summary>
+        /// <returns>Returns square of circle</returns>
         public override float ComputeSquare() => (float)(Math.PI * Math.Pow(R, 2));
 
-        public override float ComputePerimetr() => (float)(2 * Math.PI * R);
+        /// <summary>
+        /// Implementation of IShape method
+        /// </summary>
+        /// <returns>Returns perimeter of circle</returns>
+        public override float ComputePerimeter() => (float)(2 * Math.PI * R);
     }
 }

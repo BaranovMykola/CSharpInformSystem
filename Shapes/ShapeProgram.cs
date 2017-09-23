@@ -6,12 +6,20 @@ using CSharpInformSystem.Shape;
 namespace CSharpInformSystem
 {
     /// <summary>
-    /// Main Class
+    /// Entry point class
     /// </summary>
     public class ShapeProgram
     {
+        /// <summary>
+        /// Random generator field.
+        /// </summary>
         private static readonly Random Rnd = new Random();
 
+        /// <summary>
+        /// Generates random figure(circle or square)
+        /// </summary>
+        /// <param name="figure">Determines type of income figure</param>
+        /// <returns>Return randomly generated figure</returns>
         private static AbstractShape GenerateSingleShape(Type figure)
         {
             AbstractShape randomFigure = null;
@@ -27,6 +35,11 @@ namespace CSharpInformSystem
             return randomFigure;
         }
 
+        /// <summary>
+        /// Randomly fills List of shapes with circles and squares
+        /// </summary>
+        /// <param name="count">Quantity of elements to insert</param>
+        /// <returns>List of Abstract shapes</returns>
         private static List<AbstractShape> GenerateShapes(int count)
         {
             List<AbstractShape> shapes = new List<AbstractShape>();
@@ -40,16 +53,16 @@ namespace CSharpInformSystem
             return shapes;
         }
 
-        private static void Main(string[] args)
+        /// <summary>
+        /// Entry point of program, reading from file, selecting necessary elements and saving to file takes place here
+        /// </summary>
+        private static void Main()
         {
             var sfm = new ShapeFileManager();
-
             try
             {
                 Console.WriteLine("Shape loading...");
                 var shapes = sfm.LoadList<AbstractShape>("../../Data/RawData.xml");
-                //sfm.SaveList(GenerateShapes(100), "../../Data/RawData.xml");
-
                 Console.WriteLine("Shape sorting...");
                 List<AbstractShape> sortedShapes = shapes.OrderBy(s => s.ComputeSquare()).ToList();
                 Console.WriteLine("Shape selecting...");

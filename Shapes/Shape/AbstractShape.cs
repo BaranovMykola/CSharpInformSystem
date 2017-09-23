@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace CSharpInformSystem.Shape
@@ -17,14 +12,14 @@ namespace CSharpInformSystem.Shape
     public abstract class AbstractShape : IShape
     {
         /// <summary>
-        /// Default constructor
+        /// Initializes a new instance of the AbstractShape class
         /// </summary>
         protected AbstractShape()
         {
         }
 
         /// <summary>
-        /// Constructor for pin
+        /// Initializes a new instance of the AbstractShape class
         /// </summary>
         /// <param name="pin">Default pin of shape</param>
         protected AbstractShape(Point pin)
@@ -32,10 +27,21 @@ namespace CSharpInformSystem.Shape
             Pin = pin;
         }
 
+        /// <summary>
+        /// Main point in figure(for example, center in circle)
+        /// </summary>
         public Point Pin { get; set; }
 
+        /// <summary>
+        /// Calculates square of current figure
+        /// </summary>
+        /// <returns>float, square of figure</returns>
         public abstract float ComputeSquare();
 
-        public abstract float ComputePerimetr();
+        /// <summary>
+        /// Calculates perimeter of current figure
+        /// </summary>
+        /// <returns>float, perimeter of figure</returns>
+        public abstract float ComputePerimeter();
     }
 }

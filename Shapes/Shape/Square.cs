@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace CSharpInformSystem.Shape
 {
@@ -10,17 +9,17 @@ namespace CSharpInformSystem.Shape
     public class Square : AbstractShape
     {
         /// <summary>
-        /// Defualt consturctor
+        /// Initializes a new instance of the Square class
         /// </summary>
         public Square()
         {
         }
 
         /// <summary>
-        /// Cnstructs square with user defined params
+        /// Initializes a new instance of the Square class
         /// </summary>
-        /// <param name="side">Side lenth</param>
         /// <param name="leftUpPoint">Left up corner point</param>
+        /// <param name="rightDownPoint">Right down corner point</param>
         public Square(Point leftUpPoint, Point rightDownPoint) : base(leftUpPoint)
         {
             RightDownPoint = rightDownPoint;
@@ -29,27 +28,39 @@ namespace CSharpInformSystem.Shape
                 Point swap = Pin;
                 Pin = RightDownPoint;
                 RightDownPoint = swap;
-
             }
         }
 
-        //public float Side { get; set; }
-
+        /// <summary>
+        /// Right down point of the square
+        /// </summary>
         public Point RightDownPoint { get; set; }
 
+        /// <summary>
+        /// Converts Square to string, representing it by left up and right down point
+        /// </summary>
+        /// <returns>Square converted to string</returns>
         public override string ToString() => $"Square:\tLeft up point [{Pin}] Right down point[{RightDownPoint}]";
 
+        /// <summary>
+        /// Implementation of IShape method
+        /// </summary>
+        /// <returns>Square of square</returns>
         public override float ComputeSquare()
         {
             Point normPoint = Pin - RightDownPoint;
-            float square = Math.Abs(normPoint.X*normPoint.Y);
+            float square = Math.Abs(normPoint.X * normPoint.Y);
             return square;
         }
 
-        public override float ComputePerimetr()
+        /// <summary>
+        /// Implementation of IShape method
+        /// </summary>
+        /// <returns>Perimeter of square</returns>
+        public override float ComputePerimeter()
         {
             Point normPoint = Pin - RightDownPoint;
-            return normPoint.X*2 + normPoint.Y*2;
+            return (normPoint.X * 2) + (normPoint.Y * 2);
         }
     }
 }
