@@ -1,0 +1,10 @@
+Y
+PD:\Studying\Programming\Projects\CSharpInformSystem\Shapes\Shape\IFileManager.csutf-8S
+JD:\Studying\Programming\Projects\CSharpInformSystem\Shapes\Shape\IShape.csutf-8S
+JD:\Studying\Programming\Projects\CSharpInformSystem\Shapes\ShapeProgram.csutf-8^
+UD:\Studying\Programming\Projects\CSharpInformSystem\Shapes\Properties\AssemblyInfo.csutf-8Z
+QD:\Studying\Programming\Projects\CSharpInformSystem\Shapes\Shape\AbstractShape.csutf-8S
+JD:\Studying\Programming\Projects\CSharpInformSystem\Shapes\Shape\Circle.csutf-8R
+ID:\Studying\Programming\Projects\CSharpInformSystem\Shapes\Shape\Point.csutf-8]
+TD:\Studying\Programming\Projects\CSharpInformSystem\Shapes\Shape\ShapeFileManager.csutf-8S
+JD:\Studying\Programming\Projects\CSharpInformSystem\Shapes\Shape\Square.csutf-8
