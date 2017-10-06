@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CSharpInformSystem.Shape
 {
@@ -14,6 +15,7 @@ namespace CSharpInformSystem.Shape
         public Square()
         {
         }
+
 
         /// <summary>
         /// Initializes a new instance of the Square class
