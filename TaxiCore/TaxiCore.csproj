@@ -49,7 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Taxi\Driver.cs" />
     <Compile Include="Entities\Taxi\Taxi.cs" />
-    <Compile Include="Entities\Taxi\TaxiState.cs" />
     <Compile Include="Entities\Transport\Car.cs" />
     <Compile Include="Entities\Transport\LicenseCategory.cs" />
   </ItemGroup>
