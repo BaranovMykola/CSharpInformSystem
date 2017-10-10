@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaxiCore.Position;
+using TaxiCore.Entities.Position;
 
-namespace TaxiCore.Demand
+namespace TaxiCore.Entities.Demand
 {
+    [Serializable]
     public class Customer
     {
         public Customer()

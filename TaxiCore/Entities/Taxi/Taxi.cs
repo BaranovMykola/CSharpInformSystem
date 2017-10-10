@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaxiCore.Position;
-using TaxiCore.Transport;
+using TaxiCore.Entities.Position;
+using TaxiCore.Entities.Transport;
 
-namespace TaxiCore.Taxi
+namespace TaxiCore.Entities.Taxi
 {
+    [Serializable]
     public class Taxi
     {
         public Taxi()

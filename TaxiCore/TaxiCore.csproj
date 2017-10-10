@@ -43,15 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Demand\Customer.cs" />
-    <Compile Include="Position\Location.cs" />
+    <Compile Include="Entities\Demand\Customer.cs" />
+    <Compile Include="Entities\Position\Location.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Taxi\Driver.cs" />
-    <Compile Include="Taxi\Taxi.cs" />
-    <Compile Include="Taxi\TaxiState.cs" />
-    <Compile Include="Transport\Car.cs" />
-    <Compile Include="Transport\LicenseCategory.cs" />
+    <Compile Include="Entities\Taxi\Driver.cs" />
+    <Compile Include="Entities\Taxi\Taxi.cs" />
+    <Compile Include="Entities\Taxi\TaxiState.cs" />
+    <Compile Include="Entities\Transport\Car.cs" />
+    <Compile Include="Entities\Transport\LicenseCategory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

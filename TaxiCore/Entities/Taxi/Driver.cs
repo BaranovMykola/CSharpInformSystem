@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaxiCore.Transport;
+﻿using TaxiCore.Entities.Transport;
 
-namespace TaxiCore.Taxi
+namespace TaxiCore.Entities.Taxi
 {
     public class Driver
     {

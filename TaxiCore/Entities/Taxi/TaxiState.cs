@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TaxiCore.Taxi
+namespace TaxiCore.Entities.Taxi
 {
+    [Serializable]
     public static class TaxiState
     {
         public enum State
