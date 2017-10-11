@@ -1,7 +1,9 @@
-﻿using TaxiCore.Entities.Transport;
+﻿using System;
+using TaxiCore.Entities.Transport;
 
 namespace TaxiCore.Entities.Taxi
 {
+    [Serializable]
     public class Driver
     {
         public Driver()

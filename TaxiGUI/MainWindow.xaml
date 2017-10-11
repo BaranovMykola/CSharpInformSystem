@@ -1,0 +1,15 @@
+﻿<Window x:Class="TaxiGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaxiGUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button x:Name="button" Content="Add Driver" HorizontalAlignment="Left" Margin="10,292,0,0" VerticalAlignment="Bottom" Width="75"/>
+        <Button x:Name="button_Copy" Content="Add Car" HorizontalAlignment="Left" Margin="90,292,0,0" VerticalAlignment="Bottom" Width="75"/>
+        <Button x:Name="button_Copy1" Content="Add Customer" HorizontalAlignment="Left" Margin="170,292,0,0" VerticalAlignment="Bottom" Width="97"/>
+
+    </Grid>
+</Window>

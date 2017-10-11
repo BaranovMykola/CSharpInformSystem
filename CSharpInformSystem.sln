@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiCore", "TaxiCore\TaxiCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiTest", "TaxiTest\TaxiTest.csproj", "{713D7926-601C-44E1-85CC-EE13E4880E39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiGUI", "TaxiGUI\TaxiGUI.csproj", "{8607BE79-3043-43FC-97D6-3212D1F37DB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,18 @@ Global
 		{713D7926-601C-44E1-85CC-EE13E4880E39}.Release|x64.Build.0 = Release|Any CPU
 		{713D7926-601C-44E1-85CC-EE13E4880E39}.Release|x86.ActiveCfg = Release|Any CPU
 		{713D7926-601C-44E1-85CC-EE13E4880E39}.Release|x86.Build.0 = Release|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Debug|x64.Build.0 = Debug|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Debug|x86.Build.0 = Debug|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Release|x64.ActiveCfg = Release|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Release|x64.Build.0 = Release|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Release|x86.ActiveCfg = Release|Any CPU
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,5 +92,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9B62A413-BE4B-4E5F-8593-58222C12A1A8} = {FE66098A-C6E4-4A0F-ACD2-5FF70BD1AABC}
 		{713D7926-601C-44E1-85CC-EE13E4880E39} = {FE66098A-C6E4-4A0F-ACD2-5FF70BD1AABC}
+		{8607BE79-3043-43FC-97D6-3212D1F37DB1} = {FE66098A-C6E4-4A0F-ACD2-5FF70BD1AABC}
 	EndGlobalSection
 EndGlobal
