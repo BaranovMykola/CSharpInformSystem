@@ -23,6 +23,6 @@ namespace TaxiCore.Entities.Transport
 
         public uint SeatsCouunt { get; set; }
 
-        bool CanDrive(Driver driver) => driver.DriverCategory == Category;
+        public bool CanDrive(Driver driver) => driver.DriverCategory == Category;
     }
 }
