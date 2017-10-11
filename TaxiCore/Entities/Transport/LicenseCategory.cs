@@ -3,7 +3,7 @@
 namespace TaxiCore.Entities.Transport
 {
     [Serializable]
-    public enum Category
+    public enum LicenseCategory
     {
         /// <summary>
         /// Passanger car

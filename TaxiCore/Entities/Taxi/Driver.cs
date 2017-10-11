@@ -8,7 +8,7 @@ namespace TaxiCore.Entities.Taxi
         {
         }
 
-        public Driver(string name, LicenseCategory.Category driverCategory)
+        public Driver(string name, LicenseCategory driverCategory)
         {
             Name = name;
             DriverCategory = driverCategory;
@@ -16,6 +16,6 @@ namespace TaxiCore.Entities.Taxi
 
         public string Name { get; set; }
 
-        public LicenseCategory.Category DriverCategory { get; set; }
+        public LicenseCategory DriverCategory { get; set; }
     }
 }

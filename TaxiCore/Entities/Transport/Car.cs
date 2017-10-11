@@ -10,7 +10,7 @@ namespace TaxiCore.Entities.Transport
         {
         }
 
-        public Car(string carModel, LicenseCategory.Category carCategory, uint seatsCount)
+        public Car(string carModel, LicenseCategory carCategory, uint seatsCount)
         {
             Model = carModel;
             Category = carCategory;
@@ -19,7 +19,7 @@ namespace TaxiCore.Entities.Transport
 
         public string Model { get; set; }
 
-        public LicenseCategory.Category Category { get; set; }
+        public LicenseCategory Category { get; set; }
 
         public uint SeatsCouunt { get; set; }
 
