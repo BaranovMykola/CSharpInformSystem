@@ -8,6 +8,10 @@ namespace TaxiCore.Entities.Taxi
     [Serializable]
     public class Taxi
     {
+        public Action OnChangeState;
+
+        private State _currentState;
+
         public Taxi()
         {
         }
@@ -22,7 +26,15 @@ namespace TaxiCore.Entities.Taxi
 
         public Location Location { get; set; }
 
-        public State CurrentState { get; set; }
+        public State CurrentState
+        {
+            get { return _currentState; }
+            set
+            {
+                OnChangeState?.Invoke();
+                _currentState = value;
+            }
+        }
 
         public Car Car { get; set; }
 

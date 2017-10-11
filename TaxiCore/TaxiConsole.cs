@@ -24,9 +24,17 @@ namespace TaxiCore
             List<Driver> drivers = new List<Driver>
             {
                 new Driver("Petya", LicenseCategory.C),
-                new Driver("Vasya", LicenseCategory.D),
-                new Driver("Imanuil", LicenseCategory.C|LicenseCategory.C),
+                new Driver("Vasya", LicenseCategory.B),
+                new Driver("Imanuil", LicenseCategory.C|LicenseCategory.B),
                 new Driver("Valera", LicenseCategory.D)
+            };
+
+            List<Taxi> taxis = new List<Taxi>()
+            {
+                new Taxi(new Location(49.805823, 23.980947), Taxi.State.Free, cars[0], drivers[1]),
+                new Taxi(new Location(49.839067, 24.030776), Taxi.State.Free, cars[1], drivers[2]),
+                new Taxi(new Location(49.843379, 24.118381), Taxi.State.Free, cars[2], drivers[0]),
+                new Taxi(new Location(49.749379, 24.148790), Taxi.State.Free, cars[3], drivers[3])
             };
 
             List<Customer> customers = new List<Customer>
@@ -35,7 +43,11 @@ namespace TaxiCore
                 new Customer(new Location(49.828797, 24.056647), new Location(49.812421, 24.017313), 2, "Sara")
             };
 
+            TaxiPark park = new TaxiPark(taxis);
 
+            park.AddClient(customers[0]);
+
+            GoogleApiProcessing.FindDistance(new Location(49.805823, 23.980947), new Location(49.839067, 24.030776));
 
             Console.ReadKey();
         }

@@ -20,19 +20,14 @@ namespace TaxiCore.Entities
         {
         }
 
-        public List<Car> Cars { get; set; } = new List<Car>();
-
-        public List<Driver> Drivers { get; set; } = new List<Driver>();
-
-        public List<Customer> Customers { get; set; } = new List<Customer>();
+        public TaxiPark TaxiParkEntity { get; set; } = new TaxiPark();
 
         public void Write(string fileName)
         {
-            ArrayList allData = new ArrayList() {Cars,Drivers,Customers};
             using (var stream = File.Open(fileName,FileMode.OpenOrCreate, FileAccess.Write, FileShare.Delete))
             {
                 var bin = new BinaryFormatter();
-                bin.Serialize(stream,allData);
+                bin.Serialize(stream,TaxiParkEntity);
             }
         }
 
@@ -41,13 +36,7 @@ namespace TaxiCore.Entities
             using (var stream = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 var bin = new BinaryFormatter();
-                var allData = bin.Deserialize(stream) as ArrayList;
-                if (allData != null)
-                {
-                    Cars = allData[0] as List<Car>;
-                    Drivers = allData[1] as List<Driver>;
-                    Customers = allData[2] as List<Customer>;
-                }
+                TaxiParkEntity = bin.Deserialize(stream) as TaxiPark;
             }
         }
     }

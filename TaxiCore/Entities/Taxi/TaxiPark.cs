@@ -3,27 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Castle.Components.DictionaryAdapter;
+using TaxiCore.Entities.Demand;
 using TaxiCore.Entities.Transport;
+using MoreLinq;
 
 namespace TaxiCore.Entities.Taxi
 {
+    [Serializable]
     public class TaxiPark
     {
-        List<Taxi> taxis;
-
-        public static TaxiPark MakeTaxi(List<Car> cars, List<Driver> drivers)
+        public TaxiPark()
         {
-            int[,] matrix = new int[cars.Count,drivers.Count];
+        }
 
-            for (int i = 0; i < cars.Count; i++)
+        public TaxiPark(List<Taxi> taxis)
+        {
+            Taxis = taxis;
+        }
+
+        public List<Taxi> Taxis{ get; set; }
+
+        private List<Customer> clientsQueue = new EditableList<Customer>();
+
+        public void AddClient(Customer client)
+        {
+            clientsQueue.Add(client);
+            FindTaxi(client);
+        }
+
+        public void FindTaxi(Customer client)
+        {
+            var avalibleTaxis = new List<Taxi>();
+            foreach (var taxi in Taxis)
             {
-                for (int j = 0; j < drivers.Count; j++)
+                if (taxi.CurrentState == Taxi.State.Free && taxi.Car.SeatsCouunt >= client.PeoplesCount)
                 {
-                    
+                    avalibleTaxis.Add(taxi);
                 }
             }
 
-            return new TaxiPark();
+            var clientTaxi = avalibleTaxis.MinBy(s => s.Car.SeatsCouunt);
+            clientTaxi.CurrentState = Taxi.State.Busy;
+            clientsQueue.Remove(client);
         }
     }
 }
