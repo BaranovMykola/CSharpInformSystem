@@ -20,6 +20,7 @@
       <HashCode>AAAAAAAAABAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\Taxi\Driver.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="TaxiCore.Entities.Taxi.Taxi">
     <Position X="7.5" Y="0.5" Width="1.5" />
@@ -44,6 +45,7 @@
       <HashCode>AAAAAAAAAAAIAAgAAAAAAAAAAAAAAAAAAAgAAAAACAA=</HashCode>
       <FileName>Entities\Transport\Car.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Enum Name="TaxiCore.Entities.Transport.LicenseCategory">
     <Position X="9.25" Y="0.5" Width="1.5" />

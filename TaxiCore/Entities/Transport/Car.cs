@@ -4,7 +4,7 @@ using TaxiCore.Entities.Taxi;
 namespace TaxiCore.Entities.Transport
 {
     [Serializable]
-    public class Car
+    public class Car : ICar
     {
         public Car()
         {
@@ -23,6 +23,6 @@ namespace TaxiCore.Entities.Transport
 
         public uint SeatsCouunt { get; set; }
 
-        public bool CanDrive(Driver driver) => driver.DriverCategory == Category;
+        public bool CanDrive(Driver driver) => (driver.DriverCategory & Category) != 0;
     }
 }

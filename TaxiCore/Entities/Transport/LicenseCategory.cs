@@ -3,17 +3,18 @@
 namespace TaxiCore.Entities.Transport
 {
     [Serializable]
+    [Flags]
     public enum LicenseCategory
     {
         /// <summary>
         /// Passenger car
         /// </summary>
-        B = 0,
+        B = 1 << 0,
 
         /// <summary>
         /// Truck
         /// </summary>
-        C = 1,
+        C = 1 << 1,
 
         /// <summary>
         /// Bus

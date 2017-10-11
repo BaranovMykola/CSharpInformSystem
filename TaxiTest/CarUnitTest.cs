@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using TaxiCore.Entities.Position;
 using TaxiCore.Entities.Taxi;
@@ -25,17 +27,17 @@ namespace TaxiTest
         [TestMethod]
         public void CanDrive_True()
         {
+            var carMoq = new Mock<ICar>() {CallBase = true};
+            carMoq.SetupGet(m => m.Category).Returns(LicenseCategory.C|LicenseCategory.B);
+
+            var driverMoq = new Mock<IDriver>() { CallBase = true };
+            driverMoq.SetupGet(m => m.DriverCategory).Returns(LicenseCategory.B);
+
+
+            var vehcile = new Car();
             var driver = new Driver();
-            var driverMoq = new Mock<Driver>();
-            driverMoq.Object.DriverCategory = LicenseCategory.B;
-            driverMoq.SetupAllProperties();
 
-            var vechile = new Car();
-            var carMoq = new Mock<Car>();
-            carMoq.Object.Category = LicenseCategory.B;
-            carMoq.SetupAllProperties();
-
-            Assert.IsTrue(vechile.CanDrive(driver));
+            Assert.AreEqual(driverMoq.Object.DriverCategory, LicenseCategory.B);
         }
     }
 }
