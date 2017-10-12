@@ -39,7 +39,7 @@ namespace TaxiCore
 
             List<Customer> customers = new List<Customer>
             {
-                new Customer(new Location(49.795251, 24.046477), new Location(49.840043, 24.021903), 1, "Izya"),
+                new Customer(new Location(49.795251, 24.046477), new Location(49.840043, 24.021903), 30, "Izya"),
                 new Customer(new Location(49.828797, 24.056647), new Location(49.812421, 24.017313), 2, "Sara")
             };
 
