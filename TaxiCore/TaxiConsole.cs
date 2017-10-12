@@ -39,7 +39,7 @@ namespace TaxiCore
 
             List<Customer> customers = new List<Customer>
             {
-                new Customer(new Location(49.795251, 24.046477), new Location(49.840043, 24.021903), 30, "Izya"),
+                new Customer(new Location(49.795251, 24.046477), new Location(49.840043, 24.021903), 1, "Izya"),
                 new Customer(new Location(49.828797, 24.056647), new Location(49.812421, 24.017313), 2, "Sara")
             };
 
@@ -54,13 +54,12 @@ namespace TaxiCore
 
             try
             {
-                var json = GoogleApiProcessing.FindDistance(new Location(49.805823, 23.980947), new Location(49.839067, 24.030776), parametrs);
-                Console.WriteLine(json);
-                var info = GoogleApiProcessing.ParseJson(json);
-                foreach (var i in info)
-                {
-                    Console.WriteLine($"{i.Key} -> {i.Value}");
-                }
+                var json = GoogleApiProcessing.FindLocation("проспект свободи львів");
+                var loc = GoogleApiProcessing.ParseJsonAddress(json);
+                Console.WriteLine(loc.Address);
+                Console.WriteLine(loc.Lattitude);
+                Console.WriteLine(loc.Longtitude);
+
             }
             catch (Exception e)
             {
