@@ -5,11 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaxiGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525"
+        MinHeight="350"
+        MinWidth="525">
     <Grid>
-        <Button x:Name="button" Content="Add Driver" HorizontalAlignment="Left" Margin="10,292,0,0" VerticalAlignment="Bottom" Width="75"/>
-        <Button x:Name="button_Copy" Content="Add Car" HorizontalAlignment="Left" Margin="90,292,0,0" VerticalAlignment="Bottom" Width="75"/>
-        <Button x:Name="button_Copy1" Content="Add Customer" HorizontalAlignment="Left" Margin="170,292,0,0" VerticalAlignment="Bottom" Width="97"/>
-
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,158.4,37.8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ListView Grid.Column="0" Grid.Row="0" Margin="0,0,0,0" Width="Auto">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView Grid.Row="0" Margin="0,0,0,0" Grid.Column="1" Width="Auto">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        <Button x:Name="addClientButton" Content="Add Client" HorizontalAlignment="Right" Margin="0,10,10.4,0" VerticalAlignment="Top" Width="141"/>
+        <TextBox x:Name="targetTextBox" Height="23" Margin="156,0,10.4,9.8" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Bottom"/>
+        <Label x:Name="label" Content="Your Target:" HorizontalAlignment="Left" Margin="10,0,0,6.8" VerticalAlignment="Bottom" Width="141"/>
     </Grid>
 </Window>
