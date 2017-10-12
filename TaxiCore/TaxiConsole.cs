@@ -52,12 +52,19 @@ namespace TaxiCore
                 {"units", "metric"}
             };
 
-            var json = GoogleApiProcessing.FindDistance(new Location(49.805823, 23.980947), new Location(49.839067, 24.030776), parametrs);
-            Console.WriteLine(json);
-            var info = GoogleApiProcessing.ParseJson(json);
-            foreach (var i in info)
+            try
             {
-                Console.WriteLine($"{i.Key} -> {i.Value}");
+                var json = GoogleApiProcessing.FindDistance(new Location(49.805823, 23.980947), new Location(49.839067, 24.030776), parametrs);
+                Console.WriteLine(json);
+                var info = GoogleApiProcessing.ParseJson(json);
+                foreach (var i in info)
+                {
+                    Console.WriteLine($"{i.Key} -> {i.Value}");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
 
             Console.ReadKey();

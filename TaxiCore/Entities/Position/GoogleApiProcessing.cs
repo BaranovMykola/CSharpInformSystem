@@ -14,7 +14,6 @@ namespace TaxiCore.Entities.Position
     {
         private static string GoogleApiKey = "AIzaSyCh2nuJrUcfQTtBDcz1ExUHxHgfGu3Kcso";
         private static string urlTemplate = "https://maps.googleapis.com/maps/api/distancematrix/json?";
-        //example using: https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=49.805823,%2023.980947&destinations=49.839067,%2024.030776&key=AIzaSyCh2nuJrUcfQTtBDcz1ExUHxHgfGu3Kcso
 
         public static string FindDistance(Location from, Location to, Dictionary<string, string> parametrs)
         {
@@ -34,6 +33,10 @@ namespace TaxiCore.Entities.Position
         {
             Dictionary<string, int> response = new Dictionary<string, int>();
             JObject info = JObject.Parse(json);
+            if (info["status"].ToString() != "OK")
+            {
+                throw new ArgumentException($"Response is not valid: STATUS: {info["status"]}", nameof(json));
+            }
             var data = info["rows"].First;
             var elementData = data["elements"].First;
             response.Add("distance", (int)elementData["distance"]["value"]);
