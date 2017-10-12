@@ -8,7 +8,7 @@ namespace TaxiCore.Entities.Taxi
     [Serializable]
     public class Taxi
     {
-        public Action OnChangeState;
+        public Func<Taxi, Taxi.State> OnFree;
 
         private State _currentState;
 
@@ -31,8 +31,14 @@ namespace TaxiCore.Entities.Taxi
             get { return _currentState; }
             set
             {
-                OnChangeState?.Invoke();
-                _currentState = value;
+                var proxyValue = value;
+                if (value == State.Free)
+                {
+                    var eventResult = OnFree?.Invoke(this);
+                    if (eventResult != null) proxyValue = eventResult.Value;
+                }
+
+                _currentState = proxyValue;
             }
         }
 

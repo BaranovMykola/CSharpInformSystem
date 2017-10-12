@@ -21,6 +21,10 @@ namespace TaxiCore.Entities.Taxi
         public TaxiPark(List<Taxi> taxis)
         {
             Taxis = taxis;
+            foreach (var taxi in Taxis)
+            {
+                taxi.OnFree += Taxi_OnFree;
+            }
         }
 
         public List<Taxi> Taxis{ get; set; }
@@ -37,7 +41,7 @@ namespace TaxiCore.Entities.Taxi
 
         public int FindTaxi(Customer client)
         {
-            var selection =
+            var selectionLinq =
                 (from item in Taxis
                 where item.CurrentState == Taxi.State.Free && item.Car.SeatsCouunt > client.PeoplesCount
                 orderby item.Car.SeatsCouunt
@@ -45,11 +49,33 @@ namespace TaxiCore.Entities.Taxi
                     GoogleApiProcessing.ParseJsonDistance(GoogleApiProcessing.FindDistance(item.Location, client.CurrentLocation,
                         geoRarametrs))
                 orderby info["duration"]
-                select new {clientTaxi = item, Duration = info["duration"]}).First();
+                select new {clientTaxi = item, Duration = info["duration"]});
 
-            selection.clientTaxi.CurrentState = Taxi.State.Busy;
-            clientsQueue.Remove(client);
-            return selection.Duration;
+            if (selectionLinq.Count() != 0)
+            {
+                var selection = selectionLinq.First();
+                selection.clientTaxi.CurrentState = Taxi.State.Busy;
+                clientsQueue.Remove(client);
+                return selection.Duration;
+            }
+            else
+            {
+                    return -1;
+            }
+        }
+
+        public Taxi.State Taxi_OnFree(Taxi sender)
+        {
+            foreach (var customer in clientsQueue)
+            {
+                if (sender.Car.SeatsCouunt > customer.PeoplesCount)
+                {
+                    sender.CurrentState = Taxi.State.Busy;
+                    clientsQueue.Remove(customer);
+                    return Taxi.State.Busy;
+                }
+            }
+            return Taxi.State.Free;
         }
     }
 }

@@ -46,6 +46,12 @@ namespace TaxiCore
             TaxiPark park = new TaxiPark(taxis);
 
             park.AddClient(customers[0]);
+            park.AddClient(customers[0]);
+            park.AddClient(customers[0]);
+            park.AddClient(customers[0]);
+            park.AddClient(customers[0]);
+
+            park.Taxis[0].CurrentState = Taxi.State.Free;
 
             Dictionary<string, string> parametrs = new Dictionary<string, string>()
             {
