@@ -26,9 +26,7 @@ namespace TaxiCore.Entities.Position
                 $"origins={from.Lattitude.ToString(info)},%20{from.Longtitude.ToString(info)}&destinations={to.Lattitude.ToString(info)},%20{to.Longtitude.ToString(info)}&";
             urlQuery += "key=" + GoogleApiKey;
 
-            WebClient client = new WebClient();
-            string downloadedString = client.DownloadString(urlQuery);
-            return downloadedString;
+            return GetUrlResponse(urlQuery);
         }
 
         public static Dictionary<string,int> ParseJsonDistance(string json)
@@ -46,19 +44,30 @@ namespace TaxiCore.Entities.Position
             return response;
         }
 
+        private static string GetUrlResponse(string url)
+        {
+            WebClient client = new WebClient();
+            string downloadedString = client.DownloadString(url);
+            return downloadedString;
+        }
+
         public static string FindLocation(string addres)
         {
             string urlQuery = urlAddresTemplate;
             urlQuery += $"address={addres}&key={GoogleGeocodingApiKey}";
-            WebClient client = new WebClient();
-            string downloadedString = client.DownloadString(urlQuery);
-            return downloadedString;
+            return GetUrlResponse(urlQuery);
         }
 
         public static Location ParseJsonAddress(string json)
         {
-            var info = (JObject.Parse(json))["results"].First;
+            var jsonObject = JObject.Parse(json);
+            var status = jsonObject["status"];
+            if (status.ToString() != "OK")
+            {
+                throw new ArgumentException($"Response is not valid: STATUS: {status}", nameof(json));
+            }
 
+            var info = (jsonObject)["results"].First;
             double lattitude = double.Parse(info["geometry"]["location"]["lat"].ToString());
             double longtitude = double.Parse(info["geometry"]["location"]["lng"].ToString());
             string address = (info["formatted_address"].ToString());
