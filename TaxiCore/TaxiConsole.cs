@@ -47,9 +47,18 @@ namespace TaxiCore
 
             park.AddClient(customers[0]);
 
-            var json = GoogleApiProcessing.FindDistance(new Location(49.805823, 23.980947), new Location(49.839067, 24.030776));
+            Dictionary<string, string> parametrs = new Dictionary<string, string>()
+            {
+                {"units", "metric"}
+            };
+
+            var json = GoogleApiProcessing.FindDistance(new Location(49.805823, 23.980947), new Location(49.839067, 24.030776), parametrs);
             Console.WriteLine(json);
-            GoogleApiProcessing.ParseJson(json);
+            var info = GoogleApiProcessing.ParseJson(json);
+            foreach (var i in info)
+            {
+                Console.WriteLine($"{i.Key} -> {i.Value}");
+            }
 
             Console.ReadKey();
         }
