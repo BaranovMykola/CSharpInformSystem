@@ -6,6 +6,7 @@ namespace TaxiCore.Entities.Taxi
     [Serializable]
     public class Driver : IDriver
     {
+
         public Driver()
         {
         }

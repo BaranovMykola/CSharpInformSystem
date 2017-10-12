@@ -10,6 +10,8 @@ namespace TaxiCore.Entities.Taxi
     {
         public Func<Taxi, Taxi.State> OnFree;
 
+        public Func<Driver, string, int> OnNewClient;
+
         private State _currentState;
 
         public Taxi()
