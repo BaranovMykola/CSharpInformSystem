@@ -27,62 +27,6 @@ namespace TaxiGUI
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new Model();
         }
     }
-
-    public class Phone : INotifyPropertyChanged
-    {
-        private string myVar;
-
-        public string Prop
-        {
-            get { return myVar; }
-            set
-            {
-                myVar = value;
-                OnPropertyChanged("Prop");
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public class Model : INotifyPropertyChanged
-    {
-        private string myVar;
-        private Phone phone = new Phone();
-
-        public string PropModel
-        {
-            get { return phone.Prop; }
-            set
-            {
-                phone.Prop = value; 
-                OnPropertyChanged("PropModel");
-            }
-        }
-
-        public Model()
-        {
-            //PropertyChanged += phone.
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    
 }
