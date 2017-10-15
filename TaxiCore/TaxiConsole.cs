@@ -71,8 +71,6 @@ namespace TaxiCore
             {
                 Console.WriteLine(e);
             }
-
-            Console.ReadKey();
         }
     }
 }
