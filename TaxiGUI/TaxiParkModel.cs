@@ -9,22 +9,31 @@ using TaxiGUI.Annotations;
 
 namespace TaxiGUI
 {
-    class TaxiParkModel: TaxiPark, INotifyPropertyChanged
+    internal class TaxiParkModel : TaxiPark, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public ObservableCollection<Taxi> Taxis
         {
-            get { return new ObservableCollection<Taxi>(base.Taxis); }
+            get
+            {
+                return new ObservableCollection<Taxi>(base.Taxis);
+            }
+
             set
             {
-                base.Taxis = value.ToList(); 
+                base.Taxis = value.ToList();
                 OnPropertyChanged(nameof(Taxis));
             }
         }
 
-
         public ObservableCollection<Customer> ClientsQueue
         {
-            get { return new ObservableCollection<Customer>(base.clientsQueue); }
+            get
+            {
+                return new ObservableCollection<Customer>(clientsQueue);
+            }
+
             set
             {
                 clientsQueue = value.ToList();
@@ -38,9 +47,6 @@ namespace TaxiGUI
             OnPropertyChanged(nameof(ClientsQueue));
             OnPropertyChanged(nameof(Taxis));
         }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
