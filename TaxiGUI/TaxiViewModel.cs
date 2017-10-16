@@ -18,6 +18,8 @@ namespace TaxiGUI
         private Location _clientLocation;
         private string _c1;
         private string _clientLocInput;
+        private Location _clientTarget;
+        private string _clientTargetInput;
 
         public TaxiViewModel()
         {
@@ -65,6 +67,42 @@ namespace TaxiGUI
                     }
                 }
                 _clientLocInput = value;
+            }
+        }
+
+        public Location ClientTarget
+        {
+            get { return _clientTarget; }
+            set
+            {
+                _clientTarget = value;
+                OnPropertyChanged(nameof(ClientTarget));
+            }
+        }
+
+        public string ClientTargetInput
+        {
+            get { return _clientTargetInput; }
+            set
+            {
+                if (value != null && value.ToString() != string.Empty)
+                {
+                    try
+                    {
+                        var response = GoogleApiProcessing.FindLocation(value.ToString());
+                        var loc = GoogleApiProcessing.ParseJsonAddress(response);
+                        ClientTarget = loc;
+                    }
+                    catch (WebException)
+                    {
+                        ClientTarget = new Location(-1, -1, "Check your internet connection");
+                    }
+                    catch (ArgumentException)
+                    {
+                        ClientTarget = new Location(-1, -1, "Nothing found");
+                    }
+                }
+                _clientTargetInput = value;
             }
         }
 

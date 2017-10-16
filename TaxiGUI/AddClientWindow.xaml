@@ -32,19 +32,19 @@
                  Text="{Binding ClientLocInput, Mode=OneWayToSource, IsAsync=True}" VerticalAlignment="Top"></TextBox>
         </DockPanel >
         <DockPanel Grid.Column="1" Grid.Row="0" Height="Auto">
-            <TextBox Text="{Binding ClientLocation, Converter={StaticResource LocationConverter}}" IsEnabled="True" VerticalAlignment="Bottom"></TextBox>
+            <TextBox Text="{Binding ClientLocation, Converter={StaticResource LocationConverter}}" IsEnabled="False" VerticalAlignment="Bottom"></TextBox>
         </DockPanel>
 
         <TextBlock TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="1" Name="currentLocationTextBox"
                    >Your current loction:</TextBlock>
         <DockPanel Grid.Column="1" Grid.Row="1" Height="Auto">
             <TextBox Grid.Column="1" Grid.Row="1"
-                 Text="111" VerticalAlignment="Top"></TextBox>
+                 Text="{Binding ClientTargetInput, Mode=OneWayToSource, IsAsync=True}" VerticalAlignment="Top"></TextBox>
         </DockPanel >
         <DockPanel Grid.Column="1" Grid.Row="1" Height="Auto">
-            <TextBox Text="add" IsEnabled="False" VerticalAlignment="Bottom"/>
+            <TextBox Text="{Binding ClientTarget, Converter={StaticResource LocationConverter}}" IsEnabled="False" VerticalAlignment="Bottom"></TextBox>
         </DockPanel>
-
+        
         <TextBlock TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="2">Your target:</TextBlock>
         <TextBox Grid.Column="1" Grid.Row="2" Name="targetTextBox"></TextBox>
 
