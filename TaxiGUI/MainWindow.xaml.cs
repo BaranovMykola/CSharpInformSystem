@@ -73,7 +73,7 @@ namespace TaxiGUI
             //park.AddClient(customers[0]);
 
             var tvm = new TaxiViewModel() {TaxiParkModel = park};
-            tvm.MyProperty = new ObservableCollection<int>() {1};
+            tvm.CurrentTaxi = taxis[0];
             DataContext = tvm;
             
         }

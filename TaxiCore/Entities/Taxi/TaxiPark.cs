@@ -56,6 +56,7 @@ namespace TaxiCore.Entities.Taxi
                 var selection = selectionLinq.First();
                 selection.clientTaxi.CurrentState = Taxi.State.Busy;
                 clientsQueue.Remove(client);
+                selection.clientTaxi.Client = client;
                 return selection.Duration;
             }
             else

@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Xml.Serialization;
 using TaxiCore.Entities.Demand;
 using TaxiCore.Entities.Position;
+using TaxiCore.Entities.Taxi;
 using TaxiGUI.Annotations;
 
 namespace TaxiGUI
@@ -17,18 +18,6 @@ namespace TaxiGUI
     class TaxiViewModel : INotifyPropertyChanged
     {
         private TaxiParkModel taxiPark;
-        private ObservableCollection<int> myVar;
-
-	    public ObservableCollection<int> MyProperty
-	    {
-		    get { return myVar;}
-	        set
-	        {
-	            myVar = value;
-	            OnPropertyChanged(nameof(MyProperty));
-	        }
-	    }
-	
 
         public TaxiParkModel TaxiParkModel
         {
@@ -41,9 +30,15 @@ namespace TaxiGUI
         }
 
         private Location _clientLocation;
+
         private string _clientLocInput;
+
         private Location _clientTarget;
+
         private string _clientTargetInput;
+
+        private Taxi _currenTaxi;
+
 
         public TaxiViewModel()
         {
@@ -58,6 +53,23 @@ namespace TaxiGUI
         public ICommand CloseCurrentWindowCommand { get; set; }
 
         public ICommand AddClientAndCloseCommand { get; set; }
+
+        public Taxi CurrentTaxi
+        {
+            get
+            {
+                foreach (var taxi in TaxiParkModel.Taxis)
+                {
+                    if (taxi == _currenTaxi)
+                    {
+                        return taxi;
+                    }
+                }
+                return null;
+
+            }
+            set { _currenTaxi = value; }
+        }
 
         #region Add client properties
 
@@ -155,6 +167,7 @@ namespace TaxiGUI
             CloseCurrentWindow(win);
             var client = new Customer(ClientLocation, ClientTarget, (uint)PeopleCount, ClientName);
             TaxiParkModel.AddClient(client);
+            OnPropertyChanged(nameof(CurrentTaxi));
         }
 
         [NotifyPropertyChangedInvocator]

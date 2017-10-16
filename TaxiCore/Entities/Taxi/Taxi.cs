@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TaxiCore.Entities.Demand;
 using TaxiCore.Entities.Position;
 using TaxiCore.Entities.Transport;
 
@@ -36,6 +37,7 @@ namespace TaxiCore.Entities.Taxi
                 var proxyValue = value;
                 if (value == State.Free)
                 {
+                    Client = null;
                     var eventResult = OnFree?.Invoke(this);
                     if (eventResult != null) proxyValue = eventResult.Value;
                 }
@@ -47,6 +49,8 @@ namespace TaxiCore.Entities.Taxi
         public Car Car { get; set; }
 
         public Driver Driver { get; set; }
+
+        public Customer Client { get; set; }
 
         [Serializable]
         public enum State
