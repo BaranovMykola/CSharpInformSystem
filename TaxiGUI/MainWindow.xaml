@@ -48,7 +48,9 @@
             </ListView>
         </Grid>
         <Button x:Name="addClientButton" Content="Add Client" HorizontalAlignment="Right" Margin="0,10,10.4,0" VerticalAlignment="Top" Width="141" Click="AddClientButton_OnClick"/>
-        <TextBox x:Name="targetTextBox" Height="23" Margin="156,0,10.4,9.8" TextWrapping="Wrap" VerticalAlignment="Bottom" Text="{Binding CurrentTaxi.Client.TargetLocation.Address}"/>
-        <Label x:Name="label" Content="Your Target:" HorizontalAlignment="Left" Margin="10,0,0,6.8" VerticalAlignment="Bottom" Width="141"/>
+        <TextBox x:Name="targetTextBox" Height="23" Margin="83,0,158.4,6.8" TextWrapping="Wrap" VerticalAlignment="Bottom" Text="{Binding CurrentTaxi.TaxiTarget.Address}"/>
+        <Label x:Name="label" Content="Your Target:" HorizontalAlignment="Left" Margin="10,0,0,6.8" VerticalAlignment="Bottom" Width="73"/>
+        <Button Content="I'm here" HorizontalAlignment="Right" Margin="0,0,10.4,6.8" VerticalAlignment="Bottom" Width="143" Height="22"
+                Command="{Binding ArrivedCommand}"/>
     </Grid>
 </Window>

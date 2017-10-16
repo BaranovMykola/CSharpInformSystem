@@ -39,11 +39,11 @@ namespace TaxiGUI
 
         private Taxi _currenTaxi;
 
-
         public TaxiViewModel()
         {
             CloseCurrentWindowCommand = new RelayCommand(CloseCurrentWindow);
             AddClientAndCloseCommand = new RelayCommand(AddClientAndClose);
+            ArrivedCommand = new RelayCommand(s => Arrive());
             ClientLocation = null;
             ClientTarget = null;
         }
@@ -53,6 +53,8 @@ namespace TaxiGUI
         public ICommand CloseCurrentWindowCommand { get; set; }
 
         public ICommand AddClientAndCloseCommand { get; set; }
+
+        public ICommand ArrivedCommand { get; set; }
 
         public Taxi CurrentTaxi
         {
@@ -167,6 +169,23 @@ namespace TaxiGUI
             CloseCurrentWindow(win);
             var client = new Customer(ClientLocation, ClientTarget, (uint)PeopleCount, ClientName);
             TaxiParkModel.AddClient(client);
+            OnPropertyChanged(nameof(CurrentTaxi));
+        }
+
+        public void Arrive()
+        {
+            var currTaxi = CurrentTaxi;
+            if (currTaxi.CurrentState == Taxi.State.InWay)
+            {
+                currTaxi.CurrentState = Taxi.State.Busy;
+                currTaxi.TaxiTarget = currTaxi.Client.TargetLocation;
+            }
+            else if (currTaxi.CurrentState == Taxi.State.Busy)
+            {
+                currTaxi.TaxiTarget = null;
+                currTaxi.Client = null;
+                currTaxi.CurrentState = Taxi.State.Free;
+            }
             OnPropertyChanged(nameof(CurrentTaxi));
         }
 

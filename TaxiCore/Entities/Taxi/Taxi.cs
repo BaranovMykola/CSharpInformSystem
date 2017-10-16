@@ -29,6 +29,8 @@ namespace TaxiCore.Entities.Taxi
 
         public Location Location { get; set; }
 
+        public Location TaxiTarget { get; set; }  
+
         public State CurrentState
         {
             get { return _currentState; }
@@ -63,7 +65,12 @@ namespace TaxiCore.Entities.Taxi
             /// <summary>
             /// Taxi cannot apply new order
             /// </summary>
-            Busy
+            Busy,
+
+            /// <summary>
+            /// Taxi applied order
+            /// </summary>
+            InWay
         }
     }
 }

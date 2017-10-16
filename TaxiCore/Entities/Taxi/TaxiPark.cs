@@ -21,17 +21,30 @@ namespace TaxiCore.Entities.Taxi
         public TaxiPark(List<Taxi> taxis)
         {
             Taxis = taxis;
-            foreach (var taxi in Taxis)
-            {
-                taxi.OnFree += Taxi_OnFree;
-            }
+            //foreach (var taxi in Taxis)
+            //{
+            //    taxi.OnFree += Taxi_OnFree;
+            //}
         }
 
-        public List<Taxi> Taxis{ get; set; }
+        public List<Taxi> Taxis
+        {
+            get { return _taxis; }
+            set
+            {
+                _taxis = value;
+                foreach (var taxi in _taxis)
+                {
+                    taxi.OnFree += Taxi_OnFree;
+                }
+            }
+        }
 
         protected List<Customer> clientsQueue = new EditableList<Customer>();
 
         private Dictionary<string, string> geoRarametrs = new Dictionary<string, string>();
+
+        private List<Taxi> _taxis;
 
         public void AddClient(Customer client)
         {
@@ -54,9 +67,10 @@ namespace TaxiCore.Entities.Taxi
             if (selectionLinq.Count() != 0)
             {
                 var selection = selectionLinq.First();
-                selection.clientTaxi.CurrentState = Taxi.State.Busy;
+                selection.clientTaxi.CurrentState = Taxi.State.InWay;
                 clientsQueue.Remove(client);
                 selection.clientTaxi.Client = client;
+                selection.clientTaxi.TaxiTarget = client.CurrentLocation;
                 return selection.Duration;
             }
             else
@@ -67,13 +81,15 @@ namespace TaxiCore.Entities.Taxi
 
         public Taxi.State Taxi_OnFree(Taxi sender)
         {
-            foreach (var customer in clientsQueue)
+            foreach (var client in clientsQueue)
             {
-                if (sender.Car.SeatsCouunt > customer.PeoplesCount)
+                if (sender.Car.SeatsCouunt > client.PeoplesCount)
                 {
-                    sender.CurrentState = Taxi.State.Busy;
-                    clientsQueue.Remove(customer);
-                    return Taxi.State.Busy;
+                    sender.CurrentState = Taxi.State.InWay;
+                    clientsQueue.Remove(client);
+                    sender.Client = client;
+                    sender.TaxiTarget = client.CurrentLocation;
+                    return Taxi.State.InWay;
                 }
             }
             return Taxi.State.Free;
