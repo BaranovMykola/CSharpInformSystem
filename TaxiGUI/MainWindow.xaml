@@ -52,5 +52,7 @@
         <Label x:Name="label" Content="Your Target:" HorizontalAlignment="Left" Margin="10,0,0,6.8" VerticalAlignment="Bottom" Width="73"/>
         <Button Content="I'm here" HorizontalAlignment="Right" Margin="0,0,10.4,6.8" VerticalAlignment="Bottom" Width="143" Height="22"
                 Command="{Binding ArrivedCommand}"/>
+        <Button Content="Open Map" HorizontalAlignment="Right" Margin="0,0,10.4,37.8" VerticalAlignment="Bottom" Width="143" Height="22"
+            Command="{Binding OpenMap}" CommandParameter="{Binding MapUrl}"/>
     </Grid>
 </Window>

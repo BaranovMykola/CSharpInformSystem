@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using TaxiCore.Entities.Demand;
 using TaxiCore.Entities.Taxi;
 using TaxiGUI.Annotations;
@@ -24,6 +25,7 @@ namespace TaxiGUI
             {
                 base.Taxis = value.ToList();
                 OnPropertyChanged(nameof(Taxis));
+                CommandManager.InvalidateRequerySuggested();
             }
         }
 

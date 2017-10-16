@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -33,6 +34,7 @@ namespace TaxiGUI
             CloseCurrentWindowCommand = new RelayCommand(CloseCurrentWindow);
             AddClientAndCloseCommand = new RelayCommand(AddClientAndClose);
             ArrivedCommand = new RelayCommand(s => Arrive());
+            OpenMap = new RelayCommand(s => System.Diagnostics.Process.Start(MapUrl), s => MapUrl != null);
             ClientLocation = null;
             ClientTarget = null;
         }
@@ -53,6 +55,27 @@ namespace TaxiGUI
                 currenTaxi = value;
             }
         }
+
+        public string MapUrl
+        {
+            get
+            {
+                if (CurrentTaxi == null || CurrentTaxi.Location == null || CurrentTaxi.TaxiTarget == null)
+                {
+                    return null;
+                }
+                NumberFormatInfo info = new NumberFormatInfo();
+                info.NumberDecimalSeparator = ".";
+                var latFrom = CurrentTaxi.Location.Lattitude.ToString(info);
+                var lngFrom = CurrentTaxi.Location.Longtitude.ToString(info);
+
+                var latTo = CurrentTaxi.TaxiTarget.Lattitude.ToString(info);
+                var lngTo = CurrentTaxi.TaxiTarget.Longtitude.ToString(info);
+
+                var url = $"https://www.google.com.ua/maps/dir/{latFrom},{lngFrom}/{latTo},{lngTo}/";
+                return url;
+            }
+        }
         
         #region Commands
 
@@ -61,6 +84,8 @@ namespace TaxiGUI
         public ICommand AddClientAndCloseCommand { get; set; }
 
         public ICommand ArrivedCommand { get; set; }
+
+        public ICommand OpenMap { get; set; }
 
         #endregion
 
@@ -156,10 +181,14 @@ namespace TaxiGUI
 
             CloseCurrentWindow(win);
             OnPropertyChanged(nameof(CurrentTaxi));
+            TaxiParkModel.OnPropertyChanged(nameof(MapUrl));
+            (OpenMap as RelayCommand).RaiseCanExecuteChanged();
         }
 
         public void Arrive()
         {
+            var b = OpenMap.CanExecute(MapUrl);
+            
             var currTaxi = CurrentTaxi;
             if (currTaxi.CurrentState == Taxi.State.InWay)
             {
@@ -176,10 +205,12 @@ namespace TaxiGUI
             OnPropertyChanged(nameof(CurrentTaxi));
             TaxiParkModel.OnPropertyChanged("ClientsQueue");
             TaxiParkModel.OnPropertyChanged("Taxis");
+            TaxiParkModel.OnPropertyChanged(nameof(MapUrl));
+            (OpenMap as RelayCommand).RaiseCanExecuteChanged();
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
