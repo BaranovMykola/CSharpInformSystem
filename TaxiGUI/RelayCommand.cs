@@ -15,9 +15,11 @@ namespace TaxiGUI
     {
         #region Fields
 
-        readonly Action<object> _execute;
-        readonly Action<object> _executeParam;
-        readonly Predicate<object> _canExecute;
+        private readonly Action<object> execute;
+
+        private readonly Action<object> executeParam;
+
+        private readonly Predicate<object> canExecute;
 
         #endregion // Fields
 
@@ -40,20 +42,12 @@ namespace TaxiGUI
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
             if (execute == null)
+            {
                 throw new ArgumentNullException(nameof(execute));
+            }
 
-            _execute = execute;
-            _canExecute = canExecute;
-        }
-
-        #endregion // Constructors
-
-        #region ICommand Members
-
-        [DebuggerStepThrough]
-        public bool CanExecute(object parameters)
-        {
-            return _canExecute?.Invoke(parameters) ?? true;
+            this.execute = execute;
+            this.canExecute = canExecute;
         }
 
         public event EventHandler CanExecuteChanged
@@ -62,9 +56,16 @@ namespace TaxiGUI
             remove { CommandManager.RequerySuggested -= value; }
         }
 
+        #endregion // Constructors
+
+        #region ICommand Members
+
+        [DebuggerStepThrough]
+        public bool CanExecute(object parameters) => canExecute?.Invoke(parameters) ?? true;
+
         public void Execute(object parameters)
         {
-            _execute(parameters);
+            execute(parameters);
         }
 
         #endregion // ICommand Members

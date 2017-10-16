@@ -30,7 +30,6 @@ namespace TaxiGUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int a = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -66,18 +65,10 @@ namespace TaxiGUI
 
             var park = new TaxiParkModel { Taxis = new ObservableCollection<Taxi>(taxis) };
 
-            //park.AddClient(customers[0]);
-            //park.AddClient(customers[0]);
-            //park.AddClient(customers[0]);
-            //park.AddClient(customers[0]);
-            //park.AddClient(customers[0]);
-
-            var tvm = new TaxiViewModel() {TaxiParkModel = park};
+            var tvm = new TaxiViewModel() { TaxiParkModel = park };
             tvm.CurrentTaxi = taxis[0];
             DataContext = tvm;
-            
         }
-
 
         private void AddClientButton_OnClick(object sender, RoutedEventArgs e)
         {
