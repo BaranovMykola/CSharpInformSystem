@@ -187,6 +187,8 @@ namespace TaxiGUI
                 currTaxi.CurrentState = Taxi.State.Free;
             }
             OnPropertyChanged(nameof(CurrentTaxi));
+            TaxiParkModel.OnPropertyChanged("ClientsQueue");
+            TaxiParkModel.OnPropertyChanged("Taxis");
         }
 
         [NotifyPropertyChangedInvocator]

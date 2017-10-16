@@ -53,7 +53,7 @@ namespace TaxiGUI
             List<Taxi> taxis = new List<Taxi>()
             {
                 //new Taxi(new Location(49.805823, 23.980947), Taxi.State.Free, cars[0], drivers[1]),
-                //new Taxi(new Location(49.839067, 24.030776), Taxi.State.Free, cars[1], drivers[2]),
+                new Taxi(new Location(49.839067, 24.030776), Taxi.State.Free, cars[1], drivers[2]),
                 //new Taxi(new Location(49.843379, 24.118381), Taxi.State.Free, cars[2], drivers[0]),
                 new Taxi(new Location(49.749379, 24.148790), Taxi.State.Free, cars[3], drivers[3])
             };
