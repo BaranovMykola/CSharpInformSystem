@@ -29,7 +29,7 @@ namespace TaxiCore.Entities.Taxi
 
         public List<Taxi> Taxis{ get; set; }
 
-        private List<Customer> clientsQueue = new EditableList<Customer>();
+        protected List<Customer> clientsQueue = new EditableList<Customer>();
 
         private Dictionary<string, string> geoRarametrs = new Dictionary<string, string>();
 

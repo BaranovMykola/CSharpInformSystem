@@ -12,6 +12,9 @@
     </Window.Resources>
     <Window.CommandBindings>
     </Window.CommandBindings>
+    <!--<Window.DataContext>
+        <local:TaxiViewModel/>
+    </Window.DataContext>-->
     <Grid>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,158.4,37.8">
             <Grid.RowDefinitions>
@@ -21,17 +24,25 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0" Grid.Row="0" Margin="0,0,0,0" Width="Auto">
+            <ListView x:Name="taxisListView" Grid.Column="0" Grid.Row="0" Margin="0,0,0,0" Width="Auto" ItemsSource="{Binding TaxiParkModel.Taxis}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn/>
+                        <GridViewColumn Header="Driver" Width="Auto" DisplayMemberBinding="{Binding Driver.Name}"/>
+                        <GridViewColumn Header="Car Brand" Width="Auto" DisplayMemberBinding="{Binding Car.Model}"/>
+                        <GridViewColumn Header="Seats Count" Width="Auto" DisplayMemberBinding="{Binding Car.SeatsCount}"/>
+                        <GridViewColumn Header="Driver License" Width="Auto" DisplayMemberBinding="{Binding Driver.DriverCategory}"/>
+                        <GridViewColumn Header="Car Category" Width="Auto" DisplayMemberBinding="{Binding Car.Category}"/>
+                        <GridViewColumn Header="TaxiState" Width="Auto" DisplayMemberBinding="{Binding CurrentState}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <ListView Grid.Row="0" Margin="0,0,0,0" Grid.Column="1" Width="Auto">
+            <ListView Grid.Row="0" Margin="0,0,0,0" Grid.Column="1" Width="Auto" ItemsSource="{Binding TaxiParkModel.ClientsQueue}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn/>
+                        <GridViewColumn Header="Client" Width="Auto" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="People Count" Width="Auto" DisplayMemberBinding="{Binding PeoplesCount}"/>
+                        <GridViewColumn Header="Current Location" Width="Auto" DisplayMemberBinding="{Binding CurrentLocation.Address}"/>
+                        <GridViewColumn Header="Client Target" Width="Auto" DisplayMemberBinding="{Binding TargetLocation.Address}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

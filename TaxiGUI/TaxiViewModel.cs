@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -16,6 +17,29 @@ namespace TaxiGUI
     class TaxiViewModel : INotifyPropertyChanged
     {
         private TaxiParkModel taxiPark;
+        private ObservableCollection<int> myVar;
+
+	    public ObservableCollection<int> MyProperty
+	    {
+		    get { return myVar;}
+	        set
+	        {
+	            myVar = value;
+	            OnPropertyChanged(nameof(MyProperty));
+	        }
+	    }
+	
+
+        public TaxiParkModel TaxiParkModel
+        {
+            get { return taxiPark; }
+            set
+            {
+                taxiPark = value;
+                OnPropertyChanged(nameof(TaxiParkModel));
+            }
+        }
+
         private Location _clientLocation;
         private string _clientLocInput;
         private Location _clientTarget;
@@ -113,6 +137,12 @@ namespace TaxiGUI
 
         public string ClientName { get; set; }
 
+        public TaxiParkModel TaxiPark
+        {
+            get { return taxiPark; }
+            set { taxiPark = value; }
+        }
+
         #endregion
 
         public void CloseCurrentWindow(object win)
@@ -124,18 +154,13 @@ namespace TaxiGUI
         {
             CloseCurrentWindow(win);
             var client = new Customer(ClientLocation, ClientTarget, (uint)PeopleCount, ClientName);
-            taxiPark.AddClient(client);
+            TaxiParkModel.AddClient(client);
         }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void propchange(string prop)
-        {
-            OnPropertyChanged(prop);
         }
     }
 }
