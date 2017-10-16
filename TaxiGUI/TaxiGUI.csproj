@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="LocationConverter.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="StringIntConverter.cs" />
     <Compile Include="TaxiParkModel.cs" />
     <Compile Include="TaxiViewModel.cs" />
     <Page Include="AddClientWindow.xaml">

@@ -35,19 +35,7 @@ namespace TaxiGUI
         private void AddClientButton_OnClick(object sender, RoutedEventArgs e)
         {
             var dialog = new AddClientWindow(DataContext);
-            //(DataContext as TaxiViewModel).CloseEvent += dialog.Close;
             dialog.ShowDialog();
-        }
-
-        private void Button_OnClick(object sender, RoutedEventArgs e)
-        {
-            Task.Run(()
-                =>
-            {
-                Thread.Sleep(3000);
-                a = 1;
-            }
-            );
         }
     }
 }

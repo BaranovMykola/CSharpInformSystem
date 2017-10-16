@@ -11,6 +11,7 @@
     <Window.Resources>
         <local:LocationConverter x:Key="LocationConverter"></local:LocationConverter>
         <local:TaxiViewModel x:Key="TaxiViewModel"></local:TaxiViewModel>
+        <local:StringIntConverter x:Key="StringIntConverter"></local:StringIntConverter>
         <!--<local:TaxiViewModel x:Key="TaxiViewModel"></local:TaxiViewModel>-->
     </Window.Resources>
     <Grid>
@@ -38,7 +39,7 @@
             <TextBlock TextWrapping="WrapWithOverflow" Width="120" Text="Your name:"/>
         </Viewbox>
         <Viewbox Stretch="Uniform" Grid.Column="1" Grid.Row="0" >
-            <TextBox Width="240">Name</TextBox>
+            <TextBox Width="240" Text="{Binding ClientName, Mode=OneWayToSource}"></TextBox>
         </Viewbox>
 
         <Viewbox Stretch="Uniform" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
@@ -46,7 +47,7 @@
         </Viewbox>
                 <TextBox Grid.Column="1" Grid.Row="1"
                     Text="{Binding ClientLocInput, Mode=OneWayToSource, IsAsync=True}"
-                    TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Width="500"></TextBox>
+                    TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"></TextBox>
                 <TextBox Grid.Column="1" Grid.Row="2"
                     Text="{Binding ClientLocation, Converter={StaticResource LocationConverter}}"
                     IsEnabled="False" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"></TextBox>
@@ -65,13 +66,16 @@
         </Viewbox>
 
         <Viewbox Stretch="Uniform" Grid.Column="1" Grid.Row="5" >
-            <TextBox Width="240">123</TextBox>
+            <TextBox Width="240" Text="{Binding PeopleCount, Converter={StaticResource StringIntConverter}, Mode=OneWayToSource}"/>
         </Viewbox>
 
         <DockPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Margin="20,0,20,0">
-            <Button Name="addClientButton"  Width="100" HorizontalAlignment="Left" VerticalAlignment="Center">Add client</Button>
+            <Button Name="addClientButton"  Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Command="{Binding AddClientAndCloseCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">Add client</Button>
             <Button Name="cancelButton" Width="100" MaxHeight="40" MinHeight="20" HorizontalAlignment="Right"
-                    VerticalAlignment="Center" Command="{Binding CloseCurrentWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">Cancel</Button>
+                    VerticalAlignment="Center" Command="{Binding CloseCurrentWindowCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">Cancel</Button>
         </DockPanel>
     </Grid>
 </Window>

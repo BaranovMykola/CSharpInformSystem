@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
+using TaxiCore.Entities.Demand;
 using TaxiCore.Entities.Position;
 using TaxiGUI.Annotations;
 
@@ -16,16 +17,16 @@ namespace TaxiGUI
     {
         private TaxiParkModel taxiPark;
         private Location _clientLocation;
-        private string _c1;
         private string _clientLocInput;
         private Location _clientTarget;
         private string _clientTargetInput;
 
         public TaxiViewModel()
         {
-             CloseCurrentWindowCommand = new RelayCommand(CloseCurrentWindow);
-             AddClientAndCloseCommand = new RelayCommand(AddClientAndClose);
-             ClientLocation = new Location() {Address = "unknowns"};
+            CloseCurrentWindowCommand = new RelayCommand(CloseCurrentWindow);
+            AddClientAndCloseCommand = new RelayCommand(AddClientAndClose);
+            ClientLocation = null;
+            ClientTarget = null;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -33,6 +34,8 @@ namespace TaxiGUI
         public ICommand CloseCurrentWindowCommand { get; set; }
 
         public ICommand AddClientAndCloseCommand { get; set; }
+
+        #region Add client properties
 
         public Location ClientLocation
         {
@@ -106,6 +109,12 @@ namespace TaxiGUI
             }
         }
 
+        public int PeopleCount { get; set; }
+
+        public string ClientName { get; set; }
+
+        #endregion
+
         public void CloseCurrentWindow(object win)
         {
             (win as Window)?.Close();
@@ -114,8 +123,8 @@ namespace TaxiGUI
         public void AddClientAndClose(object win)
         {
             CloseCurrentWindow(win);
-            //LocationConverter.SetProp += s => ClientLocation = s;
-            //PropertyChanged += new PropertyChangedEventHandler();
+            var client = new Customer(ClientLocation, ClientTarget, (uint)PeopleCount, ClientName);
+            taxiPark.AddClient(client);
         }
 
         [NotifyPropertyChangedInvocator]
