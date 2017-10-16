@@ -48,7 +48,7 @@ namespace TaxiCore.Entities.Taxi
 
         public void AddClient(Customer client)
         {
-            clientsQueue.Add(client);
+            //clientsQueue.Add(client);
             FindTaxi(client);
         }
 
@@ -75,7 +75,8 @@ namespace TaxiCore.Entities.Taxi
             }
             else
             {
-                    return -1;
+                    clientsQueue.Add(client);
+                return -1;
             }
         }
 

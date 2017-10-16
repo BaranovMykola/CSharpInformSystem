@@ -19,6 +19,10 @@ namespace TaxiCore.Entities.Position
 
         public static string FindDistance(Location from, Location to, Dictionary<string, string> parametrs)
         {
+            if (from == null || to == null)
+            {
+                throw new ArgumentException("Location is null");
+            }
             NumberFormatInfo info = new NumberFormatInfo();
             info.NumberDecimalSeparator = ".";
             var urlQuery = parametrs.Aggregate(urlTemplate, (current, parametr) => current + (parametr.Key + "=" + parametr.Value + "&"));
@@ -39,6 +43,10 @@ namespace TaxiCore.Entities.Position
             }
             var data = info["rows"].First;
             var elementData = data["elements"].First;
+            if (elementData["status"].ToString() != "OK")
+            {
+                throw new ArgumentException($"Result status equls to {elementData["status"]}");
+            }
             response.Add("distance", (int)elementData["distance"]["value"]);
             response.Add("duration", (int)elementData["duration"]["value"]);
             return response;

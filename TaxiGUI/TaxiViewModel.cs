@@ -89,23 +89,7 @@ namespace TaxiGUI
 
             set
             {
-                if (value != null && value.ToString() != string.Empty)
-                {
-                    try
-                    {
-                        var response = GoogleApiProcessing.FindLocation(value.ToString());
-                        var loc = GoogleApiProcessing.ParseJsonAddress(response);
-                        ClientLocation = loc;
-                    }
-                    catch (WebException)
-                    {
-                        ClientLocation = new Location(-1, -1, "Check your internet connection");
-                    }
-                    catch (ArgumentException)
-                    {
-                        ClientLocation = new Location(-1, -1, "Nothing found");
-                    }
-                }
+                ClientLocation = ExtractLocation(value);
 
                 clientLocInput = value;
             }
@@ -134,23 +118,7 @@ namespace TaxiGUI
 
             set
             {
-                if (value != null && value.ToString() != string.Empty)
-                {
-                    try
-                    {
-                        var response = GoogleApiProcessing.FindLocation(value.ToString());
-                        var loc = GoogleApiProcessing.ParseJsonAddress(response);
-                        ClientTarget = loc;
-                    }
-                    catch (WebException)
-                    {
-                        ClientTarget = new Location(-1, -1, "Check your internet connection");
-                    }
-                    catch (ArgumentException)
-                    {
-                        ClientTarget = new Location(-1, -1, "Nothing found");
-                    }
-                }
+                ClientTarget = ExtractLocation(value);
 
                 clientTargetInput = value;
             }
@@ -169,9 +137,24 @@ namespace TaxiGUI
 
         public void AddClientAndClose(object win)
         {
-            CloseCurrentWindow(win);
+            if (ClientLocation == null || ClientTarget == null || ClientName == null)
+            {
+                MessageBox.Show("You should fill all fields");
+                return;
+            }
+
             var client = new Customer(ClientLocation, ClientTarget, (uint)PeopleCount, ClientName);
-            TaxiParkModel.AddClient(client);
+            try
+            {
+                TaxiParkModel.AddClient(client);
+            }
+            catch (ArgumentException e)
+            {
+                MessageBox.Show("You cannot apply this route");
+                return;
+            }
+
+            CloseCurrentWindow(win);
             OnPropertyChanged(nameof(CurrentTaxi));
         }
 
@@ -199,6 +182,29 @@ namespace TaxiGUI
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private Location ExtractLocation(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return null;
+            }
+
+                try
+                {
+                    var response = GoogleApiProcessing.FindLocation(value.ToString());
+                    var loc = GoogleApiProcessing.ParseJsonAddress(response);
+                    return loc;
+                }
+                catch (WebException)
+                {
+                    return new Location(-1, -1, "Check your internet connection");
+                }
+                catch (ArgumentException)
+                {
+                    return new Location(-1, -1, "Nothing found");
+                }
         }
     }
 }
