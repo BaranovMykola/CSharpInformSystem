@@ -18,6 +18,14 @@ namespace TaxiCore.Entities.Demand
             Name = name;
         }
 
+        public Customer(string currentLocation, string targetLocation, uint peoplesCount, string name)
+        {
+            CurrentLocation = GoogleApiProcessing.ParseJsonAddress(GoogleApiProcessing.FindLocation(currentLocation));
+            TargetLocation = CurrentLocation = GoogleApiProcessing.ParseJsonAddress(GoogleApiProcessing.FindLocation(targetLocation));
+            PeoplesCount = peoplesCount;
+            Name = name;
+        }
+
         public Location CurrentLocation { get; set; }
 
         public Location TargetLocation { get; set; }

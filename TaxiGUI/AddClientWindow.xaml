@@ -1,0 +1,59 @@
+﻿<Window x:Class="TaxiGUI.AddClientWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaxiGUI"
+        mc:Ignorable="d"
+        Title="AddClient" Height="278.78" Width="300"
+        MinWidth="300"
+        MinHeight="300">
+    <Window.Resources>
+        <local:LocationConverter x:Key="LocationConverter"></local:LocationConverter>
+        <local:TaxiViewModel x:Key="TaxiViewModel"></local:TaxiViewModel>
+        <!--<local:TaxiViewModel x:Key="TaxiViewModel"></local:TaxiViewModel>-->
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="0">Name:</TextBlock>
+        <DockPanel Grid.Column="1" Grid.Row="0" Height="Auto">
+            <TextBox Grid.Column="1" Grid.Row="1"
+                 Text="{Binding ClientLocInput, Mode=OneWayToSource, IsAsync=True}" VerticalAlignment="Top"></TextBox>
+        </DockPanel >
+        <DockPanel Grid.Column="1" Grid.Row="0" Height="Auto">
+            <TextBox Text="{Binding ClientLocation, Converter={StaticResource LocationConverter}}" IsEnabled="True" VerticalAlignment="Bottom"></TextBox>
+        </DockPanel>
+
+        <TextBlock TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="1" Name="currentLocationTextBox"
+                   >Your current loction:</TextBlock>
+        <DockPanel Grid.Column="1" Grid.Row="1" Height="Auto">
+            <TextBox Grid.Column="1" Grid.Row="1"
+                 Text="111" VerticalAlignment="Top"></TextBox>
+        </DockPanel >
+        <DockPanel Grid.Column="1" Grid.Row="1" Height="Auto">
+            <TextBox Text="add" IsEnabled="False" VerticalAlignment="Bottom"/>
+        </DockPanel>
+
+        <TextBlock TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="2">Your target:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="2" Name="targetTextBox"></TextBox>
+
+        <TextBlock TextWrapping="WrapWithOverflow" Grid.Column="0" Grid.Row="3">People count:</TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="3" Name ="peopleCountTextBox" ></TextBox>
+        <DockPanel Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="20,0,20,0">
+            <Button Name="addClientButton"  Width="100" HorizontalAlignment="Left" VerticalAlignment="Center">Add client</Button>
+            <Button Name="cancelButton" Width="100" MaxHeight="40" MinHeight="20" HorizontalAlignment="Right"
+                    VerticalAlignment="Center" Command="{Binding CloseCurrentWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">Cancel</Button>
+        </DockPanel>
+    </Grid>
+</Window>
