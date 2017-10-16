@@ -10,7 +10,7 @@ using TaxiCore.Entities.Position;
 
 namespace TaxiGUI
 {
-    class LocationConverter : IValueConverter
+    internal class LocationConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
