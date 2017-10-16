@@ -181,8 +181,7 @@ namespace TaxiGUI
 
             CloseCurrentWindow(win);
             OnPropertyChanged(nameof(CurrentTaxi));
-            TaxiParkModel.OnPropertyChanged(nameof(MapUrl));
-            (OpenMap as RelayCommand).RaiseCanExecuteChanged();
+            (OpenMap as RelayCommand)?.RaiseCanExecuteChanged();
         }
 
         public void Arrive()
@@ -205,8 +204,7 @@ namespace TaxiGUI
             OnPropertyChanged(nameof(CurrentTaxi));
             TaxiParkModel.OnPropertyChanged("ClientsQueue");
             TaxiParkModel.OnPropertyChanged("Taxis");
-            TaxiParkModel.OnPropertyChanged(nameof(MapUrl));
-            (OpenMap as RelayCommand).RaiseCanExecuteChanged();
+            (OpenMap as RelayCommand)?.RaiseCanExecuteChanged();
         }
 
         [NotifyPropertyChangedInvocator]
