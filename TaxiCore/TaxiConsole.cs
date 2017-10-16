@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using TaxiCore.Entities.Demand;
 using TaxiCore.Entities.Position;
 using TaxiCore.Entities.Taxi;
 using TaxiCore.Entities.Transport;
+using Npgsql;
 
 namespace TaxiCore
 {
@@ -45,32 +47,72 @@ namespace TaxiCore
 
             TaxiPark park = new TaxiPark(taxis);
 
-            park.AddClient(customers[0]);
-            park.AddClient(customers[0]);
-            park.AddClient(customers[0]);
-            park.AddClient(customers[0]);
-            park.AddClient(customers[0]);
+            //park.AddClient(customers[0]);
+            //park.AddClient(customers[0]);
+            //park.AddClient(customers[0]);
+            //park.AddClient(customers[0]);
+            //park.AddClient(customers[0]);
 
-            park.Taxis[0].CurrentState = Taxi.State.Free;
+            //park.Taxis[0].CurrentState = Taxi.State.Free;
+                   DataSet ds = new DataSet();
+                   DataTable dt = new DataTable();
 
-            Dictionary<string, string> parametrs = new Dictionary<string, string>()
+        string connstring = $"Server={"localhost"};Port={"5432"};" +
+                                $"User Id={"postgres"};Password={"1111"};Database={"EventsSite"};";
+            // Making connection with Npgsql provider
+            NpgsqlConnection conn = new NpgsqlConnection(connstring);
+            conn.Open();
+            string sql = "SELECT * FROM ticket";
+            NpgsqlCommand com = new NpgsqlCommand(sql, conn);
+            NpgsqlDataAdapter ad = new NpgsqlDataAdapter(com);
+            // Execute the query and obtain the value of the first column of the first row
+            Console.WriteLine("Conection to server established successfuly \n");
+            // check if connection is open or not
+            if (conn != null && conn.State == ConnectionState.Open)
             {
-                {"units", "metric"}
-            };
+                Console.WriteLine("Connection Open");
+                //conn.Close();
+            }
+            else
+            {
+                conn.Open();
+            }
+
+            // Fill data table with data and start reading
+            ad.Fill(dt);
+            NpgsqlDataReader dRead = com.ExecuteReader();
 
             try
             {
-                var json = GoogleApiProcessing.FindLocation("проспект свободи львів");
-                var loc = GoogleApiProcessing.ParseJsonAddress(json);
-                Console.WriteLine(loc.Address);
-                Console.WriteLine(loc.Lattitude);
-                Console.WriteLine(loc.Longtitude);
-
+                Console.WriteLine("Contents of table in database: \n");
+                while (dRead.Read())
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            Console.Write("{0} \t \n", row[i].ToString());
+                        }
+                    }
+                }
             }
-            catch (Exception e)
+            catch (NpgsqlException ne)
             {
-                Console.WriteLine(e);
+                Console.WriteLine("Problem connecting to server, Error details {0}", ne.ToString());
             }
+            finally
+            {
+                Console.WriteLine("Closing connections");
+                dRead.Close();
+                dRead = null;
+                conn.Close();
+                conn = null;
+                com.Dispose();
+                com = null;
+            }
+            // connect grid to DataTable
+            // since we only showing the result we don't need connection anymore
+            Console.ReadKey();
         }
     }
 }
