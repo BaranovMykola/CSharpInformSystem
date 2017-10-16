@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,9 +49,20 @@ namespace TaxiGUI
             {
                 if (value != null && value.ToString() != string.Empty)
                 {
-                    var response = GoogleApiProcessing.FindLocation(value.ToString());
-                    var loc = GoogleApiProcessing.ParseJsonAddress(response);
-                    ClientLocation = loc;
+                    try
+                    {
+                        var response = GoogleApiProcessing.FindLocation(value.ToString());
+                        var loc = GoogleApiProcessing.ParseJsonAddress(response);
+                        ClientLocation = loc;
+                    }
+                    catch (WebException)
+                    {
+                        ClientLocation = new Location(-1, -1, "Check your internet connection");
+                    }
+                    catch (ArgumentException)
+                    {
+                        ClientLocation = new Location(-1, -1, "Nothing found");
+                    }
                 }
                 _clientLocInput = value;
             }
