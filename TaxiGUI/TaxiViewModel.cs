@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -15,29 +16,17 @@ using TaxiGUI.Annotations;
 
 namespace TaxiGUI
 {
-    class TaxiViewModel : INotifyPropertyChanged
+    internal class TaxiViewModel : INotifyPropertyChanged
     {
-        private TaxiParkModel taxiPark;
+        private Location clientLocation;
 
-        public TaxiParkModel TaxiParkModel
-        {
-            get { return taxiPark; }
-            set
-            {
-                taxiPark = value;
-                OnPropertyChanged(nameof(TaxiParkModel));
-            }
-        }
+        private string clientLocInput;
 
-        private Location _clientLocation;
+        private Location clientTarget;
 
-        private string _clientLocInput;
+        private string clientTargetInput;
 
-        private Location _clientTarget;
-
-        private string _clientTargetInput;
-
-        private Taxi _currenTaxi;
+        private Taxi currenTaxi;
 
         public TaxiViewModel()
         {
@@ -50,44 +39,54 @@ namespace TaxiGUI
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public TaxiParkModel TaxiParkModel { get; set; }
+
+        public Taxi CurrentTaxi
+        {
+            get
+            {
+                return TaxiParkModel.Taxis.FirstOrDefault(taxi => taxi == currenTaxi);
+            }
+
+            set
+            {
+                currenTaxi = value;
+            }
+        }
+        
+        #region Commands
+
         public ICommand CloseCurrentWindowCommand { get; set; }
 
         public ICommand AddClientAndCloseCommand { get; set; }
 
         public ICommand ArrivedCommand { get; set; }
 
-        public Taxi CurrentTaxi
-        {
-            get
-            {
-                foreach (var taxi in TaxiParkModel.Taxis)
-                {
-                    if (taxi == _currenTaxi)
-                    {
-                        return taxi;
-                    }
-                }
-                return null;
-
-            }
-            set { _currenTaxi = value; }
-        }
+        #endregion
 
         #region Add client properties
 
         public Location ClientLocation
         {
-            get { return _clientLocation; }
+            get
+            {
+                return clientLocation;
+            }
+
             set
             {
-                _clientLocation = value;
+                clientLocation = value;
                 OnPropertyChanged(nameof(ClientLocation));
             }
         }
 
         public string ClientLocInput
         {
-            get { return _clientLocInput; }
+            get
+            {
+                return clientLocInput; 
+            }
+
             set
             {
                 if (value != null && value.ToString() != string.Empty)
@@ -107,23 +106,32 @@ namespace TaxiGUI
                         ClientLocation = new Location(-1, -1, "Nothing found");
                     }
                 }
-                _clientLocInput = value;
+
+                clientLocInput = value;
             }
         }
 
         public Location ClientTarget
         {
-            get { return _clientTarget; }
+            get
+            {
+                return clientTarget;
+            }
+
             set
             {
-                _clientTarget = value;
+                clientTarget = value;
                 OnPropertyChanged(nameof(ClientTarget));
             }
         }
 
         public string ClientTargetInput
         {
-            get { return _clientTargetInput; }
+            get
+            {
+                return clientTargetInput;
+            }
+
             set
             {
                 if (value != null && value.ToString() != string.Empty)
@@ -143,19 +151,14 @@ namespace TaxiGUI
                         ClientTarget = new Location(-1, -1, "Nothing found");
                     }
                 }
-                _clientTargetInput = value;
+
+                clientTargetInput = value;
             }
         }
 
         public int PeopleCount { get; set; }
 
         public string ClientName { get; set; }
-
-        public TaxiParkModel TaxiPark
-        {
-            get { return taxiPark; }
-            set { taxiPark = value; }
-        }
 
         #endregion
 
@@ -186,6 +189,7 @@ namespace TaxiGUI
                 currTaxi.Client = null;
                 currTaxi.CurrentState = Taxi.State.Free;
             }
+
             OnPropertyChanged(nameof(CurrentTaxi));
             TaxiParkModel.OnPropertyChanged("ClientsQueue");
             TaxiParkModel.OnPropertyChanged("Taxis");
