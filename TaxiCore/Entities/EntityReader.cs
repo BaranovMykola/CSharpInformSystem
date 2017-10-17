@@ -52,7 +52,10 @@ namespace TaxiCore.Entities
                                     $"User Id={"postgres"};Password={"1111"};Database={"Taxi"};";
             NpgsqlConnection conn = new NpgsqlConnection(connstring);
             conn.Open();
-            string sql = "SELECT * FROM car; SELECT * FROM location; SELECT * FROM driver;SELECT * FROM customer; SELECT * FROM taxi;";
+            string sql = "SELECT * FROM car; SELECT * FROM location; SELECT * FROM driver;SELECT * FROM customer; SELECT * FROM taxi;select* from customer where NOT EXISTS(select client_id from taxi where client_id = customer.id)";
+
+            //         select* from customer where NOT EXISTS(
+            //select client_id from taxi where client_id = customer.id)
             NpgsqlCommand com = new NpgsqlCommand(sql, conn);
             NpgsqlDataAdapter ad = new NpgsqlDataAdapter(com);
             Console.WriteLine("Conection to server established successfuly \n");
@@ -71,6 +74,7 @@ namespace TaxiCore.Entities
             var drivers = new List<Driver>();
             var clients = new List<Customer>();
             var taxis = new List<Taxi.Taxi>();
+            var freeClients = new List<Customer>();
             try
             {
                 Console.WriteLine("Contents of table in database: \n");
@@ -105,12 +109,26 @@ namespace TaxiCore.Entities
                     var car = cars.FirstOrDefault(s => s.Id == (int) dRead[2]);
                     var location = locations.FirstOrDefault(s => s.Id == (int) dRead[3]);
                     var target = (dRead[4] is DBNull) ? null : locations.FirstOrDefault(s => s.Id == (int) dRead[4]);
-                    var client = clients.FirstOrDefault(s => s.Id == (int) dRead[5]);
+                    var client = (dRead[5] is DBNull) ? null : clients.FirstOrDefault(s => s.Id == (int) dRead[5]);
                     var state = (Taxi.Taxi.State) (dRead[6]);
-                    var taxi = new Taxi.Taxi(location,target, car,driver,client) {Id = (int)dRead[0]};
+                    var taxi = new Taxi.Taxi(location,target, car,driver,client) {Id = (int)dRead[0], CurrentState = state};
                     taxis.Add(taxi);
                 }
-
+                dRead.NextResult();
+                while (dRead.Read())
+                {
+                    string name = dRead[1].ToString();
+                    var curr_loc = locations.FirstOrDefault(s => s.Id == (int)dRead[2]);
+                    var target_loc = locations.FirstOrDefault(s => s.Id == (int)dRead[3]);
+                    var peop_count = (int)dRead[4];
+                    var client = new Customer(curr_loc, target_loc, (uint)peop_count, name) { Id = (int)dRead[0] };
+                    freeClients.Add(client);
+                }
+                var park = new TaxiPark(taxis);
+                foreach (var i in freeClients)
+                {
+                    park.AddClient(i);
+                }
             }
             catch (NpgsqlException ne)
             {
@@ -129,6 +147,38 @@ namespace TaxiCore.Entities
             // connect grid to DataTable
             // since we only showing the result we don't need connection anymore
             Console.ReadKey();
+        }
+
+        public static void WriteDB(TaxiPark park)
+        {
+            DataSet ds = new DataSet();
+            DataTable dt = new DataTable();
+
+            string connstring = $"Server={"localhost"};Port={"5432"};" +
+                                    $"User Id={"postgres"};Password={"1111"};Database={"Taxi"};";
+            NpgsqlConnection conn = new NpgsqlConnection(connstring);
+            conn.Open();
+
+            string sql = "insert into car (category,model,seats_count) values";
+            foreach (var taxi in park.Taxis)
+            {
+                sql += "("+(int)taxi.Car.Category+",'"+taxi.Car.Model+"',"+taxi.Car.SeatsCouunt+"),";
+            }
+            sql = sql.Remove(sql.Length - 1, 1);
+
+            //         select* from customer where NOT EXISTS(
+            //select client_id from taxi where client_id = customer.id)
+            NpgsqlCommand com = new NpgsqlCommand(sql, conn);
+            Console.WriteLine("Conection to server established successfuly \n");
+            if (conn != null && conn.State == ConnectionState.Open)
+            {
+                Console.WriteLine("Connection Open");
+            }
+            else
+            {
+                throw new AccessViolationException();
+            }
+            com.ExecuteNonQuery();
         }
 
         private static Location ReadLocation(NpgsqlDataReader dRead)
