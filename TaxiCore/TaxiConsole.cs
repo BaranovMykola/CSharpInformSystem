@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,11 +59,11 @@ namespace TaxiCore
                    DataTable dt = new DataTable();
 
         string connstring = $"Server={"localhost"};Port={"5432"};" +
-                                $"User Id={"postgres"};Password={"1111"};Database={"EventsSite"};";
+                                $"User Id={"postgres"};Password={"1111"};Database={"Taxi"};";
             // Making connection with Npgsql provider
             NpgsqlConnection conn = new NpgsqlConnection(connstring);
             conn.Open();
-            string sql = "SELECT * FROM ticket";
+            string sql = "SELECT * FROM location";
             NpgsqlCommand com = new NpgsqlCommand(sql, conn);
             NpgsqlDataAdapter ad = new NpgsqlDataAdapter(com);
             // Execute the query and obtain the value of the first column of the first row
@@ -77,7 +78,6 @@ namespace TaxiCore
             {
                 conn.Open();
             }
-
             // Fill data table with data and start reading
             ad.Fill(dt);
             NpgsqlDataReader dRead = com.ExecuteReader();
@@ -87,13 +87,13 @@ namespace TaxiCore
                 Console.WriteLine("Contents of table in database: \n");
                 while (dRead.Read())
                 {
-                    foreach (DataRow row in dt.Rows)
+                    for (var i = 0; i < dRead.FieldCount; i++)
                     {
-                        for (int i = 0; i < dt.Rows.Count; i++)
-                        {
-                            Console.Write("{0} \t \n", row[i].ToString());
-                        }
+                        var value = dRead[i].ToString();
+                        Console.Write(value);
+                        Console.Write("   ");
                     }
+                    Console.WriteLine();
                 }
             }
             catch (NpgsqlException ne)
