@@ -50,35 +50,67 @@ namespace TaxiCore.Entities
 
             string connstring = $"Server={"localhost"};Port={"5432"};" +
                                     $"User Id={"postgres"};Password={"1111"};Database={"Taxi"};";
-            // Making connection with Npgsql provider
             NpgsqlConnection conn = new NpgsqlConnection(connstring);
             conn.Open();
-            string sql = "SELECT * FROM car";
+            string sql = "SELECT * FROM car; SELECT * FROM location; SELECT * FROM driver;SELECT * FROM customer; SELECT * FROM taxi;";
             NpgsqlCommand com = new NpgsqlCommand(sql, conn);
             NpgsqlDataAdapter ad = new NpgsqlDataAdapter(com);
-            // Execute the query and obtain the value of the first column of the first row
             Console.WriteLine("Conection to server established successfuly \n");
-            // check if connection is open or not
             if (conn != null && conn.State == ConnectionState.Open)
             {
                 Console.WriteLine("Connection Open");
-                //conn.Close();
             }
             else
             {
-                conn.Open();
+                throw new AccessViolationException();
             }
-            // Fill data table with data and start reading
             ad.Fill(dt);
             NpgsqlDataReader dRead = com.ExecuteReader();
-
+            var cars = new List<Car>();
+            var locations = new List<Location>();
+            var drivers = new List<Driver>();
+            var clients = new List<Customer>();
+            var taxis = new List<Taxi.Taxi>();
             try
             {
                 Console.WriteLine("Contents of table in database: \n");
                 while (dRead.Read())
                 {
-                   var c = ReadCar(dRead);
+                   cars.Add(ReadCar(dRead));
                 }
+                dRead.NextResult();
+                while (dRead.Read())
+                {
+                    locations.Add(ReadLocation(dRead));
+                }
+                dRead.NextResult();
+                while (dRead.Read())
+                {
+                    drivers.Add(ReadDriver(dRead));
+                }
+                dRead.NextResult();
+                while (dRead.Read())
+                {
+                    string name = dRead[1].ToString();
+                    var curr_loc = locations.FirstOrDefault(s => s.Id == (int) dRead[2]);
+                    var target_loc = locations.FirstOrDefault(s => s.Id == (int)dRead[3]);
+                    var peop_count = (int) dRead[4];
+                    var client = new Customer(curr_loc, target_loc, (uint)peop_count, name) {Id = (int)dRead[0]};
+                    clients.Add(client);
+                }
+                dRead.NextResult();
+                while (dRead.Read())
+                {
+                    var driver = drivers.FirstOrDefault(s => s.Id == (int)dRead[1]);
+                    var car = cars.FirstOrDefault(s => s.Id == (int) dRead[2]);
+                    var location = locations.FirstOrDefault(s => s.Id == (int) dRead[3]);
+                    var target = (dRead[4] is DBNull) ? null : locations.FirstOrDefault(s => s.Id == (int) dRead[4]);
+                    var client = clients.FirstOrDefault(s => s.Id == (int) dRead[5]);
+                    var state = (Taxi.Taxi.State) (dRead[6]);
+                    var taxi = new Taxi.Taxi(location,target, car,driver,client) {Id = (int)dRead[0]};
+                    taxis.Add(taxi);
+                }
+
             }
             catch (NpgsqlException ne)
             {
@@ -125,7 +157,7 @@ namespace TaxiCore.Entities
         {
             int cat = (int) dRead[1];
             LicenseCategory license = 0;
-            for (int i = 0; i < 3; i++) // magic
+            for (int i = 0; i < 3; i++) // black magic
             { 
                 if ((cat & 1) == 1)
                 {

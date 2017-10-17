@@ -27,6 +27,15 @@ namespace TaxiCore.Entities.Taxi
             Driver = driver;
         }
 
+        public Taxi(Location location, Location taxiTarget, Car car, Driver driver, Customer client)
+        {
+            Location = location;
+            TaxiTarget = taxiTarget;
+            Car = car;
+            Driver = driver;
+            Client = client;
+        }
+
         public Location Location { get; set; }
 
         public Location TaxiTarget { get; set; }  
