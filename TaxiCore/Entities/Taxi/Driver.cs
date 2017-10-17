@@ -4,7 +4,7 @@ using TaxiCore.Entities.Transport;
 namespace TaxiCore.Entities.Taxi
 {
     [Serializable]
-    public class Driver : IDriver
+    public class Driver : IDriver, IIndentify
     {
 
         public Driver()
@@ -20,5 +20,7 @@ namespace TaxiCore.Entities.Taxi
         public string Name { get; set; }
 
         public LicenseCategory DriverCategory { get; set; }
+
+        public int Id { get; set; }
     }
 }

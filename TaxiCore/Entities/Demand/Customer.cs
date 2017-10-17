@@ -4,7 +4,7 @@ using TaxiCore.Entities.Position;
 namespace TaxiCore.Entities.Demand
 {
     [Serializable]
-    public class Customer
+    public class Customer : IIndentify
     {
         public Customer()
         {
@@ -33,5 +33,7 @@ namespace TaxiCore.Entities.Demand
         public uint PeoplesCount { get; set; }
 
         public string Name { get; set; }
+
+        public int Id { get; set; }
     }
 }

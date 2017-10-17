@@ -3,7 +3,7 @@
 namespace TaxiCore.Entities.Position
 {
     [Serializable]
-    public class Location
+    public class Location : IIndentify
     {
         public Location()
         {
@@ -27,5 +27,7 @@ namespace TaxiCore.Entities.Position
         public double Longtitude { get; set; }
 
         public string Address { get; set; }
+
+        public int Id { get; set; }
     }
 }

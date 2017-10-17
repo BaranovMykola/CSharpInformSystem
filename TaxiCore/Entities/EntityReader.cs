@@ -77,7 +77,7 @@ namespace TaxiCore.Entities
                 Console.WriteLine("Contents of table in database: \n");
                 while (dRead.Read())
                 {
-                    ReadCar(dRead);
+                   var c = ReadCar(dRead);
                 }
             }
             catch (NpgsqlException ne)
@@ -102,7 +102,7 @@ namespace TaxiCore.Entities
         private static Location ReadLocation(NpgsqlDataReader dRead)
         {
             var address = Encoding.UTF8.GetString(Convert.FromBase64String(dRead[3].ToString()));
-            return new Location((double)dRead[1], (double)dRead[2], address);
+            return new Location((double)dRead[1], (double)dRead[2], address) { Id = (int)dRead[0] };
         }
 
         private static Driver ReadDriver(NpgsqlDataReader dRead)
@@ -118,7 +118,7 @@ namespace TaxiCore.Entities
                 }
                 cat = cat >> 1;
             }
-            return  new Driver(name, license);
+            return  new Driver(name, license) { Id = (int)dRead[0] };
         }
 
         private static Car ReadCar(NpgsqlDataReader dRead)
@@ -126,7 +126,7 @@ namespace TaxiCore.Entities
             int cat = (int) dRead[1];
             LicenseCategory license = 0;
             for (int i = 0; i < 3; i++) // magic
-            {
+            { 
                 if ((cat & 1) == 1)
                 {
                     license = (LicenseCategory)(1 << i);
@@ -136,7 +136,7 @@ namespace TaxiCore.Entities
             }
             string model = dRead[2].ToString();
             int seatsCount = (int) dRead[3];
-            return  new Car(model, license, (uint)seatsCount);
+            return  new Car(model, license, (uint)seatsCount) {Id = (int)dRead[0]};
         }
     }
 }

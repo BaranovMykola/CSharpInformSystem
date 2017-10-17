@@ -7,7 +7,7 @@ using TaxiCore.Entities.Transport;
 namespace TaxiCore.Entities.Taxi
 {
     [Serializable]
-    public class Taxi
+    public class Taxi : IIndentify
     {
         public Func<Taxi, Taxi.State> OnFree;
 
@@ -53,6 +53,8 @@ namespace TaxiCore.Entities.Taxi
         public Driver Driver { get; set; }
 
         public Customer Client { get; set; }
+
+        public int Id { get; set; }
 
         [Serializable]
         public enum State

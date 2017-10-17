@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Entities\Demand\Customer.cs" />
     <Compile Include="Entities\EntityReader.cs" />
+    <Compile Include="Entities\IIndetify.cs" />
     <Compile Include="Entities\Position\GoogleApiProcessing.cs" />
     <Compile Include="Entities\Position\Location.cs" />
     <Compile Include="Entities\Taxi\IDriver.cs" />
