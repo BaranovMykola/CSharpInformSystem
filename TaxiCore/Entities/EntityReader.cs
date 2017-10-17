@@ -43,7 +43,7 @@ namespace TaxiCore.Entities
             }
         }
 
-        public static void ReadDB()
+        public static TaxiPark ReadDB()
         {
             DataSet ds = new DataSet();
             DataTable dt = new DataTable();
@@ -129,6 +129,7 @@ namespace TaxiCore.Entities
                 {
                     park.AddClient(i);
                 }
+                return park;
             }
             catch (NpgsqlException ne)
             {
@@ -147,6 +148,7 @@ namespace TaxiCore.Entities
             // connect grid to DataTable
             // since we only showing the result we don't need connection anymore
             Console.ReadKey();
+            return null;
         }
 
         public static void WriteDB(TaxiPark park)
@@ -159,26 +161,118 @@ namespace TaxiCore.Entities
             NpgsqlConnection conn = new NpgsqlConnection(connstring);
             conn.Open();
 
-            string sql = "insert into car (category,model,seats_count) values";
             foreach (var taxi in park.Taxis)
             {
-                sql += "("+(int)taxi.Car.Category+",'"+taxi.Car.Model+"',"+taxi.Car.SeatsCouunt+"),";
-            }
-            sql = sql.Remove(sql.Length - 1, 1);
+                var addr = Convert.ToBase64String(Encoding.UTF8.GetBytes(taxi.Location.Address));
+                string update =
+                    $"UPDATE location set lat = {taxi.Location.Lattitude}, lng = {taxi.Location.Longtitude}, address = '{addr}' where id = {taxi.Location.Id};";
+                NpgsqlCommand com = new NpgsqlCommand(update, conn);
+                int aff = com.ExecuteNonQuery();
+                if (aff == 0)
+                {
+                    update =
+                    $"INSERT INTO location (lat, lng, address) values ({taxi.Location.Lattitude}, {taxi.Location.Longtitude}, '{addr}') RETURNING id";
+                    com = new NpgsqlCommand(update, conn);
+                    taxi.Location.Id= (int)com.ExecuteScalar();
+                }
+                if (taxi.Client != null)
+                {
+                    addr = Convert.ToBase64String(Encoding.UTF8.GetBytes(taxi.Client.CurrentLocation.Address ?? ""));
+                    update =
+                        $"UPDATE location set lat = {taxi.Client.CurrentLocation.Lattitude}, lng = {taxi.Client.CurrentLocation.Longtitude}, address = '{addr}' where id = {taxi.Client.CurrentLocation.Id};";
+                    com = new NpgsqlCommand(update, conn);
+                    aff = com.ExecuteNonQuery();
+                    if (aff == 0)
+                    {
+                        update =
+                            $"INSERT INTO location (lat, lng, address) values ({taxi.Client.CurrentLocation.Lattitude}, {taxi.Client.CurrentLocation.Longtitude}, '{addr}') RETURNING id";
+                        com = new NpgsqlCommand(update, conn);
+                        taxi.Client.CurrentLocation.Id = (int) com.ExecuteScalar();
+                    }
 
-            //         select* from customer where NOT EXISTS(
-            //select client_id from taxi where client_id = customer.id)
-            NpgsqlCommand com = new NpgsqlCommand(sql, conn);
-            Console.WriteLine("Conection to server established successfuly \n");
-            if (conn != null && conn.State == ConnectionState.Open)
-            {
-                Console.WriteLine("Connection Open");
+                    addr = Convert.ToBase64String(Encoding.UTF8.GetBytes(taxi.Client.TargetLocation.Address ?? ""));
+                    update =
+                        $"UPDATE location set lat = {taxi.Client.TargetLocation.Lattitude}, lng = {taxi.Client.TargetLocation.Longtitude}, address = '{addr}' where id = {taxi.Client.TargetLocation.Id};";
+                    com = new NpgsqlCommand(update, conn);
+                    aff = com.ExecuteNonQuery();
+                    if (aff == 0)
+                    {
+                        update =
+                        $"INSERT INTO location (lat, lng, address) values ({taxi.Client.TargetLocation.Lattitude}, {taxi.Client.TargetLocation.Longtitude}, '{addr}') RETURNING id";
+                        com = new NpgsqlCommand(update, conn);
+                        taxi.Client.TargetLocation.Id = (int)com.ExecuteScalar();
+                    }
+                }
+
+                if (taxi.TaxiTarget != null)
+                {
+                    addr = Convert.ToBase64String(Encoding.UTF8.GetBytes(taxi.TaxiTarget.Address ?? ""));
+                    update =
+                        $"UPDATE location set lat = {taxi.TaxiTarget.Lattitude}, lng = {taxi.TaxiTarget.Longtitude}, address = '{addr}' where id = {taxi.TaxiTarget.Id};";
+                    com = new NpgsqlCommand(update, conn);
+                    aff = com.ExecuteNonQuery();
+                    if (aff == 0)
+                    {
+                        update =
+                            $"INSERT INTO location (lat, lng, address) values ({taxi.TaxiTarget.Lattitude}, {taxi.TaxiTarget.Longtitude}, '{addr}') RETURNING id";
+                        com = new NpgsqlCommand(update, conn);
+                        taxi.TaxiTarget.Id = (int) com.ExecuteScalar();
+                    }
+                }
+
+
+                update =
+                    $"UPDATE car set category = {(int)taxi.Car.Category}, model = '{taxi.Car.Model}', seats_count = {taxi.Car.SeatsCouunt} where id = {taxi.Car.Id}";
+                com = new NpgsqlCommand(update,conn);
+                aff = com.ExecuteNonQuery();
+                if (aff == 0)
+                {
+                    update =
+                    $"INSERT INTO car (category,model,seats_count) values ({(int)taxi.Car.Category}, '{taxi.Car.Model}', {taxi.Car.SeatsCouunt}) RETURNING id";
+                    com = new NpgsqlCommand(update, conn);
+                    taxi.Car.Id = (int)com.ExecuteScalar();
+                }
+                update =
+                    $"UPDATE driver set driver_category = {(int)taxi.Driver.DriverCategory}, name = '{taxi.Driver.Name}' where id = {taxi.Driver.Id}";
+                com = new NpgsqlCommand(update, conn);
+                aff = com.ExecuteNonQuery();
+                if (aff == 0)
+                {
+                    update =
+                        $"INSERT INTO driver (driver_category,name) values ({(int)taxi.Driver.DriverCategory}, '{taxi.Driver.Name}') RETURNING id";
+                    com = new NpgsqlCommand(update, conn);
+                    taxi.Driver.Id = (int)com.ExecuteScalar();
+                }
+                if (taxi.Client != null)
+                {
+                    update =
+                        $"UPDATE customer set name = '{taxi.Client.Name}', current_location_id = {taxi.Client?.CurrentLocation.Id}, target_location_id = {taxi.Client.TargetLocation.Id}, peoples_count = {taxi.Client.PeoplesCount} where id = {taxi.Client.Id}";
+                    com = new NpgsqlCommand(update, conn);
+                    aff = com.ExecuteNonQuery();
+                    if (aff == 0)
+                    {
+                        update =
+                            $"INSERT INTO customer (name,current_location_id, target_location_id,peoples_count) values ('{taxi.Client.Name}', {taxi.Client?.CurrentLocation.Id}, {taxi.Client.TargetLocation.Id}, {taxi.Client.PeoplesCount}) RETURNING id";
+                        com = new NpgsqlCommand(update, conn);
+                        taxi.Client.Id = (int)com.ExecuteScalar();
+                    }
+                }
+                var tgid = taxi.TaxiTarget?.Id;
+                var tgidstr = tgid?.ToString() ?? "";
+                update =
+                    $"UPDATE taxi set driver_id = {taxi.Driver.Id}, car_id = {taxi.Car.Id}, location_id = {taxi.Location.Id}, taxi_target_id = {taxi.TaxiTarget?.Id.ToString() ?? "null"}, client_id = {taxi.Client?.Id.ToString() ?? "null"}, current_state = {(int) taxi.CurrentState} where id = {taxi.Id}";
+                com = new NpgsqlCommand(update, conn);
+                aff = com.ExecuteNonQuery();
+                if (aff == 0)
+                {
+                    update =
+                        $"INSERT INTO taxi (driver_id,car_id,location_id,taxi_target_id,client_id,current_state) values ({taxi.Driver.Id},{taxi.Car.Id},{taxi.Location.Id},{taxi.TaxiTarget?.Id.ToString() ?? "null"},{taxi.Client?.Id.ToString() ?? "null"},{(int)taxi.CurrentState}) RETURNING id";
+                    com = new NpgsqlCommand(update, conn);
+                    taxi.Id = (int)com.ExecuteScalar();
+                }
+
             }
-            else
-            {
-                throw new AccessViolationException();
-            }
-            com.ExecuteNonQuery();
+
         }
 
         private static Location ReadLocation(NpgsqlDataReader dRead)
