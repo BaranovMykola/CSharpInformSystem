@@ -53,7 +53,7 @@ namespace TaxiCore.Entities
             // Making connection with Npgsql provider
             NpgsqlConnection conn = new NpgsqlConnection(connstring);
             conn.Open();
-            string sql = "SELECT * FROM driver";
+            string sql = "SELECT * FROM car";
             NpgsqlCommand com = new NpgsqlCommand(sql, conn);
             NpgsqlDataAdapter ad = new NpgsqlDataAdapter(com);
             // Execute the query and obtain the value of the first column of the first row
@@ -77,7 +77,7 @@ namespace TaxiCore.Entities
                 Console.WriteLine("Contents of table in database: \n");
                 while (dRead.Read())
                 {
-                    ReadDriver(dRead);
+                    ReadCar(dRead);
                 }
             }
             catch (NpgsqlException ne)
@@ -119,6 +119,24 @@ namespace TaxiCore.Entities
                 cat = cat >> 1;
             }
             return  new Driver(name, license);
+        }
+
+        private static Car ReadCar(NpgsqlDataReader dRead)
+        {
+            int cat = (int) dRead[1];
+            LicenseCategory license = 0;
+            for (int i = 0; i < 3; i++) // magic
+            {
+                if ((cat & 1) == 1)
+                {
+                    license = (LicenseCategory)(1 << i);
+                    break;
+                }
+                cat = cat >> 1;
+            }
+            string model = dRead[2].ToString();
+            int seatsCount = (int) dRead[3];
+            return  new Car(model, license, (uint)seatsCount);
         }
     }
 }
