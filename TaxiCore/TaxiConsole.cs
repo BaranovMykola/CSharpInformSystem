@@ -55,64 +55,7 @@ namespace TaxiCore
             //park.AddClient(customers[0]);
 
             //park.Taxis[0].CurrentState = Taxi.State.Free;
-                   DataSet ds = new DataSet();
-                   DataTable dt = new DataTable();
-
-        string connstring = $"Server={"localhost"};Port={"5432"};" +
-                                $"User Id={"postgres"};Password={"1111"};Database={"Taxi"};";
-            // Making connection with Npgsql provider
-            NpgsqlConnection conn = new NpgsqlConnection(connstring);
-            conn.Open();
-            string sql = "SELECT * FROM location";
-            NpgsqlCommand com = new NpgsqlCommand(sql, conn);
-            NpgsqlDataAdapter ad = new NpgsqlDataAdapter(com);
-            // Execute the query and obtain the value of the first column of the first row
-            Console.WriteLine("Conection to server established successfuly \n");
-            // check if connection is open or not
-            if (conn != null && conn.State == ConnectionState.Open)
-            {
-                Console.WriteLine("Connection Open");
-                //conn.Close();
-            }
-            else
-            {
-                conn.Open();
-            }
-            // Fill data table with data and start reading
-            ad.Fill(dt);
-            NpgsqlDataReader dRead = com.ExecuteReader();
-
-            try
-            {
-                Console.WriteLine("Contents of table in database: \n");
-                while (dRead.Read())
-                {
-                    for (var i = 0; i < dRead.FieldCount; i++)
-                    {
-                        var value = dRead[i].ToString();
-                        Console.Write(value);
-                        Console.Write("   ");
-                    }
-                    Console.WriteLine();
-                }
-            }
-            catch (NpgsqlException ne)
-            {
-                Console.WriteLine("Problem connecting to server, Error details {0}", ne.ToString());
-            }
-            finally
-            {
-                Console.WriteLine("Closing connections");
-                dRead.Close();
-                dRead = null;
-                conn.Close();
-                conn = null;
-                com.Dispose();
-                com = null;
-            }
-            // connect grid to DataTable
-            // since we only showing the result we don't need connection anymore
-            Console.ReadKey();
+            Entities.EntityReader.ReadDB();
         }
     }
 }
