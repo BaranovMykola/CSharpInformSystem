@@ -215,7 +215,16 @@ namespace TaxiGUI
 
         public void SaveCommand(object parameter)
         {
-            EntityReader.WriteDB(TaxiParkModel as TaxiPark);
+            try
+            {
+                EntityReader.WriteDB(TaxiParkModel as TaxiPark);
+                MessageBox.Show("Saved data to DB!");
+            }
+            catch
+            {
+                MessageBox.Show("Error while writing to DB");
+            }
+            
         }
 
         [NotifyPropertyChangedInvocator]

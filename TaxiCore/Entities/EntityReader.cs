@@ -205,17 +205,7 @@ namespace TaxiCore.Entities
                 }
                 if (taxi.Client != null)
                 {
-                    update =
-                        $"UPDATE customer set name = '{taxi.Client.Name}', current_location_id = {taxi.Client?.CurrentLocation.Id}, target_location_id = {taxi.Client.TargetLocation.Id}, peoples_count = {taxi.Client.PeoplesCount} where id = {taxi.Client.Id}";
-                    com = new NpgsqlCommand(update, conn);
-                    aff = com.ExecuteNonQuery();
-                    if (aff == 0)
-                    {
-                        update =
-                            $"INSERT INTO customer (name,current_location_id, target_location_id,peoples_count) values ('{taxi.Client.Name}', {taxi.Client?.CurrentLocation.Id}, {taxi.Client.TargetLocation.Id}, {taxi.Client.PeoplesCount}) RETURNING id";
-                        com = new NpgsqlCommand(update, conn);
-                        taxi.Client.Id = (int)com.ExecuteScalar();
-                    }
+                    WriteCustomer(taxi.Client,conn);
                 }
                 var tgid = taxi.TaxiTarget?.Id;
                 var tgidstr = tgid?.ToString() ?? "";
@@ -236,19 +226,24 @@ namespace TaxiCore.Entities
             {
                 WriteLocation(conn, customer.CurrentLocation);
                 WriteLocation(conn, customer.TargetLocation);
-                var update =
-                 $"UPDATE customer set name = '{customer.Name}', current_location_id = {customer?.CurrentLocation.Id}, target_location_id = {customer.TargetLocation.Id}, peoples_count = {customer.PeoplesCount} where id = {customer.Id}";
-                var com = new NpgsqlCommand(update, conn);
-                var aff = com.ExecuteNonQuery();
-                if (aff == 0)
-                {
-                    update =
-                        $"INSERT INTO customer (name,current_location_id, target_location_id,peoples_count) values ('{customer.Name}', {customer?.CurrentLocation.Id}, {customer.TargetLocation.Id}, {customer.PeoplesCount}) RETURNING id";
-                    com = new NpgsqlCommand(update, conn);
-                    customer.Id = (int)com.ExecuteScalar();
-                }
+                WriteCustomer(customer, conn);
             }
 
+        }
+
+        private static void WriteCustomer(Customer customer, NpgsqlConnection conn)
+        {
+            var update =
+                $"UPDATE customer set name = '{customer.Name}', current_location_id = {customer?.CurrentLocation.Id}, target_location_id = {customer.TargetLocation.Id}, peoples_count = {customer.PeoplesCount} where id = {customer.Id}";
+            var com = new NpgsqlCommand(update, conn);
+            var aff = com.ExecuteNonQuery();
+            if (aff == 0)
+            {
+                update =
+                    $"INSERT INTO customer (name,current_location_id, target_location_id,peoples_count) values ('{customer.Name}', {customer?.CurrentLocation.Id}, {customer.TargetLocation.Id}, {customer.PeoplesCount}) RETURNING id";
+                com = new NpgsqlCommand(update, conn);
+                customer.Id = (int) com.ExecuteScalar();
+            }
         }
 
         private static void WriteLocation(NpgsqlConnection conn, Location loc)
