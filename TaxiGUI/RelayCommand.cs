@@ -51,15 +51,10 @@ namespace TaxiGUI
         }
 
         public event EventHandler CanExecuteChanged;
-        //{
-        //    add { CommandManager.RequerySuggested += value; }
-        //    remove { CommandManager.RequerySuggested -= value; }
-        //}
 
         public void RaiseCanExecuteChanged()
         {
-            if (CanExecuteChanged != null)
-                    CanExecuteChanged(this, new EventArgs());
+            CanExecuteChanged?.Invoke(this, new EventArgs());
         }
 
         #endregion // Constructors

@@ -62,10 +62,11 @@ namespace TaxiGUI
         {
             get
             {
-                if (CurrentTaxi == null || CurrentTaxi.Location == null || CurrentTaxi.TaxiTarget == null)
+                if (CurrentTaxi?.Location == null || CurrentTaxi.TaxiTarget == null)
                 {
                     return null;
                 }
+
                 NumberFormatInfo info = new NumberFormatInfo();
                 info.NumberDecimalSeparator = ".";
                 var latFrom = CurrentTaxi.Location.Lattitude.ToString(info);
@@ -224,7 +225,6 @@ namespace TaxiGUI
             {
                 MessageBox.Show("Error while writing to DB");
             }
-            
         }
 
         [NotifyPropertyChangedInvocator]

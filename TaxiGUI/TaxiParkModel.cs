@@ -12,13 +12,13 @@ namespace TaxiGUI
 {
     internal class TaxiParkModel : TaxiPark, INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public TaxiParkModel(TaxiPark park)
         {
             this.Taxis = new ObservableCollection<Taxi>(park.Taxis);
                 ClientsQueue = new ObservableCollection<Customer>(park.clientsQueue);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<Taxi> Taxis
         {

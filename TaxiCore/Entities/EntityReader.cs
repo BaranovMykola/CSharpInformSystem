@@ -27,10 +27,10 @@ namespace TaxiCore.Entities
 
         public void Write(string fileName)
         {
-            using (var stream = File.Open(fileName,FileMode.OpenOrCreate, FileAccess.Write, FileShare.Delete))
+            using (var stream = File.Open(fileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Delete))
             {
                 var bin = new BinaryFormatter();
-                bin.Serialize(stream,TaxiParkEntity);
+                bin.Serialize(stream, TaxiParkEntity);
             }
         }
 
@@ -80,7 +80,7 @@ namespace TaxiCore.Entities
                 Console.WriteLine("Contents of table in database: \n");
                 while (dRead.Read())
                 {
-                   cars.Add(ReadCar(dRead));
+                    cars.Add(ReadCar(dRead));
                 }
                 dRead.NextResult();
                 while (dRead.Read())
@@ -96,22 +96,22 @@ namespace TaxiCore.Entities
                 while (dRead.Read())
                 {
                     string name = dRead[1].ToString();
-                    var curr_loc = locations.FirstOrDefault(s => s.Id == (int) dRead[2]);
+                    var curr_loc = locations.FirstOrDefault(s => s.Id == (int)dRead[2]);
                     var target_loc = locations.FirstOrDefault(s => s.Id == (int)dRead[3]);
-                    var peop_count = (int) dRead[4];
-                    var client = new Customer(curr_loc, target_loc, (uint)peop_count, name) {Id = (int)dRead[0]};
+                    var peop_count = (int)dRead[4];
+                    var client = new Customer(curr_loc, target_loc, (uint)peop_count, name) { Id = (int)dRead[0] };
                     clients.Add(client);
                 }
                 dRead.NextResult();
                 while (dRead.Read())
                 {
                     var driver = drivers.FirstOrDefault(s => s.Id == (int)dRead[1]);
-                    var car = cars.FirstOrDefault(s => s.Id == (int) dRead[2]);
-                    var location = locations.FirstOrDefault(s => s.Id == (int) dRead[3]);
-                    var target = (dRead[4] is DBNull) ? null : locations.FirstOrDefault(s => s.Id == (int) dRead[4]);
-                    var client = (dRead[5] is DBNull) ? null : clients.FirstOrDefault(s => s.Id == (int) dRead[5]);
-                    var state = (Taxi.Taxi.State) (dRead[6]);
-                    var taxi = new Taxi.Taxi(location,target, car,driver,client) {Id = (int)dRead[0], CurrentState = state};
+                    var car = cars.FirstOrDefault(s => s.Id == (int)dRead[2]);
+                    var location = locations.FirstOrDefault(s => s.Id == (int)dRead[3]);
+                    var target = (dRead[4] is DBNull) ? null : locations.FirstOrDefault(s => s.Id == (int)dRead[4]);
+                    var client = (dRead[5] is DBNull) ? null : clients.FirstOrDefault(s => s.Id == (int)dRead[5]);
+                    var state = (Taxi.Taxi.State)(dRead[6]);
+                    var taxi = new Taxi.Taxi(location, target, car, driver, client) { Id = (int)dRead[0], CurrentState = state };
                     taxis.Add(taxi);
                 }
                 dRead.NextResult();
@@ -183,7 +183,7 @@ namespace TaxiCore.Entities
 
                 update =
                     $"UPDATE car set category = {(int)taxi.Car.Category}, model = '{taxi.Car.Model}', seats_count = {taxi.Car.SeatsCouunt} where id = {taxi.Car.Id}";
-                com = new NpgsqlCommand(update,conn);
+                com = new NpgsqlCommand(update, conn);
                 aff = com.ExecuteNonQuery();
                 if (aff == 0)
                 {
@@ -192,6 +192,7 @@ namespace TaxiCore.Entities
                     com = new NpgsqlCommand(update, conn);
                     taxi.Car.Id = (int)com.ExecuteScalar();
                 }
+
                 update =
                     $"UPDATE driver set driver_category = {(int)taxi.Driver.DriverCategory}, name = '{taxi.Driver.Name}' where id = {taxi.Driver.Id}";
                 com = new NpgsqlCommand(update, conn);
@@ -203,14 +204,16 @@ namespace TaxiCore.Entities
                     com = new NpgsqlCommand(update, conn);
                     taxi.Driver.Id = (int)com.ExecuteScalar();
                 }
+
                 if (taxi.Client != null)
                 {
-                    WriteCustomer(taxi.Client,conn);
+                    WriteCustomer(taxi.Client, conn);
                 }
+
                 var tgid = taxi.TaxiTarget?.Id;
                 var tgidstr = tgid?.ToString() ?? "";
                 update =
-                    $"UPDATE taxi set driver_id = {taxi.Driver.Id}, car_id = {taxi.Car.Id}, location_id = {taxi.Location.Id}, taxi_target_id = {taxi.TaxiTarget?.Id.ToString() ?? "null"}, client_id = {taxi.Client?.Id.ToString() ?? "null"}, current_state = {(int) taxi.CurrentState} where id = {taxi.Id}";
+                    $"UPDATE taxi set driver_id = {taxi.Driver.Id}, car_id = {taxi.Car.Id}, location_id = {taxi.Location.Id}, taxi_target_id = {taxi.TaxiTarget?.Id.ToString() ?? "null"}, client_id = {taxi.Client?.Id.ToString() ?? "null"}, current_state = {(int)taxi.CurrentState} where id = {taxi.Id}";
                 com = new NpgsqlCommand(update, conn);
                 aff = com.ExecuteNonQuery();
                 if (aff == 0)
@@ -242,13 +245,12 @@ namespace TaxiCore.Entities
                 update =
                     $"INSERT INTO customer (name,current_location_id, target_location_id,peoples_count) values ('{customer.Name}', {customer?.CurrentLocation.Id}, {customer.TargetLocation.Id}, {customer.PeoplesCount}) RETURNING id";
                 com = new NpgsqlCommand(update, conn);
-                customer.Id = (int) com.ExecuteScalar();
+                customer.Id = (int)com.ExecuteScalar();
             }
         }
 
         private static void WriteLocation(NpgsqlConnection conn, Location loc)
         {
-            Taxi.Taxi taxi;
             var addr = Convert.ToBase64String(Encoding.UTF8.GetBytes(loc.Address ?? ""));
             string update =
                 $"UPDATE location set lat = {loc.Lattitude}, lng = {loc.Longtitude}, address = '{addr}' where id = {loc.Id};";
@@ -272,7 +274,7 @@ namespace TaxiCore.Entities
         private static Driver ReadDriver(NpgsqlDataReader dRead)
         {
             string name = dRead[1].ToString();
-            int cat = (int) dRead[2];
+            int cat = (int)dRead[2];
             LicenseCategory license = 0;
             for (int i = 0; i < 3; i++) // magic
             {
@@ -282,25 +284,27 @@ namespace TaxiCore.Entities
                 }
                 cat = cat >> 1;
             }
-            return  new Driver(name, license) { Id = (int)dRead[0] };
+            return new Driver(name, license) { Id = (int)dRead[0] };
         }
 
         private static Car ReadCar(NpgsqlDataReader dRead)
         {
-            int cat = (int) dRead[1];
+            int cat = (int)dRead[1];
             LicenseCategory license = 0;
             for (int i = 0; i < 3; i++) // black magic
-            { 
+            {
                 if ((cat & 1) == 1)
                 {
                     license = (LicenseCategory)(1 << i);
                     break;
                 }
+
                 cat = cat >> 1;
             }
+
             string model = dRead[2].ToString();
-            int seatsCount = (int) dRead[3];
-            return  new Car(model, license, (uint)seatsCount) {Id = (int)dRead[0]};
+            int seatsCount = (int)dRead[3];
+            return new Car(model, license, (uint)seatsCount) { Id = (int)dRead[0] };
         }
     }
 }
