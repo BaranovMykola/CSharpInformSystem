@@ -32,7 +32,7 @@
                         <GridViewColumn Header="Seats Count" Width="Auto" DisplayMemberBinding="{Binding Car.SeatsCount}"/>
                         <GridViewColumn Header="Driver License" Width="Auto" DisplayMemberBinding="{Binding Driver.DriverCategory}"/>
                         <GridViewColumn Header="Car Category" Width="Auto" DisplayMemberBinding="{Binding Car.Category}"/>
-                      <GridViewColumn Header="Location" Width="Auto" DisplayMemberBinding="{Binding Location.Address}"/>
+                        <GridViewColumn Header="Location" Width="Auto" DisplayMemberBinding="{Binding Location.Address}"/>
                         <GridViewColumn Header="TaxiState" Width="Auto" DisplayMemberBinding="{Binding CurrentState}"/>
                     </GridView>
                 </ListView.View>
@@ -55,5 +55,33 @@
                 Command="{Binding ArrivedCommand}"/>
         <Button Content="Open Map" HorizontalAlignment="Right" Margin="0,0,10.4,37.8" VerticalAlignment="Bottom" Width="143" Height="22"
             Command="{Binding OpenMap}"/>
+        <GroupBox x:Name="groupBox" Header="You:" HorizontalAlignment="Right" Margin="0,34,10.4,0" VerticalAlignment="Top" Height="68" Width="141">
+            <StackPanel>
+                <DockPanel>
+                    <Label>Driver:</Label>
+                    <Label Content="{Binding CurrentTaxi.Driver.Name}" Width="70"></Label>
+                </DockPanel>
+                <DockPanel>
+                    <Label>License:</Label>
+                    <Label Content="{Binding CurrentTaxi.Driver.DriverCategory}" Width="70"></Label>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="carGroupBox" Header="Car:" HorizontalAlignment="Right" Margin="0,107,10.4,0" VerticalAlignment="Top" Height="96" Width="141">
+            <StackPanel>
+                <DockPanel>
+                    <Label>Model:</Label>
+                    <Label Content="{Binding CurrentTaxi.Car.Model}" Width="70"></Label>
+                </DockPanel>
+                <DockPanel>
+                    <Label>License:</Label>
+                    <Label Content="{Binding CurrentTaxi.Car.Category}" Width="70"></Label>
+                </DockPanel>
+                <DockPanel>
+                    <Label>Seats Count:</Label>
+                    <Label Content="{Binding CurrentTaxi.Car.SeatsCouunt}" Width="70"></Label>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </Window>
