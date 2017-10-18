@@ -50,7 +50,7 @@ namespace TaxiCore
 
             park.AddClient(customers[0]);
             park.AddClient(customers[1]);
-            
+
 
             //park.Taxis[0].CurrentState = Taxi.State.Free;
             //var pk = Entities.EntityReader.ReadDB();
@@ -59,7 +59,7 @@ namespace TaxiCore
             //    (
             //        new Location(0,0,"from"), new Location(), new Car("car-car", LicenseCategory.B, 4),   new Driver("petro", LicenseCategory.B), new Customer(new Location(),new Location(), 4,"client" )
             //    ));
-            //Entities.EntityReader.WriteDB(park);
+            Entities.EntityReader.WriteDB(park);
         }
     }
 }

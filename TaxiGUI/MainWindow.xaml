@@ -83,5 +83,7 @@
                 </DockPanel>
             </StackPanel>
         </GroupBox>
+        <Button Content="Save" HorizontalAlignment="Right" Margin="0,0,10.4,64.8" VerticalAlignment="Bottom" Width="143" Height="22"
+            Command="{Binding Save}"/>
     </Grid>
 </Window>

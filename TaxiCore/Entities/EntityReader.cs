@@ -230,7 +230,23 @@ namespace TaxiCore.Entities
                     com = new NpgsqlCommand(update, conn);
                     taxi.Id = (int)com.ExecuteScalar();
                 }
+            }
 
+            foreach (var customer in park.clientsQueue)
+            {
+                WriteLocation(conn, customer.CurrentLocation);
+                WriteLocation(conn, customer.TargetLocation);
+                var update =
+                 $"UPDATE customer set name = '{customer.Name}', current_location_id = {customer?.CurrentLocation.Id}, target_location_id = {customer.TargetLocation.Id}, peoples_count = {customer.PeoplesCount} where id = {customer.Id}";
+                var com = new NpgsqlCommand(update, conn);
+                var aff = com.ExecuteNonQuery();
+                if (aff == 0)
+                {
+                    update =
+                        $"INSERT INTO customer (name,current_location_id, target_location_id,peoples_count) values ('{customer.Name}', {customer?.CurrentLocation.Id}, {customer.TargetLocation.Id}, {customer.PeoplesCount}) RETURNING id";
+                    com = new NpgsqlCommand(update, conn);
+                    customer.Id = (int)com.ExecuteScalar();
+                }
             }
 
         }

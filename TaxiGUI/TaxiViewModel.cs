@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
+using TaxiCore.Entities;
 using TaxiCore.Entities.Demand;
 using TaxiCore.Entities.Position;
 using TaxiCore.Entities.Taxi;
@@ -35,6 +36,7 @@ namespace TaxiGUI
             AddClientAndCloseCommand = new RelayCommand(AddClientAndClose);
             ArrivedCommand = new RelayCommand(s => Arrive());
             OpenMap = new RelayCommand(s => System.Diagnostics.Process.Start(MapUrl), s => MapUrl != null);
+            Save = new RelayCommand(SaveCommand);
             ClientLocation = null;
             ClientTarget = null;
         }
@@ -86,6 +88,8 @@ namespace TaxiGUI
         public ICommand ArrivedCommand { get; set; }
 
         public ICommand OpenMap { get; set; }
+
+        public ICommand Save { get; set; }
 
         #endregion
 
@@ -207,6 +211,11 @@ namespace TaxiGUI
             TaxiParkModel.OnPropertyChanged("ClientsQueue");
             TaxiParkModel.OnPropertyChanged("Taxis");
             (OpenMap as RelayCommand)?.RaiseCanExecuteChanged();
+        }
+
+        public void SaveCommand(object parameter)
+        {
+            EntityReader.WriteDB(TaxiParkModel as TaxiPark);
         }
 
         [NotifyPropertyChangedInvocator]
