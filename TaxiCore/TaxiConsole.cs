@@ -34,34 +34,32 @@ namespace TaxiCore
 
             List<Taxi> taxis = new List<Taxi>()
             {
-                new Taxi(new Location(49.805823, 23.980947), Taxi.State.Free, cars[0], drivers[1]),
-                new Taxi(new Location(49.839067, 24.030776), Taxi.State.Free, cars[1], drivers[2]),
-                new Taxi(new Location(49.843379, 24.118381), Taxi.State.Free, cars[2], drivers[0]),
-                new Taxi(new Location(49.749379, 24.148790), Taxi.State.Free, cars[3], drivers[3])
+                new Taxi(new Location(49.805823, 23.980947, "Т1416, L'viv, Lviv Oblast, 79000"), Taxi.State.Free, cars[0], drivers[1]),
+                new Taxi(new Location(49.839067, 24.030776, "Halytska Square, L'viv, Lviv Oblast"), Taxi.State.Free, cars[1], drivers[2]),
+                new Taxi(new Location(49.843379, 24.118381, "Hlynyanskyi Trakt St, L'viv, Lviv Oblast"), Taxi.State.Free, cars[2], drivers[0]),
+                new Taxi(new Location(49.749379, 24.148790, "Н09"), Taxi.State.Free, cars[3], drivers[3])
             };
 
             List<Customer> customers = new List<Customer>
             {
-                new Customer(new Location(49.795251, 24.046477), new Location(49.840043, 24.021903), 1, "Izya"),
-                new Customer(new Location(49.828797, 24.056647), new Location(49.812421, 24.017313), 2, "Sara")
+                new Customer(new Location(49.795251, 24.046477, "Gnata Khotkevycha St, 16, L'viv, Lviv Oblast, 79000"), new Location(49.840043, 24.021903, "Universytetska St, 1, L'viv, Lviv Oblast"), 1, "Izya"),
+                new Customer(new Location(49.828797, 24.056647, "Anatoliya Vakhnyanyna St, 29, L'viv, Lviv Oblast"), new Location(49.812421, 24.017313, "Luhanska St"), 2, "Sara")
             };
 
             TaxiPark park = new TaxiPark(taxis);
 
-            //park.AddClient(customers[0]);
-            //park.AddClient(customers[0]);
-            //park.AddClient(customers[0]);
-            //park.AddClient(customers[0]);
-            //park.AddClient(customers[0]);
+            park.AddClient(customers[0]);
+            park.AddClient(customers[1]);
+            
 
             //park.Taxis[0].CurrentState = Taxi.State.Free;
-            var pk = Entities.EntityReader.ReadDB();
-            //pk.Taxis.First().Client= new Customer(new Location(), new Location(), 1, "baran");
-            pk.Taxis.Add(new Taxi
-                (
-                    new Location(0,0,"from"), new Location(), new Car("car-car", LicenseCategory.B, 4),   new Driver("petro", LicenseCategory.B), new Customer(new Location(),new Location(), 4,"client" )
-                ));
-            Entities.EntityReader.WriteDB(pk);
+            //var pk = Entities.EntityReader.ReadDB();
+            ////pk.Taxis.First().Client= new Customer(new Location(), new Location(), 1, "baran");
+            //pk.Taxis.Add(new Taxi
+            //    (
+            //        new Location(0,0,"from"), new Location(), new Car("car-car", LicenseCategory.B, 4),   new Driver("petro", LicenseCategory.B), new Customer(new Location(),new Location(), 4,"client" )
+            //    ));
+            //Entities.EntityReader.WriteDB(park);
         }
     }
 }

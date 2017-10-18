@@ -192,11 +192,13 @@ namespace TaxiGUI
             if (currTaxi.CurrentState == Taxi.State.InWay)
             {
                 currTaxi.CurrentState = Taxi.State.Busy;
+                currTaxi.Location = currTaxi.Client.CurrentLocation;
                 currTaxi.TaxiTarget = currTaxi.Client.TargetLocation;
             }
             else if (currTaxi.CurrentState == Taxi.State.Busy)
             {
                 currTaxi.TaxiTarget = null;
+                currTaxi.Location = currTaxi.Client.TargetLocation;
                 currTaxi.Client = null;
                 currTaxi.CurrentState = Taxi.State.Free;
             }

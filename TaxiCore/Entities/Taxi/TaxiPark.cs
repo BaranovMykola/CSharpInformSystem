@@ -40,7 +40,7 @@ namespace TaxiCore.Entities.Taxi
             }
         }
 
-        protected List<Customer> clientsQueue = new EditableList<Customer>();
+        public List<Customer> clientsQueue = new EditableList<Customer>();
 
         private Dictionary<string, string> geoRarametrs = new Dictionary<string, string>();
 

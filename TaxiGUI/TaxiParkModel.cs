@@ -14,6 +14,12 @@ namespace TaxiGUI
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public TaxiParkModel(TaxiPark park)
+        {
+            this.Taxis = new ObservableCollection<Taxi>(park.Taxis);
+                ClientsQueue = new ObservableCollection<Customer>(park.clientsQueue);
+        }
+
         public ObservableCollection<Taxi> Taxis
         {
             get
