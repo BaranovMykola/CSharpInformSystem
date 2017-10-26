@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaxiGUI"
         mc:Ignorable="d"
-        Title="AddClient" Height="278.78" Width="285.113"
+        Title="Add Client" Height="278.78" Width="285.113"
         MinWidth="300"
         MinHeight="300">
     <Window.Resources>
