@@ -1,0 +1,43 @@
+﻿<Window x:Class="WPF_Shapes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Shapes"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu DockPanel.Dock="Top" Grid.Row="0" Margin="0,0,0.4,0">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New"  />
+                <MenuItem Header="_Open" />
+                <Separator />
+                <MenuItem x:Name="Settings" Header="_Save"/>
+            </MenuItem>
+        </Menu>
+        
+        <ItemsControl ItemsSource="{Binding Polygons}" Grid.Row="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True" Background="AliceBlue" x:Name="canvasArea">
+                        <Canvas.InputBindings>
+                            <MouseBinding Gesture="LeftClick" Command="{Binding ClickCanvasCommand}" CommandParameter="{Binding ElementName=canvasArea}" />
+                            <MouseBinding Gesture="RightClick" Command="{Binding DrawPolyCommand}" CommandParameter="{Binding ElementName=canvasArea}" />
+                        </Canvas.InputBindings>
+                    </Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+           
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Polygon Points="{Binding Pol.Points}" Fill="{Binding Fill}"></Polygon>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>
