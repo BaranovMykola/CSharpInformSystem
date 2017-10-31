@@ -57,5 +57,21 @@ namespace WPF_Shapes
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private Transform _rtr;
+
+        public Transform RTR
+        {
+            get
+            {
+                return _rtr;
+
+            }
+            set
+            {
+                _rtr = value;
+                OnPropertyChanged(nameof(RTR));
+            }
+        }
     }
 }

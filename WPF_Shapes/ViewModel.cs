@@ -16,6 +16,7 @@ namespace WPF_Shapes
     public class ViewModel : INotifyPropertyChanged
     {
         private readonly List<Point> polyognEdges = new List<Point>();
+        private Transform _rtr;
 
         public ViewModel(WindowMediator colorPicker)
         {
@@ -112,6 +113,7 @@ namespace WPF_Shapes
             var polygonWrapper = parameter as PolygonWrapper;
             polygonWrapper?.SwapStrokeThicknes(10);
             polygonWrapper.CanDrag = !polygonWrapper.CanDrag;
+            OnPropertyChanged(nameof(Polygons));
         }
     }
 }

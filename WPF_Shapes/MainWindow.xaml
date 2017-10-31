@@ -47,7 +47,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Polygon Points="{Binding Pol.Points}" Fill="{Binding Fill}" StrokeThickness="{Binding StrokeThinkness}" Stroke="{Binding Stroke}"
-                             local:DragBehavior.Drag="{Binding CanDrag}"></Polygon>
+                             local:DragBehavior.Drag="{Binding CanDrag}" RenderTransform="{Binding RTR, Mode=OneWayToSource, UpdateSourceTrigger=Default}"></Polygon>
                 </DataTemplate> 
             </ItemsControl.ItemTemplate>
         </ItemsControl>

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -93,6 +96,9 @@ namespace WPF_Shapes
             if (!((UIElement)sender).IsMouseCaptured || !(Bools[UiElements.FindIndex(s => s == (sender as UIElement))])) return;
             Transform.X = _elementStartPosition2.X + diff.X;
             Transform.Y = _elementStartPosition2.Y + diff.Y;
+            Debug.Assert(sender as DependencyObject != null, "sender as DependencyObject != null");
+            var bindingExpression = BindingOperations.GetBindingExpression(sender as DependencyObject, Polygon.RenderTransformProperty);
+            bindingExpression.UpdateSource();
         }
     }
 }
