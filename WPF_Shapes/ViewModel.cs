@@ -21,7 +21,7 @@ namespace WPF_Shapes
         {
             ClickCanvasCommand = new RelayCommand(ClickCanvas);
             DrawPolyCommand = new RelayCommand(DrawPoly);
-            InvokeColorDialogoCommand = new RelayCommand(s => ColorDialogInvoker.ShowDialog(this.ColorDialog));
+            InvokeColorDialogoCommand = new RelayCommand(OpenColorDialog);
 
             ColorDialogInvoker = colorPicker;
             ColorDialogInvoker.OnClose += ColorDialog_OnClose;
@@ -31,7 +31,7 @@ namespace WPF_Shapes
 
         public WindowMediator ColorDialogInvoker { get; set; }
 
-        public ColorDialogViewModel ColorDialog { get; set; } = new ColorDialogViewModel();
+        public ColorDialogViewModel ColorDialogViewModel { get; set; } = new ColorDialogViewModel();
 
         public ObservableCollection<PolygonWrapper> Polygons { get; set; } = new ObservableCollection<PolygonWrapper>();
 
@@ -58,11 +58,27 @@ namespace WPF_Shapes
             Point center = polyognEdges.Aggregate((a, b) => new Point(a.X + b.X, a.Y + b.Y));
             center.X /= polyognEdges.Count;
             center.Y /= polyognEdges.Count;
-            ColorDialogInvoker.ShowDialog(this.ColorDialog);
-            Polygons.Add(new PolygonWrapper() { Pol = p, Fill = ColorDialog.ColorPicker, Id = $"Polygon {Polygons.Count+1}" });
-            OnPropertyChanged(nameof(Polygons));
             
+            InvokeColorDialogoCommand?.Execute(null);
+
+            if (ColorDialogViewModel.DialogResult)
+            {
+                Polygons.Add(new PolygonWrapper()
+                {
+                    Pol = p,
+                    Fill = ColorDialogViewModel.ColorPicker,
+                    Id = $"Polygon {Polygons.Count + 1}"
+                });
+                OnPropertyChanged(nameof(Polygons));
+            }
+
             polyognEdges.Clear();
+        }
+
+        private void OpenColorDialog(object parametr)
+        {
+            ColorDialogViewModel.DialogResult = false;
+            ColorDialogInvoker.ShowDialog(this.ColorDialogViewModel);
         }
 
         private void ColorDialog_OnClose(object sender, EventArgs e)

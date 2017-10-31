@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -19,7 +20,7 @@ namespace WPF_Shapes
         private int _g;
         private int _b;
         private double _alpha = 255;
-        private Brush _colorPicker;
+        private Brush _colorPicker = Brushes.Black;
 
         public ColorDialogViewModel()
         {
@@ -29,17 +30,24 @@ namespace WPF_Shapes
                 new ObservableCollection<Brush>(
                     typeof (Brushes).GetProperties().Select(p => p.GetValue(null) as Brush).OrderBy(s =>
                     {
-                        var pp = ((Color)(s.GetValue(SolidColorBrush.ColorProperty)));
+                        var pp = ((Color) (s.GetValue(SolidColorBrush.ColorProperty)));
                         return pp.R;
                     }).ThenBy(s =>
                     {
-                        var pp = ((Color)(s.GetValue(SolidColorBrush.ColorProperty)));
+                        var pp = ((Color) (s.GetValue(SolidColorBrush.ColorProperty)));
                         return pp.G;
                     }).ThenBy(s =>
                     {
-                        var pp = ((Color)(s.GetValue(SolidColorBrush.ColorProperty)));
+                        var pp = ((Color) (s.GetValue(SolidColorBrush.ColorProperty)));
                         return pp.B;
+                    }).Where(s =>
+                    {
+                        var pp = ((Color) (s.GetValue(SolidColorBrush.ColorProperty)));
+                        return pp.A != 0;
                     }).ToList());
+
+            OkCommand = new RelayCommand(Ok);
+            CancelCommand = new RelayCommand(Cancel);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -100,7 +108,13 @@ namespace WPF_Shapes
 
         public ICommand ColorClickCommand { get; set; }
 
+        public ICommand OkCommand { get; set; }
+
+        public ICommand CancelCommand { get; set; }
+
         public ObservableCollection<Brush> Colors { get; set; }
+
+        public bool DialogResult { get; set; }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -124,6 +138,23 @@ namespace WPF_Shapes
             var g = Colors[2];
             var values = typeof(Brushes).GetProperties().Select(p => new { Name = p.Name, Brush = p.GetValue(null) as Brush }).
     ToArray();
+        }
+
+        private void Ok(object parameter)
+        {
+            DialogResult = true;
+            CloseWindow(parameter);
+        }
+
+        private void Cancel(object parameter)
+        {
+            DialogResult = false;
+            CloseWindow(parameter);
+        }
+
+        private void CloseWindow(object window)
+        {
+            (window as Window)?.Close();
         }
     }
 }
