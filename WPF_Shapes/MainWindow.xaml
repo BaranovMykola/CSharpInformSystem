@@ -24,6 +24,9 @@
                     <Style TargetType="MenuItem">
                         <Setter Property="Header" Value="{Binding Id}"/>
                         <Setter Property="IsCheckable" Value="True"/>
+                        <Setter Property="Command" Value="{Binding DataContext.SelectPolygonCommand,
+                                    RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}"/>
+                        <Setter Property="CommandParameter" Value="{Binding}"></Setter>
                     </Style>
                 </MenuItem.ItemContainerStyle>
             </MenuItem>
@@ -32,7 +35,7 @@
         <ItemsControl ItemsSource="{Binding Polygons}" Grid.Row="1">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas IsItemsHost="True" Background="AliceBlue" x:Name="canvasArea">
+                    <Canvas IsItemsHost="True" Background="#FFB7B9B4" x:Name="canvasArea">
                         <Canvas.InputBindings>
                             <MouseBinding Gesture="LeftClick" Command="{Binding ClickCanvasCommand}" CommandParameter="{Binding ElementName=canvasArea}" />
                             <MouseBinding Gesture="RightClick" Command="{Binding DrawPolyCommand}" CommandParameter="{Binding ElementName=canvasArea}" />
@@ -43,7 +46,7 @@
            
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Polygon Points="{Binding Pol.Points}" Fill="{Binding Fill}"></Polygon>
+                    <Polygon Points="{Binding Pol.Points}" Fill="{Binding Fill}" StrokeThickness="{Binding StrokeThinkness}" Stroke="{Binding Stroke}"></Polygon>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

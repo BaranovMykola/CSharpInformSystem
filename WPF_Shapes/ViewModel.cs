@@ -22,9 +22,8 @@ namespace WPF_Shapes
             ClickCanvasCommand = new RelayCommand(ClickCanvas);
             DrawPolyCommand = new RelayCommand(DrawPoly);
             InvokeColorDialogoCommand = new RelayCommand(OpenColorDialog);
-
             ColorDialogInvoker = colorPicker;
-            ColorDialogInvoker.OnClose += ColorDialog_OnClose;
+            SelectPolygonCommand = new RelayCommand(SelectPolygon);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -40,6 +39,8 @@ namespace WPF_Shapes
         public ICommand DrawPolyCommand { get; set; }
 
         public ICommand InvokeColorDialogoCommand { get; set; }
+
+        public ICommand SelectPolygonCommand { get; set; }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -63,11 +64,26 @@ namespace WPF_Shapes
 
             if (ColorDialogViewModel.DialogResult)
             {
+                var fill = ColorDialogViewModel.ColorPicker;
+                var color = (Color)fill.GetValue(SolidColorBrush.ColorProperty);
+                var average = (color.R + color.G + color.B)/3;
+
+                Brush stroke;
+                if (average < 127)
+                {
+                    stroke = Brushes.White;
+                }
+                else
+                {
+                    stroke = Brushes.Black;
+                }
+
                 Polygons.Add(new PolygonWrapper()
                 {
                     Pol = p,
                     Fill = ColorDialogViewModel.ColorPicker,
-                    Id = $"Polygon {Polygons.Count + 1}"
+                    Id = $"Polygon {Polygons.Count + 1}",
+                    Stroke = stroke
                 });
                 OnPropertyChanged(nameof(Polygons));
             }
@@ -81,9 +97,10 @@ namespace WPF_Shapes
             ColorDialogInvoker.ShowDialog(this.ColorDialogViewModel);
         }
 
-        private void ColorDialog_OnClose(object sender, EventArgs e)
+        private void SelectPolygon(object parameter)
         {
-            Console.WriteLine("dialog close");
+            var polygonWrapper = parameter as PolygonWrapper;
+            polygonWrapper?.SwapStrokeThicknes(10);
         }
     }
 }

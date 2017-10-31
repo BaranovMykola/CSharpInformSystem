@@ -49,7 +49,9 @@
                     <DataTemplate>
                         <Canvas Margin="1,1,1,1" Background="{Binding}" Width="15" Height="15">
                             <Canvas.InputBindings>
-                                <MouseBinding Gesture="LeftClick" Command="{Binding DataContext.ColorClickCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" CommandParameter="{Binding}" />
+                                <MouseBinding Gesture="LeftClick"
+                                              Command="{Binding DataContext.ColorClickCommand,
+                                    RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}" CommandParameter="{Binding}" />
                             </Canvas.InputBindings>
                         </Canvas>
                     </DataTemplate>
