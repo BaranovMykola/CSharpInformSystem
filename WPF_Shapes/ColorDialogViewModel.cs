@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using WPF_Shapes.Annotations;
 
@@ -21,6 +22,7 @@ namespace WPF_Shapes
 
         public ColorDialogViewModel()
         {
+            ColorClickCommand = new RelayCommand(ColorClick);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -79,6 +81,8 @@ namespace WPF_Shapes
             }
         }
 
+        public ICommand ColorClickCommand { get; set; }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -88,6 +92,16 @@ namespace WPF_Shapes
         private void UpdateBrush()
         {
             ColorPicker = new SolidColorBrush(Color.FromArgb((byte)Alpha, (byte) R, (byte) G, (byte) B));
+        }
+
+        private void ColorClick(object parameter)
+        {
+            var p = (parameter as Brush);
+            var pp = ((Color) (p.GetValue(SolidColorBrush.ColorProperty)));
+            R = pp.R;
+            B = pp.B;
+            G = pp.G;
+            Alpha = pp.A;
         }
     }
 }
