@@ -59,7 +59,7 @@ namespace WPF_Shapes
             center.X /= polyognEdges.Count;
             center.Y /= polyognEdges.Count;
             ColorDialogInvoker.ShowDialog(this.ColorDialog);
-            Polygons.Add(new PolygonWrapper() { Pol = p, Fill = ColorDialog.ColorPicker });
+            Polygons.Add(new PolygonWrapper() { Pol = p, Fill = ColorDialog.ColorPicker, Id = $"Polygon {Polygons.Count+1}" });
             OnPropertyChanged(nameof(Polygons));
             
             polyognEdges.Clear();

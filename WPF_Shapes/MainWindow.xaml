@@ -19,6 +19,14 @@
                 <Separator />
                 <MenuItem x:Name="Settings" Header="_Save"/>
             </MenuItem>
+            <MenuItem Header="_Shapes" ItemsSource="{Binding Polygons}">
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <!--<Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}, Path=DataContext.ViewSwitchCommand}" />-->
+                        <Setter Property="Header" Value="{Binding Id}" />
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
         </Menu>
         
         <ItemsControl ItemsSource="{Binding Polygons}" Grid.Row="1">

@@ -6,6 +6,9 @@ namespace WPF_Shapes
     public class PolygonWrapper
     {
         public Polygon Pol { get; set; }
+
         public Brush Fill { get; set; }
+
+        public string Id { get; set; }
     }
 }
