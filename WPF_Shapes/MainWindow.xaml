@@ -22,8 +22,8 @@
             <MenuItem Header="_Shapes" ItemsSource="{Binding Polygons}">
                 <MenuItem.ItemContainerStyle>
                     <Style TargetType="MenuItem">
-                        <!--<Setter Property="Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}, Path=DataContext.ViewSwitchCommand}" />-->
-                        <Setter Property="Header" Value="{Binding Id}" />
+                        <Setter Property="Header" Value="{Binding Id}"/>
+                        <Setter Property="IsCheckable" Value="True"/>
                     </Style>
                 </MenuItem.ItemContainerStyle>
             </MenuItem>
