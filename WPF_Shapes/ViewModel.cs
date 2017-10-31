@@ -50,42 +50,52 @@ namespace WPF_Shapes
 
         private void ClickCanvas(object parameter)
         {
-            polyognEdges.Add(Mouse.GetPosition(parameter as IInputElement));
+            if (!Polygons.Any(s => s.CanDrag))
+            {
+                polyognEdges.Add(Mouse.GetPosition(parameter as IInputElement));
+            }
         }
 
         private void DrawPoly(object parameter)
         {
-            var p = new Polygon() { Points = new PointCollection(polyognEdges) };
-            Point center = polyognEdges.Aggregate((a, b) => new Point(a.X + b.X, a.Y + b.Y));
-            center.X /= polyognEdges.Count;
-            center.Y /= polyognEdges.Count;
-            
-            InvokeColorDialogoCommand?.Execute(null);
-
-            if (ColorDialogViewModel.DialogResult)
+            if (!Polygons.Any(s => s.CanDrag))
             {
-                var fill = ColorDialogViewModel.ColorPicker;
-                var color = (Color)fill.GetValue(SolidColorBrush.ColorProperty);
-                var average = (color.R + color.G + color.B)/3;
+                var p = new Polygon() {Points = new PointCollection(polyognEdges)};
+                Point center = polyognEdges.Aggregate((a, b) => new Point(a.X + b.X, a.Y + b.Y));
+                center.X /= polyognEdges.Count;
+                center.Y /= polyognEdges.Count;
 
-                Brush stroke;
-                if (average < 127)
-                {
-                    stroke = Brushes.White;
-                }
-                else
-                {
-                    stroke = Brushes.Black;
-                }
+                InvokeColorDialogoCommand?.Execute(null);
 
-                Polygons.Add(new PolygonWrapper()
+                if (ColorDialogViewModel.DialogResult)
                 {
-                    Pol = p,
-                    Fill = ColorDialogViewModel.ColorPicker,
-                    Id = $"Polygon {Polygons.Count + 1}",
-                    Stroke = stroke
-                });
-                OnPropertyChanged(nameof(Polygons));
+                    var fill = ColorDialogViewModel.ColorPicker;
+                    var color = (Color) fill.GetValue(SolidColorBrush.ColorProperty);
+                    var average = (color.R + color.G + color.B)/3;
+
+                    Brush stroke;
+                    if (average < 127)
+                    {
+                        stroke = Brushes.White;
+                    }
+                    else
+                    {
+                        stroke = Brushes.Black;
+                    }
+
+                    Polygons.Add(new PolygonWrapper()
+                    {
+                        Pol = p,
+                        Fill = ColorDialogViewModel.ColorPicker,
+                        Id = $"Polygon {Polygons.Count + 1}",
+                        Stroke = stroke
+                    });
+                    OnPropertyChanged(nameof(Polygons));
+                }
+            }
+            else
+            {
+                MessageBox.Show("You cannot add new shapes while dragging");
             }
 
             polyognEdges.Clear();
