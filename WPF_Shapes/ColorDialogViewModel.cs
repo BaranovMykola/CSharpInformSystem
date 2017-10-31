@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -23,6 +24,22 @@ namespace WPF_Shapes
         public ColorDialogViewModel()
         {
             ColorClickCommand = new RelayCommand(ColorClick);
+
+            Colors =
+                new ObservableCollection<Brush>(
+                    typeof (Brushes).GetProperties().Select(p => p.GetValue(null) as Brush).OrderBy(s =>
+                    {
+                        var pp = ((Color)(s.GetValue(SolidColorBrush.ColorProperty)));
+                        return pp.R;
+                    }).ThenBy(s =>
+                    {
+                        var pp = ((Color)(s.GetValue(SolidColorBrush.ColorProperty)));
+                        return pp.G;
+                    }).ThenBy(s =>
+                    {
+                        var pp = ((Color)(s.GetValue(SolidColorBrush.ColorProperty)));
+                        return pp.B;
+                    }).ToList());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -83,6 +100,8 @@ namespace WPF_Shapes
 
         public ICommand ColorClickCommand { get; set; }
 
+        public ObservableCollection<Brush> Colors { get; set; }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -96,12 +115,15 @@ namespace WPF_Shapes
 
         private void ColorClick(object parameter)
         {
-            var p = (parameter as Brush);
-            var pp = ((Color) (p.GetValue(SolidColorBrush.ColorProperty)));
+            var p1 = (parameter as Brush);
+            var pp = ((Color) (p1.GetValue(SolidColorBrush.ColorProperty)));
             R = pp.R;
             B = pp.B;
             G = pp.G;
             Alpha = pp.A;
+            var g = Colors[2];
+            var values = typeof(Brushes).GetProperties().Select(p => new { Name = p.Name, Brush = p.GetValue(null) as Brush }).
+    ToArray();
         }
     }
 }
