@@ -9,6 +9,7 @@ namespace WPF_Shapes
     public class PolygonWrapper : INotifyPropertyChanged
     {
         private int _strokeThinkness;
+        private bool _canDrag = false;
         public Polygon Pol { get; set; }
 
         public Brush Fill { get; set; }
@@ -24,6 +25,16 @@ namespace WPF_Shapes
             {
                 _strokeThinkness = value; 
                 OnPropertyChanged(nameof(StrokeThinkness));
+            }
+        }
+
+        public bool CanDrag
+        {
+            get { return _canDrag; }
+            set
+            {
+                _canDrag = value; 
+                OnPropertyChanged(nameof(CanDrag));
             }
         }
 

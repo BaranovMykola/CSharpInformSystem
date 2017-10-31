@@ -101,6 +101,7 @@ namespace WPF_Shapes
         {
             var polygonWrapper = parameter as PolygonWrapper;
             polygonWrapper?.SwapStrokeThicknes(10);
+            polygonWrapper.CanDrag = !polygonWrapper.CanDrag;
         }
     }
 }

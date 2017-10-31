@@ -1,12 +1,15 @@
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace WPF_Shapes
 {
     public class DragBehavior
     {
-        public readonly TranslateTransform Transform = new TranslateTransform();
+        public TranslateTransform Transform = new TranslateTransform();
 
         private Point _elementStartPosition2;
 
@@ -29,6 +32,10 @@ namespace WPF_Shapes
                 typeof(bool), typeof(DragBehavior),
                 new PropertyMetadata(false, OnDragChanged));
 
+        public static List<UIElement> UiElements { get; set; } = new List<UIElement>();
+
+        public static List<bool> Bools { get; set; } = new List<bool>();
+
         private static void OnDragChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             // ignoring error checking
@@ -36,16 +43,28 @@ namespace WPF_Shapes
             var isDrag = (bool)(e.NewValue);
 
             Instance = new DragBehavior();
-            ((UIElement)sender).RenderTransform = Instance.Transform;
 
             if (isDrag)
             {
+                //((UIElement)sender).RenderTransform = Instance.Transform;
+                if (UiElements.Find(s => s == element) == null)
+                {
+                    ((UIElement) sender).RenderTransform = Instance.Transform;
+                    UiElements.Add(element);
+                    Bools.Add(true);
+                }
+                else
+                {
+                    Bools[UiElements.FindIndex(s => s == element)] = true;
+                }
+
                 element.MouseLeftButtonDown += Instance.ElementOnMouseLeftButtonDown;
                 element.MouseLeftButtonUp += Instance.ElementOnMouseLeftButtonUp;
                 element.MouseMove += Instance.ElementOnMouseMove;
             }
             else
             {
+                Bools[UiElements.FindIndex(s => s == element)] = false;
                 element.MouseLeftButtonDown -= Instance.ElementOnMouseLeftButtonDown;
                 element.MouseLeftButtonUp -= Instance.ElementOnMouseLeftButtonUp;
                 element.MouseMove -= Instance.ElementOnMouseMove;
@@ -71,7 +90,7 @@ namespace WPF_Shapes
             var parent = Application.Current.MainWindow;
             var mousePos = mouseEventArgs.GetPosition(parent);
             var diff = (mousePos - _mouseStartPosition2);
-            if (!((UIElement)sender).IsMouseCaptured) return;
+            if (!((UIElement)sender).IsMouseCaptured || !(Bools[UiElements.FindIndex(s => s == (sender as UIElement))])) return;
             Transform.X = _elementStartPosition2.X + diff.X;
             Transform.Y = _elementStartPosition2.Y + diff.Y;
         }
