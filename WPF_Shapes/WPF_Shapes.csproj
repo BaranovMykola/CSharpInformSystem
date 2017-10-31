@@ -61,6 +61,7 @@
     <Compile Include="ColorDialogViewModel.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="DragBehavior.cs" />
     <Compile Include="Shapes\Ellipse.cs" />
     <Compile Include="Shapes\IShape.cs" />
     <Compile Include="PolygonWrapper.cs" />
