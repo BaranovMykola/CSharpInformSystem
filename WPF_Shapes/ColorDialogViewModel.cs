@@ -16,11 +16,11 @@ namespace WPF_Shapes
 {
     public class ColorDialogViewModel : INotifyPropertyChanged
     {
-        private int _r;
-        private int _g;
-        private int _b;
-        private double _alpha = 255;
-        private Brush _colorPicker = Brushes.Black;
+        private int r;
+        private int g;
+        private int b;
+        private double alpha = 255;
+        private Brush colorPicker = Brushes.Black;
 
         public ColorDialogViewModel()
         {
@@ -28,23 +28,23 @@ namespace WPF_Shapes
 
             Colors =
                 new ObservableCollection<Brush>(
-                    typeof (Brushes).GetProperties().Select(p => p.GetValue(null) as Brush).OrderBy(s =>
-                    {
-                        var pp = ((Color) (s.GetValue(SolidColorBrush.ColorProperty)));
-                        return pp.R;
-                    }).ThenBy(s =>
-                    {
-                        var pp = ((Color) (s.GetValue(SolidColorBrush.ColorProperty)));
-                        return pp.G;
-                    }).ThenBy(s =>
-                    {
-                        var pp = ((Color) (s.GetValue(SolidColorBrush.ColorProperty)));
-                        return pp.B;
-                    }).Where(s =>
-                    {
-                        var pp = ((Color) (s.GetValue(SolidColorBrush.ColorProperty)));
-                        return pp.A != 0;
-                    }).ToList());
+                    typeof(Brushes).GetProperties().Select(p => p.GetValue(null) as Brush).OrderBy(s =>
+                   {
+                       var pp = (Color)s.GetValue(SolidColorBrush.ColorProperty);
+                       return pp.R;
+                   }).ThenBy(s =>
+                   {
+                       var pp = (Color)s.GetValue(SolidColorBrush.ColorProperty);
+                       return pp.G;
+                   }).ThenBy(s =>
+                   {
+                       var pp = (Color)s.GetValue(SolidColorBrush.ColorProperty);
+                       return pp.B;
+                   }).Where(s =>
+                   {
+                       var pp = (Color)s.GetValue(SolidColorBrush.ColorProperty);
+                       return pp.A != 0;
+                   }).ToList());
 
             OkCommand = new RelayCommand(Ok);
             CancelCommand = new RelayCommand(Cancel);
@@ -54,10 +54,14 @@ namespace WPF_Shapes
 
         public int R
         {
-            get { return _r; }
+            get
+            {
+                return r;
+            }
+
             set
             {
-                _r = value;
+                r = value;
                 OnPropertyChanged(nameof(R));
                 UpdateBrush();
             }
@@ -65,10 +69,14 @@ namespace WPF_Shapes
 
         public int G
         {
-            get { return _g; }
+            get
+            {
+                return g;
+            }
+
             set
             {
-                _g = value;
+                g = value;
                 OnPropertyChanged(nameof(G));
                 UpdateBrush();
             }
@@ -76,10 +84,14 @@ namespace WPF_Shapes
 
         public int B
         {
-            get { return _b; }
+            get
+            {
+                return b;
+            }
+
             set
             {
-                _b = value;
+                b = value;
                 OnPropertyChanged(nameof(B));
                 UpdateBrush();
             }
@@ -87,10 +99,14 @@ namespace WPF_Shapes
 
         public double Alpha
         {
-            get { return _alpha; }
+            get
+            {
+                return alpha; 
+            }
+
             set
             {
-                _alpha = value;
+                alpha = value;
                 OnPropertyChanged(nameof(B));
                 UpdateBrush();
             }
@@ -98,10 +114,14 @@ namespace WPF_Shapes
 
         public Brush ColorPicker
         {
-            get { return _colorPicker; }
+            get
+            {
+                return colorPicker; 
+            }
+
             set
             {
-                _colorPicker = value; 
+                colorPicker = value;
                 OnPropertyChanged(nameof(ColorPicker));
             }
         }
@@ -124,20 +144,17 @@ namespace WPF_Shapes
 
         private void UpdateBrush()
         {
-            ColorPicker = new SolidColorBrush(Color.FromArgb((byte)Alpha, (byte) R, (byte) G, (byte) B));
+            ColorPicker = new SolidColorBrush(Color.FromArgb((byte)Alpha, (byte)R, (byte)G, (byte)B));
         }
 
         private void ColorClick(object parameter)
         {
-            var p1 = (parameter as Brush);
-            var pp = ((Color) (p1.GetValue(SolidColorBrush.ColorProperty)));
-            R = pp.R;
-            B = pp.B;
-            G = pp.G;
-            Alpha = pp.A;
-            var g = Colors[2];
-            var values = typeof(Brushes).GetProperties().Select(p => new { Name = p.Name, Brush = p.GetValue(null) as Brush }).
-    ToArray();
+            var brush = parameter as Brush;
+            var color = (Color)brush.GetValue(SolidColorBrush.ColorProperty);
+            R = color.R;
+            B = color.B;
+            G = color.G;
+            Alpha = color.A;
         }
 
         private void Ok(object parameter)

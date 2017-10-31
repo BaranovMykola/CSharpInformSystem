@@ -58,7 +58,9 @@
     <Compile Include="ColorDialog.xaml.cs">
       <DependentUpon>ColorDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ColorDialogViewModel.cs" />
+    <Compile Include="ColorDialogViewModel.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Shapes\Ellipse.cs" />
     <Compile Include="Shapes\IShape.cs" />
     <Compile Include="PolygonWrapper.cs" />
