@@ -65,13 +65,9 @@
     <Compile Include="DragBehavior.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Shapes\Ellipse.cs" />
-    <Compile Include="Shapes\IShape.cs" />
     <Compile Include="PolygonWrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RelayCommand.cs" />
-    <Compile Include="Shapes\Polygon.cs" />
-    <Compile Include="Shapes\ShapeConverter.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="WindowMediator.cs" />
     <Page Include="ColorDialog.xaml">
