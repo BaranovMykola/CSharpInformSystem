@@ -31,7 +31,7 @@ namespace WPF_Shapes
                     typeof(Brushes).GetProperties().Select(p => p.GetValue(null) as Brush).OrderBy(s =>
                    {
                        var pp = (Color)s.GetValue(SolidColorBrush.ColorProperty);
-                       return pp.R+pp.G+pp.B;
+                       return pp.R + pp.G + pp.B;
                    }).Where(s =>
                    {
                        var pp = (Color)s.GetValue(SolidColorBrush.ColorProperty);
@@ -93,7 +93,7 @@ namespace WPF_Shapes
         {
             get
             {
-                return alpha; 
+                return alpha;
             }
 
             set
@@ -108,7 +108,7 @@ namespace WPF_Shapes
         {
             get
             {
-                return colorPicker; 
+                return colorPicker;
             }
 
             set
