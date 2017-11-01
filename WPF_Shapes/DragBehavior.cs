@@ -12,13 +12,19 @@ namespace WPF_Shapes
 {
     public class DragBehavior
     {
-        public TranslateTransform Transform = new TranslateTransform();
+        public static readonly DependencyProperty IsDragProperty = DependencyProperty.RegisterAttached("Drag", typeof(bool), typeof(DragBehavior), new PropertyMetadata(false, OnDragChanged));
 
-        private Point _elementStartPosition2;
+        private Point elementStartPosition2;
 
-        private Point _mouseStartPosition2;
+        private Point mouseStartPosition2;
 
         public static DragBehavior Instance { get; set; } = new DragBehavior();
+
+        public static List<UIElement> UiElements { get; set; } = new List<UIElement>();
+
+        public static List<bool> Bools { get; set; } = new List<bool>();
+
+        public TranslateTransform Transform { get; set; } = new TranslateTransform();
 
         public static bool GetDrag(DependencyObject obj)
         {
@@ -30,29 +36,18 @@ namespace WPF_Shapes
             obj.SetValue(IsDragProperty, value);
         }
 
-        public static readonly DependencyProperty IsDragProperty =
-            DependencyProperty.RegisterAttached("Drag",
-                typeof(bool), typeof(DragBehavior),
-                new PropertyMetadata(false, OnDragChanged));
-
-        public static List<UIElement> UiElements { get; set; } = new List<UIElement>();
-
-        public static List<bool> Bools { get; set; } = new List<bool>();
-
         private static void OnDragChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            // ignoring error checking
             var element = (UIElement)sender;
-            var isDrag = (bool)(e.NewValue);
+            var isDrag = (bool)e.NewValue;
 
             Instance = new DragBehavior();
 
             if (isDrag)
             {
-                //((UIElement)sender).RenderTransform = Instance.Transform;
                 if (UiElements.Find(s => s == element) == null)
                 {
-                    ((UIElement) sender).RenderTransform = Instance.Transform;
+                    ((UIElement)sender).RenderTransform = Instance.Transform;
                     UiElements.Add(element);
                     Bools.Add(true);
                 }
@@ -77,28 +72,31 @@ namespace WPF_Shapes
         private void ElementOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var parent = Application.Current.MainWindow;
-            _mouseStartPosition2 = mouseButtonEventArgs.GetPosition(parent);
+            mouseStartPosition2 = mouseButtonEventArgs.GetPosition(parent);
             ((UIElement)sender).CaptureMouse();
         }
 
         private void ElementOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             ((UIElement)sender).ReleaseMouseCapture();
-            _elementStartPosition2.X = Transform.X;
-            _elementStartPosition2.Y = Transform.Y;
+            elementStartPosition2.X = Transform.X;
+            elementStartPosition2.Y = Transform.Y;
         }
 
         private void ElementOnMouseMove(object sender, MouseEventArgs mouseEventArgs)
         {
             var parent = Application.Current.MainWindow;
             var mousePos = mouseEventArgs.GetPosition(parent);
-            var diff = (mousePos - _mouseStartPosition2);
-            if (!((UIElement)sender).IsMouseCaptured || !(Bools[UiElements.FindIndex(s => s == (sender as UIElement))])) return;
-            Transform.X = _elementStartPosition2.X + diff.X;
-            Transform.Y = _elementStartPosition2.Y + diff.Y;
-            Debug.Assert(sender as DependencyObject != null, "sender as DependencyObject != null");
-            var bindingExpression = BindingOperations.GetBindingExpression(sender as DependencyObject, Polygon.RenderTransformProperty);
-            bindingExpression.UpdateSource();
+            var diff = mousePos - mouseStartPosition2;
+            if (!((UIElement)sender).IsMouseCaptured || !Bools[UiElements.FindIndex(s => s == sender as UIElement)])
+            {
+                return;
+            }
+
+            Transform.X = elementStartPosition2.X + diff.X;
+            Transform.Y = elementStartPosition2.Y + diff.Y;
+            var bindingExpression = BindingOperations.GetBindingExpression(sender as DependencyObject, UIElement.RenderTransformProperty);
+            bindingExpression?.UpdateSource();
         }
     }
 }
