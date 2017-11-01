@@ -31,15 +31,7 @@ namespace WPF_Shapes
                     typeof(Brushes).GetProperties().Select(p => p.GetValue(null) as Brush).OrderBy(s =>
                    {
                        var pp = (Color)s.GetValue(SolidColorBrush.ColorProperty);
-                       return pp.R;
-                   }).ThenBy(s =>
-                   {
-                       var pp = (Color)s.GetValue(SolidColorBrush.ColorProperty);
-                       return pp.G;
-                   }).ThenBy(s =>
-                   {
-                       var pp = (Color)s.GetValue(SolidColorBrush.ColorProperty);
-                       return pp.B;
+                       return pp.R+pp.G+pp.B;
                    }).Where(s =>
                    {
                        var pp = (Color)s.GetValue(SolidColorBrush.ColorProperty);
@@ -154,7 +146,6 @@ namespace WPF_Shapes
             R = color.R;
             B = color.B;
             G = color.G;
-            //Alpha = color.A;
         }
 
         private void Ok(object parameter)

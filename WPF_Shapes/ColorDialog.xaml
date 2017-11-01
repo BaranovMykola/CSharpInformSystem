@@ -47,7 +47,7 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Canvas Margin="1,1,1,1" Background="{Binding}" Width="15" Height="15">
+                        <Canvas Margin="0,0,0,0" Background="{Binding}" Width="17" Height="17">
                             <Canvas.InputBindings>
                                 <MouseBinding Gesture="LeftClick"
                                               Command="{Binding DataContext.ColorClickCommand,
