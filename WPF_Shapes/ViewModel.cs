@@ -20,7 +20,6 @@ namespace WPF_Shapes
     public class ViewModel : INotifyPropertyChanged
     {
         private readonly List<Point> polyognEdges = new List<Point>();
-        private Transform _rtr;
 
         public ViewModel(WindowMediator colorPicker)
         {
@@ -71,7 +70,7 @@ namespace WPF_Shapes
         {
             if (!Polygons.Any(s => s.CanDrag))
             {
-                var p = new Polygon() {Points = new PointCollection(polyognEdges)};
+                var p = new Polygon() { Points = new PointCollection(polyognEdges) };
                 Point center = polyognEdges.Aggregate((a, b) => new Point(a.X + b.X, a.Y + b.Y));
                 center.X /= polyognEdges.Count;
                 center.Y /= polyognEdges.Count;
@@ -81,8 +80,8 @@ namespace WPF_Shapes
                 if (ColorDialogViewModel.DialogResult)
                 {
                     var fill = ColorDialogViewModel.ColorPicker;
-                    var color = (Color) fill.GetValue(SolidColorBrush.ColorProperty);
-                    var average = (color.R + color.G + color.B)/3;
+                    var color = (Color)fill.GetValue(SolidColorBrush.ColorProperty);
+                    var average = (color.R + color.G + color.B) / 3;
 
                     Brush stroke;
                     if (average < 127)
@@ -126,56 +125,40 @@ namespace WPF_Shapes
             OnPropertyChanged(nameof(Polygons));
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public List<PolygonWrapper> Lst
-        {
-            get { return Polygons.ToList(); }
-        }
-
         private void Save(object parameter)
         {
-            Console.WriteLine("ok?");
             var dialog = new SaveFileDialog();
             dialog.Filter = "XML (*.xml)|*.xml";
             var confirm = dialog.ShowDialog();
             if (confirm ?? false)
             {
-                Console.WriteLine(dialog.FileName);
-                var lst = Polygons.ToList();
                 File.WriteAllText(dialog.FileName, string.Empty);
-                using (
-                    var stream = File.Open(dialog.FileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Delete))
-                {
-                    var a = new A();
-                    foreach (var wrapper in Lst)
-                    {
-                        a.Add(wrapper);
-                    }
 
-                    for (int j = 0; j < a.Count; j++)
+                using (var stream = File.Open(dialog.FileName, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Delete))
+                {
+                    var a = new PolygonWrapperCollection(Polygons.ToList());
+
+                    foreach (var wrapper in a)
                     {
-                        var points = a[j].Pol.Points;
+                        var points = wrapper.Pol.Points;
                         for (int i = 0; i < points.Count; i++)
                         {
-                            points[i] = new Point(points[i].X + a[j].RTR.Value.OffsetX, points[i].Y + a[j].RTR.Value.OffsetY);
-                            //points[i] = new Point(0,0);
+                            points[i] = new Point(points[i].X + wrapper.RTR.Value.OffsetX, points[i].Y + wrapper.RTR.Value.OffsetY);
                         }
                     }
 
                     XamlWriter.Save(a, stream);
 
-                    for (int j = 0; j < a.Count; j++)
+                    foreach (var wrapper in a)
                     {
-                        var points = a[j].Pol.Points;
+                        var points = wrapper.Pol.Points;
                         for (int i = 0; i < points.Count; i++)
                         {
-                            points[i] = new Point(points[i].X - a[j].RTR.Value.OffsetX, points[i].Y - a[j].RTR.Value.OffsetY);
-                            //points[i] = new Point(0,0);
+                            points[i] = new Point(points[i].X - wrapper.RTR.Value.OffsetX, points[i].Y - wrapper.RTR.Value.OffsetY);
                         }
                     }
                 }
             }
-
         }
 
         private void Open(object parametr)
@@ -185,97 +168,12 @@ namespace WPF_Shapes
             var confirm = dialog.ShowDialog();
             if (confirm ?? false)
             {
-                using (
-    var stream = File.Open(dialog.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                using (var stream = File.Open(dialog.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     var obj = XamlReader.Load(stream);
-                    Polygons = new ObservableCollection<PolygonWrapper>((List<PolygonWrapper>)(obj as A));
+                    Polygons = new ObservableCollection<PolygonWrapper>(obj as PolygonWrapperCollection);
                     OnPropertyChanged(nameof(Polygons));
                 }
-            }
-        }
-    }
-
-    public class A : List<PolygonWrapper>
-    {
-        public A(List<PolygonWrapper> p): base(p)
-        {
-            
-        }
-
-        public A()
-        {
-            
-        }
-    }
-
-    [Serializable]
-    public class PolygonWrapper2
-    {
-        private int _strokeThinkness;
-        private bool _canDrag = false;
-
-        public Polygon Pol { get; set; }
-
-        public Brush Fill { get; set; }
-
-        public string Id { get; set; }
-
-        public Brush Stroke { get; set; }
-
-        public int StrokeThinkness
-        {
-            get { return _strokeThinkness; }
-            set
-            {
-                _strokeThinkness = value;
-                //OnPropertyChanged(nameof(StrokeThinkness));
-            }
-        }
-
-        public bool CanDrag
-        {
-            get { return _canDrag; }
-            set
-            {
-                _canDrag = value;
-                //OnPropertyChanged(nameof(CanDrag));
-            }
-        }
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        public void SwapStrokeThicknes(int val)
-        {
-            if (StrokeThinkness == val)
-            {
-                StrokeThinkness = 0;
-            }
-            else
-            {
-                StrokeThinkness = val;
-            }
-        }
-
-        //[NotifyPropertyChangedInvocator]
-        //protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        //}
-
-        private Transform _rtr;
-
-        public Transform RTR
-        {
-            get
-            {
-                return _rtr;
-
-            }
-            set
-            {
-                _rtr = value;
-                //OnPropertyChanged(nameof(RTR));
             }
         }
     }
