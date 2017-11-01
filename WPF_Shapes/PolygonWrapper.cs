@@ -1,15 +1,19 @@
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using WPF_Shapes.Annotations;
 
 namespace WPF_Shapes
 {
+    [Serializable]
     public class PolygonWrapper : INotifyPropertyChanged
     {
         private int _strokeThinkness;
         private bool _canDrag = false;
+
         public Polygon Pol { get; set; }
 
         public Brush Fill { get; set; }
@@ -70,6 +74,8 @@ namespace WPF_Shapes
             set
             {
                 _rtr = value;
+                //Pol.RenderTransform = value;
+                //Pol.RenderTransformOrigin = new Point(value.Value.OffsetX, value.Value.OffsetY);
                 OnPropertyChanged(nameof(RTR));
             }
         }

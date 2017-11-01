@@ -15,9 +15,9 @@
         <Menu DockPanel.Dock="Top" Grid.Row="0" Margin="0,0,0.4,0">
             <MenuItem Header="_File">
                 <MenuItem Header="_New"  />
-                <MenuItem Header="_Open" />
+                <MenuItem Header="_Open" Command="{Binding OpenCommand}"/>
                 <Separator />
-                <MenuItem x:Name="Settings" Header="_Save"/>
+                <MenuItem Header="_Save" Command="{Binding SaveCommand}"/>
             </MenuItem>
             <MenuItem Header="_Shapes" ItemsSource="{Binding Polygons}">
                 <MenuItem.ItemContainerStyle>
