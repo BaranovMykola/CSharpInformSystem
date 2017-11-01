@@ -154,7 +154,7 @@ namespace WPF_Shapes
             R = color.R;
             B = color.B;
             G = color.G;
-            Alpha = color.A;
+            //Alpha = color.A;
         }
 
         private void Ok(object parameter)
