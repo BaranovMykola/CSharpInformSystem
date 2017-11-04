@@ -71,35 +71,21 @@ namespace WPF_Shapes
             if (!Polygons.Any(s => s.CanDrag))
             {
                 var p = new Polygon() { Points = new PointCollection(polyognEdges) };
-                Point center = polyognEdges.Aggregate((a, b) => new Point(a.X + b.X, a.Y + b.Y));
-                center.X /= polyognEdges.Count;
-                center.Y /= polyognEdges.Count;
 
                 InvokeColorDialogoCommand?.Execute(null);
 
                 if (ColorDialogViewModel.DialogResult)
                 {
-                    var fill = ColorDialogViewModel.ColorPicker;
-                    var color = (Color)fill.GetValue(SolidColorBrush.ColorProperty);
-                    var average = (color.R + color.G + color.B) / 3;
-
-                    Brush stroke;
-                    if (average < 127)
-                    {
-                        stroke = Brushes.White;
-                    }
-                    else
-                    {
-                        stroke = Brushes.Black;
-                    }
-
-                    Polygons.Add(new PolygonWrapper()
+                    int average = ComputeAverageColor();
+                    Brush stroke = average < 127 ? Brushes.OrangeRed : Brushes.Black;
+                    Polygons.Add(new PolygonWrapper
                     {
                         Pol = p,
                         Fill = ColorDialogViewModel.ColorPicker,
                         Id = $"Polygon {Polygons.Count + 1}",
                         Stroke = stroke
                     });
+
                     OnPropertyChanged(nameof(Polygons));
                 }
             }
@@ -111,6 +97,14 @@ namespace WPF_Shapes
             polyognEdges.Clear();
         }
 
+        private int ComputeAverageColor()
+        {
+            var fill = ColorDialogViewModel.ColorPicker;
+            var color = (Color)fill.GetValue(SolidColorBrush.ColorProperty);
+            var average = (color.R + color.G + color.B) / 3;
+            return average;
+        }
+
         private void OpenColorDialog(object parametr)
         {
             ColorDialogViewModel.DialogResult = false;
@@ -120,7 +114,7 @@ namespace WPF_Shapes
         private void SelectPolygon(object parameter)
         {
             var polygonWrapper = parameter as PolygonWrapper;
-            polygonWrapper?.SwapStrokeThicknes(10);
+            polygonWrapper?.SwapStrokeThicknes(3);
             polygonWrapper.CanDrag = !polygonWrapper.CanDrag;
             OnPropertyChanged(nameof(Polygons));
         }
@@ -163,8 +157,7 @@ namespace WPF_Shapes
 
         private void Open(object parametr)
         {
-            var dialog = new OpenFileDialog();
-            dialog.Filter = "XML (*.xml)|*.xml";
+            var dialog = new OpenFileDialog {Filter = "XML (*.xml)|*.xml"};
             var confirm = dialog.ShowDialog();
             if (confirm ?? false)
             {

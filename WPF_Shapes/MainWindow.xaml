@@ -6,13 +6,14 @@
         xmlns:local="clr-namespace:WPF_Shapes"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525"
+        Background="Black">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Menu DockPanel.Dock="Top" Grid.Row="0" Margin="0,0,0.4,0">
+        <Menu DockPanel.Dock="Top" Grid.Row="0" Margin="0,0,0.4,0" Background="White">
             <MenuItem Header="_File">
                 <MenuItem Header="_New"  />
                 <MenuItem Header="_Open" Command="{Binding OpenCommand}"/>
@@ -32,10 +33,10 @@
             </MenuItem>
         </Menu>
         
-        <ItemsControl ItemsSource="{Binding Polygons}" Grid.Row="1">
+        <ItemsControl ItemsSource="{Binding Polygons}" Grid.Row="1" Margin="3,3,3,3">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas IsItemsHost="True" Background="#FFB7B9B4" x:Name="canvasArea">
+                    <Canvas IsItemsHost="True" Background="White" x:Name="canvasArea">
                         <Canvas.InputBindings>
                             <MouseBinding Gesture="LeftClick" Command="{Binding ClickCanvasCommand}" CommandParameter="{Binding ElementName=canvasArea}" />
                             <MouseBinding Gesture="RightClick" Command="{Binding DrawPolyCommand}" CommandParameter="{Binding ElementName=canvasArea}" />
