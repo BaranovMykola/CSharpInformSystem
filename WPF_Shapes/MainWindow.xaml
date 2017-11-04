@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Menu DockPanel.Dock="Top" Grid.Row="0" Margin="0,0,0.4,0" Background="White">
             <MenuItem Header="_File">
-                <MenuItem Header="_New"  />
+                <MenuItem Header="_New"  Command="{Binding NewCommand}"/>
                 <MenuItem Header="_Open" Command="{Binding OpenCommand}"/>
                 <Separator />
                 <MenuItem Header="_Save" Command="{Binding SaveCommand}"/>

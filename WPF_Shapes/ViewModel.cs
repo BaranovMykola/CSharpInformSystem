@@ -30,6 +30,7 @@ namespace WPF_Shapes
             SelectPolygonCommand = new RelayCommand(SelectPolygon);
             SaveCommand = new RelayCommand(Save);
             OpenCommand = new RelayCommand(Open);
+            NewCommand = new RelayCommand(New);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -51,6 +52,8 @@ namespace WPF_Shapes
         public ICommand SaveCommand { get; set; }
 
         public ICommand OpenCommand { get; set; }
+
+        public ICommand NewCommand { get; set; }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -168,6 +171,11 @@ namespace WPF_Shapes
                     OnPropertyChanged(nameof(Polygons));
                 }
             }
+        }
+
+        private void New(object parameter)
+        {
+            Polygons.Clear();
         }
     }
 }
