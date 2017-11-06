@@ -71,32 +71,34 @@ namespace WPF_Shapes
 
         private void DrawPoly(object parameter)
         {
-            if (!Polygons.Any(s => s.CanDrag))
+            if (polyognEdges.Count > 1)
             {
-                var p = new Polygon() { Points = new PointCollection(polyognEdges) };
-
-                InvokeColorDialogoCommand?.Execute(null);
-
-                if (ColorDialogViewModel.DialogResult)
+                if (!Polygons.Any(s => s.CanDrag))
                 {
-                    int average = ComputeAverageColor();
-                    Brush stroke = average < 127 ? Brushes.OrangeRed : Brushes.Black;
-                    Polygons.Add(new PolygonWrapper
-                    {
-                        Pol = p,
-                        Fill = ColorDialogViewModel.ColorPicker,
-                        Id = $"Polygon {Polygons.Count + 1}",
-                        Stroke = stroke
-                    });
+                    var p = new Polygon() {Points = new PointCollection(polyognEdges)};
 
-                    OnPropertyChanged(nameof(Polygons));
+                    InvokeColorDialogoCommand?.Execute(null);
+
+                    if (ColorDialogViewModel.DialogResult)
+                    {
+                        int average = ComputeAverageColor();
+                        Brush stroke = average < 127 ? Brushes.OrangeRed : Brushes.Black;
+                        Polygons.Add(new PolygonWrapper
+                        {
+                            Pol = p,
+                            Fill = ColorDialogViewModel.ColorPicker,
+                            Id = $"Polygon {Polygons.Count + 1}",
+                            Stroke = stroke
+                        });
+
+                        OnPropertyChanged(nameof(Polygons));
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("You cannot add new shapes while dragging");
                 }
             }
-            else
-            {
-                MessageBox.Show("You cannot add new shapes while dragging");
-            }
-
             polyognEdges.Clear();
         }
 
@@ -118,7 +120,7 @@ namespace WPF_Shapes
         {
             var polygonWrapper = parameter as PolygonWrapper;
             polygonWrapper?.SwapStrokeThicknes(3);
-            polygonWrapper.CanDrag = !polygonWrapper.CanDrag;
+            //polygonWrapper.CanDrag = !polygonWrapper.CanDrag;
             OnPropertyChanged(nameof(Polygons));
         }
 

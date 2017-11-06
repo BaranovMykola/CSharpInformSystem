@@ -25,6 +25,7 @@
                     <Style TargetType="MenuItem">
                         <Setter Property="Header" Value="{Binding Id}"/>
                         <Setter Property="IsCheckable" Value="True"/>
+                        <Setter Property="IsChecked" Value="{Binding CanDrag}"/>
                         <Setter Property="Command" Value="{Binding DataContext.SelectPolygonCommand,
                                     RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}"/>
                         <Setter Property="CommandParameter" Value="{Binding}"></Setter>
@@ -41,6 +42,27 @@
                             <MouseBinding Gesture="LeftClick" Command="{Binding ClickCanvasCommand}" CommandParameter="{Binding ElementName=canvasArea}" />
                             <MouseBinding Gesture="RightClick" Command="{Binding DrawPolyCommand}" CommandParameter="{Binding ElementName=canvasArea}" />
                         </Canvas.InputBindings>
+                        <Canvas.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="_New"  Command="{Binding NewCommand}"/>
+                                <MenuItem Header="_Open" Command="{Binding OpenCommand}"/>
+                                <Separator />
+                                <MenuItem Header="_Save" Command="{Binding SaveCommand}"/>
+                                <Separator />
+                                <MenuItem Header="_Shapes" ItemsSource="{Binding Polygons}">
+                                    <MenuItem.ItemContainerStyle>
+                                        <Style TargetType="MenuItem">
+                                            <Setter Property="Header" Value="{Binding Id}"/>
+                                            <Setter Property="IsCheckable" Value="True"/>
+                                            <Setter Property="IsChecked" Value="{Binding CanDrag}"/>
+                                                <Setter Property="Command" Value="{Binding DataContext.SelectPolygonCommand,
+                                    RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}"/>
+                                            <Setter Property="CommandParameter" Value="{Binding}"></Setter>
+                                        </Style>
+                                    </MenuItem.ItemContainerStyle>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Canvas.ContextMenu>
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
