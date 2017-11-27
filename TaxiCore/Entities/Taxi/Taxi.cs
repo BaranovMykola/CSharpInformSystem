@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using TaxiCore.Entities.Demand;
 using TaxiCore.Entities.Position;
 using TaxiCore.Entities.Transport;
+using System.ComponentModel.DataAnnotations;
 
 namespace TaxiCore.Entities.Taxi
 {
     [Serializable]
-    public class Taxi : IIndentify
+    public class Taxi
     {
         public Func<Taxi, Taxi.State> OnFree;
 
@@ -59,10 +60,12 @@ namespace TaxiCore.Entities.Taxi
 
         public Car Car { get; set; }
 
+        [Required]
         public Driver Driver { get; set; }
 
         public Customer Client { get; set; }
 
+        [Key]
         public int Id { get; set; }
 
         [Serializable]

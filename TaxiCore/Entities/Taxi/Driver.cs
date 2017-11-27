@@ -1,5 +1,6 @@
 ﻿using System;
 using TaxiCore.Entities.Transport;
+using System.ComponentModel.DataAnnotations;
 
 namespace TaxiCore.Entities.Taxi
 {
@@ -21,6 +22,7 @@ namespace TaxiCore.Entities.Taxi
 
         public LicenseCategory DriverCategory { get; set; }
 
+        [Key]
         public int Id { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
@@ -99,7 +100,7 @@ namespace TaxiCore.Entities
                     var curr_loc = locations.FirstOrDefault(s => s.Id == (int)dRead[2]);
                     var target_loc = locations.FirstOrDefault(s => s.Id == (int)dRead[3]);
                     var peop_count = (int)dRead[4];
-                    var client = new Customer(curr_loc, target_loc, (uint)peop_count, name) { Id = (int)dRead[0] };
+                    var client = new Customer(curr_loc, target_loc, peop_count, name) { Id = (int)dRead[0] };
                     clients.Add(client);
                 }
                 dRead.NextResult();
@@ -121,7 +122,7 @@ namespace TaxiCore.Entities
                     var curr_loc = locations.FirstOrDefault(s => s.Id == (int)dRead[2]);
                     var target_loc = locations.FirstOrDefault(s => s.Id == (int)dRead[3]);
                     var peop_count = (int)dRead[4];
-                    var client = new Customer(curr_loc, target_loc, (uint)peop_count, name) { Id = (int)dRead[0] };
+                    var client = new Customer(curr_loc, target_loc, peop_count, name) { Id = (int)dRead[0] };
                     freeClients.Add(client);
                 }
                 var park = new TaxiPark(taxis);
@@ -305,6 +306,58 @@ namespace TaxiCore.Entities
             string model = dRead[2].ToString();
             int seatsCount = (int)dRead[3];
             return new Car(model, license, (uint)seatsCount) { Id = (int)dRead[0] };
+        }
+
+        public static TaxiPark EFWLoad()
+        {
+            using (var db = new Model2())
+            {
+                foreach (var location in db.Locations)
+                {
+                    Console.WriteLine(location);
+                }
+
+                foreach (var location in db.Customers)
+                {
+                    Console.WriteLine(location);
+                }
+
+                foreach (var driver in db.Drivers)
+                {
+                    Console.WriteLine(driver);
+                }
+
+                foreach (var taxi in db.Taxis)
+                {
+                    Console.WriteLine(taxi);
+                }
+
+                TaxiPark tp = new TaxiPark();
+                foreach (var taxiPark in db.TaxiParks)
+                {
+                    tp = taxiPark;
+                }
+
+                return tp;
+            }
+        }
+
+        public static void EFWWrite(TaxiPark p)
+        {
+            using (var db = new Model2())
+            {
+                //foreach (var taxi in p.Taxis)
+                //{
+                //    db.Taxis.AddOrUpdate(taxi);
+                //}
+                //db.TaxiParks.AddOrUpdate(p);
+
+                var c = new Customer(new Location(00, 00, "00"), new Location(111, 111, "111"), 134, "cucuruza");
+                var taxi = new Taxi.Taxi(new Location(123, 123, "123"), c.TargetLocation,
+                    new Car("carcar", LicenseCategory.B, 10), new Driver("dridri", LicenseCategory.B), c);
+                //db.TaxiParks.Add(p);
+                //db.SaveChanges();
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ using TaxiCore.Entities.Demand;
 using TaxiCore.Entities.Transport;
 using MoreLinq;
 using TaxiCore.Entities.Position;
+using System.ComponentModel.DataAnnotations;
 
 namespace TaxiCore.Entities.Taxi
 {
@@ -20,14 +21,18 @@ namespace TaxiCore.Entities.Taxi
 
         public TaxiPark(List<Taxi> taxis)
         {
-            Taxis = taxis;
+            Taxis = new List<Taxi>();
+            foreach (var taxi in taxis)
+            {
+                Taxis.Add(taxi);
+            }
             //foreach (var taxi in Taxis)
             //{
             //    taxi.OnFree += Taxi_OnFree;
             //}
         }
 
-        public List<Taxi> Taxis
+        public virtual ICollection<Taxi> Taxis
         {
             get { return _taxis; }
             set
@@ -40,11 +45,11 @@ namespace TaxiCore.Entities.Taxi
             }
         }
 
-        public List<Customer> clientsQueue = new EditableList<Customer>();
+        public virtual ICollection<Customer> clientsQueue { get; set; }= new List<Customer>();
 
         private Dictionary<string, string> geoRarametrs = new Dictionary<string, string>();
 
-        private List<Taxi> _taxis;
+        private ICollection<Taxi> _taxis;
 
         public void AddClient(Customer client)
         {
@@ -95,5 +100,8 @@ namespace TaxiCore.Entities.Taxi
             }
             return Taxi.State.Free;
         }
+
+        [System.ComponentModel.DataAnnotations.Key]
+        public int Id { get; set; }
     }
 }

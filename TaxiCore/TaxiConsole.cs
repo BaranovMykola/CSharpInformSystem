@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -44,12 +45,27 @@ namespace TaxiCore
             {
                 new Customer(new Location(49.795251, 24.046477, "Gnata Khotkevycha St, 16, L'viv, Lviv Oblast, 79000"), new Location(49.840043, 24.021903, "Universytetska St, 1, L'viv, Lviv Oblast"), 1, "Izya"),
                 new Customer(new Location(49.828797, 24.056647, "Anatoliya Vakhnyanyna St, 29, L'viv, Lviv Oblast"), new Location(49.812421, 24.017313, "Luhanska St"), 2, "Sara")
+
+                ,
+                new Customer(new Location(49.795251, 24.046477, "Gnata Khotkevycha St, 16, L'viv, Lviv Oblast, 79000"), new Location(49.840043, 24.021903, "Universytetska St, 1, L'viv, Lviv Oblast"), 1, "Izya1"),
+                new Customer(new Location(49.828797, 24.056647, "Anatoliya Vakhnyanyna St, 29, L'viv, Lviv Oblast"), new Location(49.812421, 24.017313, "Luhanska St"), 2, "Sara1"),
+                new Customer(new Location(49.795251, 24.046477, "Gnata Khotkevycha St, 16, L'viv, Lviv Oblast, 79000"), new Location(49.840043, 24.021903, "Universytetska St, 1, L'viv, Lviv Oblast"), 1, "Izya2"),
+                new Customer(new Location(49.828797, 24.056647, "Anatoliya Vakhnyanyna St, 29, L'viv, Lviv Oblast"), new Location(49.812421, 24.017313, "Luhanska St"), 2, "Sara2")
             };
 
             TaxiPark park = new TaxiPark(taxis);
 
             park.AddClient(customers[0]);
             park.AddClient(customers[1]);
+            park.AddClient(customers[2]);
+            park.AddClient(customers[3]);
+            park.AddClient(customers[4]);
+
+            Entities.EntityReader.EFWWrite(park);
+            var p = Entities.EntityReader.EFWLoad();
+
+            Console.WriteLine("Ended");
+            Console.ReadKey();
 
 
             //park.Taxis[0].CurrentState = Taxi.State.Free;
@@ -59,7 +75,14 @@ namespace TaxiCore
             //    (
             //        new Location(0,0,"from"), new Location(), new Car("car-car", LicenseCategory.B, 4),   new Driver("petro", LicenseCategory.B), new Customer(new Location(),new Location(), 4,"client" )
             //    ));
-            Entities.EntityReader.WriteDB(park);
+            //Entities.EntityReader.WriteDB(park);
         }
+    }
+
+    public class A
+    {
+        [Key]
+        public int Id { get; set; }
+        public int i { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using TaxiCore.Entities.Position;
+using System.ComponentModel.DataAnnotations;
 
 namespace TaxiCore.Entities.Demand
 {
@@ -10,7 +11,7 @@ namespace TaxiCore.Entities.Demand
         {
         }
 
-        public Customer(Location currentLocation, Location targetLocation, uint peoplesCount, string name)
+        public Customer(Location currentLocation, Location targetLocation, int peoplesCount, string name)
         {
             CurrentLocation = currentLocation;
             TargetLocation = targetLocation;
@@ -18,7 +19,7 @@ namespace TaxiCore.Entities.Demand
             Name = name;
         }
 
-        public Customer(string currentLocation, string targetLocation, uint peoplesCount, string name)
+        public Customer(string currentLocation, string targetLocation, int peoplesCount, string name)
         {
             CurrentLocation = GoogleApiProcessing.ParseJsonAddress(GoogleApiProcessing.FindLocation(currentLocation));
             TargetLocation = CurrentLocation = GoogleApiProcessing.ParseJsonAddress(GoogleApiProcessing.FindLocation(targetLocation));
@@ -30,10 +31,11 @@ namespace TaxiCore.Entities.Demand
 
         public Location TargetLocation { get; set; }
 
-        public uint PeoplesCount { get; set; }
+        public int PeoplesCount { get; set; }
 
         public string Name { get; set; }
 
+        [Key]
         public int Id { get; set; }
     }
 }

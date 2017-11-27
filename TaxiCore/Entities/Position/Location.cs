@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TaxiCore.Entities.Position
 {
@@ -28,6 +29,7 @@ namespace TaxiCore.Entities.Position
 
         public string Address { get; set; }
 
+        [Key]
         public int Id { get; set; }
     }
 }
