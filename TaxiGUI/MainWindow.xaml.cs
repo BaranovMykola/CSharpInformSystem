@@ -35,7 +35,7 @@ namespace TaxiGUI
         {
             InitializeComponent();
 
-            var park = EntityReader.ReadDB();
+            var park = EntityReader.EFWLoad();
 
             var tvm = new TaxiViewModel() { TaxiParkModel = new TaxiParkModel(park) };
             tvm.CurrentTaxi = park.Taxis.First();

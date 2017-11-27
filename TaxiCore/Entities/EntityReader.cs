@@ -305,13 +305,13 @@ namespace TaxiCore.Entities
 
             string model = dRead[2].ToString();
             int seatsCount = (int)dRead[3];
-            return new Car(model, license, (uint)seatsCount) { Id = (int)dRead[0] };
+            return new Car(model, license, seatsCount) { Id = (int)dRead[0] };
         }
 
         public static TaxiPark EFWLoad()
         {
-            using (var db = new Model2())
-            {
+            var db = new Model2();
+            //{
                 foreach (var location in db.Locations)
                 {
                     Console.WriteLine(location);
@@ -327,6 +327,11 @@ namespace TaxiCore.Entities
                     Console.WriteLine(driver);
                 }
 
+                foreach (var car in db.Cars)
+                {
+                    Console.WriteLine(car);
+                }
+
                 foreach (var taxi in db.Taxis)
                 {
                     Console.WriteLine(taxi);
@@ -337,26 +342,22 @@ namespace TaxiCore.Entities
                 {
                     tp = taxiPark;
                 }
+                var g = tp.Taxis.First();
 
                 return tp;
-            }
+            //}
         }
 
         public static void EFWWrite(TaxiPark p)
         {
+            TaxiPark p2 = (TaxiPark)p;
             using (var db = new Model2())
             {
-                //foreach (var taxi in p.Taxis)
-                //{
-                //    db.Taxis.AddOrUpdate(taxi);
-                //}
-                //db.TaxiParks.AddOrUpdate(p);
-
                 var c = new Customer(new Location(00, 00, "00"), new Location(111, 111, "111"), 134, "cucuruza");
                 var taxi = new Taxi.Taxi(new Location(123, 123, "123"), c.TargetLocation,
                     new Car("carcar", LicenseCategory.B, 10), new Driver("dridri", LicenseCategory.B), c);
-                //db.TaxiParks.Add(p);
-                //db.SaveChanges();
+                db.TaxiParks.AddOrUpdate(p2);
+                db.SaveChanges();
             }
         }
     }

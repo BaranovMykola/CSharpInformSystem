@@ -6,7 +6,7 @@ namespace TaxiCore.Entities.Transport
     {
         LicenseCategory Category { get; set; }
         string Model { get; set; }
-        uint SeatsCouunt { get; set; }
+        int SeatsCouunt { get; set; }
 
         bool CanDrive(Driver driver);
     }

@@ -173,7 +173,7 @@ namespace TaxiGUI
                 return;
             }
 
-            var client = new Customer(ClientLocation, ClientTarget, (uint)PeopleCount, ClientName);
+            var client = new Customer(ClientLocation, ClientTarget, PeopleCount, ClientName);
             try
             {
                 TaxiParkModel.AddClient(client);
@@ -218,7 +218,13 @@ namespace TaxiGUI
         {
             try
             {
-                EntityReader.WriteDB(TaxiParkModel as TaxiPark);
+                TaxiPark p = new TaxiPark()
+                {
+                    clientsQueue = TaxiParkModel.clientsQueue,
+                    Taxis = TaxiParkModel.Taxis,
+                    Id = TaxiParkModel.Id
+                };
+                EntityReader.EFWWrite(p);
                 MessageBox.Show("Saved data to DB!");
             }
             catch

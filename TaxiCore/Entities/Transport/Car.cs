@@ -10,7 +10,7 @@ namespace TaxiCore.Entities.Transport
         {
         }
 
-        public Car(string carModel, LicenseCategory carCategory, uint seatsCount)
+        public Car(string carModel, LicenseCategory carCategory, int seatsCount)
         {
             Model = carModel;
             Category = carCategory;
@@ -21,7 +21,7 @@ namespace TaxiCore.Entities.Transport
 
         public LicenseCategory Category { get; set; }
 
-        public uint SeatsCouunt { get; set; }
+        public int SeatsCouunt { get; set; }
 
         public bool CanDrive(Driver driver) => (driver.DriverCategory & Category) != 0;
 
